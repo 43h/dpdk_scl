@@ -24,7 +24,6 @@ fun_compile(){
 	meson -Dtests=false build
 	meson compile build
 	popd >> /dev/null
-	popd >> /dev/null
 }
 
 

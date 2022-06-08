@@ -1,6089 +1,6088 @@
 # dpdk源码阅读笔记
 
-## 版本 
-22.03版本
+## 版本
+22.03
 
 ## 源码目录
-./
-├── ABI_VERSION
-├── app
-│   ├── dumpcap
-│   │   ├── main.c
-│   │   └── meson.build
-│   ├── meson.build
-│   ├── pdump
-│   │   ├── main.c
-│   │   └── meson.build
-│   ├── proc-info
-│   │   ├── main.c
-│   │   └── meson.build
-│   ├── test
-│   │   ├── commands.c
-│   │   ├── has_hugepage.py
-│   │   ├── meson.build
-│   │   ├── packet_burst_generator.c
-│   │   ├── packet_burst_generator.h
-│   │   ├── process.h
-│   │   ├── resource.c
-│   │   ├── resource.h
-│   │   ├── sample_packet_forward.c
-│   │   ├── sample_packet_forward.h
-│   │   ├── test_acl.c
-│   │   ├── test_acl.h
-│   │   ├── test_alarm.c
-│   │   ├── test_atomic.c
-│   │   ├── test_barrier.c
-│   │   ├── test_bitmap.c
-│   │   ├── test_bitops.c
-│   │   ├── test_bitratestats.c
-│   │   ├── test_bpf.c
-│   │   ├── test_byteorder.c
-│   │   ├── test.c
-│   │   ├── test_cfgfile.c
-│   │   ├── test_cfgfiles
-│   │   │   └── etc
-│   │   │       ├── empty.ini
-│   │   │       ├── empty_key_value.ini
-│   │   │       ├── invalid_section.ini
-│   │   │       ├── line_too_long.ini
-│   │   │       ├── missing_section.ini
-│   │   │       ├── realloc_sections.ini
-│   │   │       ├── sample1.ini
-│   │   │       └── sample2.ini
-│   │   ├── test_cksum.c
-│   │   ├── test_cmdline.c
-│   │   ├── test_cmdline_cirbuf.c
-│   │   ├── test_cmdline_etheraddr.c
-│   │   ├── test_cmdline.h
-│   │   ├── test_cmdline_ipaddr.c
-│   │   ├── test_cmdline_lib.c
-│   │   ├── test_cmdline_num.c
-│   │   ├── test_cmdline_portlist.c
-│   │   ├── test_cmdline_string.c
-│   │   ├── test_common.c
-│   │   ├── test_compressdev.c
-│   │   ├── test_compressdev_test_buffer.h
-│   │   ├── test_cpuflags.c
-│   │   ├── test_crc.c
-│   │   ├── test_cryptodev_aead_test_vectors.h
-│   │   ├── test_cryptodev_aes_test_vectors.h
-│   │   ├── test_cryptodev_asym.c
-│   │   ├── test_cryptodev_asym_util.h
-│   │   ├── test_cryptodev_blockcipher.c
-│   │   ├── test_cryptodev_blockcipher.h
-│   │   ├── test_cryptodev.c
-│   │   ├── test_cryptodev_des_test_vectors.h
-│   │   ├── test_cryptodev_dh_test_vectors.h
-│   │   ├── test_cryptodev_dsa_test_vectors.h
-│   │   ├── test_cryptodev_ecdsa_test_vectors.h
-│   │   ├── test_cryptodev_ecpm_test_vectors.h
-│   │   ├── test_cryptodev.h
-│   │   ├── test_cryptodev_hash_test_vectors.h
-│   │   ├── test_cryptodev_hmac_test_vectors.h
-│   │   ├── test_cryptodev_kasumi_hash_test_vectors.h
-│   │   ├── test_cryptodev_kasumi_test_vectors.h
-│   │   ├── test_cryptodev_mixed_test_vectors.h
-│   │   ├── test_cryptodev_mod_test_vectors.h
-│   │   ├── test_cryptodev_rsa_test_vectors.h
-│   │   ├── test_cryptodev_security_docsis_test_vectors.h
-│   │   ├── test_cryptodev_security_ipsec.c
-│   │   ├── test_cryptodev_security_ipsec.h
-│   │   ├── test_cryptodev_security_ipsec_test_vectors.h
-│   │   ├── test_cryptodev_security_pdcp.c
-│   │   ├── test_cryptodev_security_pdcp_sdap_test_vectors.h
-│   │   ├── test_cryptodev_security_pdcp_test_func.h
-│   │   ├── test_cryptodev_security_pdcp_test_vectors.h
-│   │   ├── test_cryptodev_snow3g_hash_test_vectors.h
-│   │   ├── test_cryptodev_snow3g_test_vectors.h
-│   │   ├── test_cryptodev_zuc_test_vectors.h
-│   │   ├── test_cycles.c
-│   │   ├── test_debug.c
-│   │   ├── test_devargs.c
-│   │   ├── test_distributor.c
-│   │   ├── test_distributor_perf.c
-│   │   ├── test_dmadev_api.c
-│   │   ├── test_dmadev_api.h
-│   │   ├── test_dmadev.c
-│   │   ├── test_eal_flags.c
-│   │   ├── test_eal_fs.c
-│   │   ├── test_efd.c
-│   │   ├── test_efd_perf.c
-│   │   ├── test_errno.c
-│   │   ├── test_ethdev_link.c
-│   │   ├── test_event_crypto_adapter.c
-│   │   ├── test_eventdev.c
-│   │   ├── test_event_eth_rx_adapter.c
-│   │   ├── test_event_eth_tx_adapter.c
-│   │   ├── test_event_ring.c
-│   │   ├── test_event_timer_adapter.c
-│   │   ├── test_external_mem.c
-│   │   ├── test_fbarray.c
-│   │   ├── test_fib6.c
-│   │   ├── test_fib6_perf.c
-│   │   ├── test_fib.c
-│   │   ├── test_fib_perf.c
-│   │   ├── test_flow_classify.c
-│   │   ├── test_flow_classify.h
-│   │   ├── test_func_reentrancy.c
-│   │   ├── test_graph.c
-│   │   ├── test_graph_perf.c
-│   │   ├── test.h
-│   │   ├── test_hash.c
-│   │   ├── test_hash_functions.c
-│   │   ├── test_hash_multiwriter.c
-│   │   ├── test_hash_perf.c
-│   │   ├── test_hash_readwrite.c
-│   │   ├── test_hash_readwrite_lf_perf.c
-│   │   ├── test_interrupts.c
-│   │   ├── test_ipfrag.c
-│   │   ├── test_ipsec.c
-│   │   ├── test_ipsec_perf.c
-│   │   ├── test_ipsec_sad.c
-│   │   ├── test_kni.c
-│   │   ├── test_kvargs.c
-│   │   ├── test_latencystats.c
-│   │   ├── test_lcores.c
-│   │   ├── test_link_bonding.c
-│   │   ├── test_link_bonding_mode4.c
-│   │   ├── test_link_bonding_rssconf.c
-│   │   ├── test_logs.c
-│   │   ├── test_lpm6.c
-│   │   ├── test_lpm6_data.h
-│   │   ├── test_lpm6_perf.c
-│   │   ├── test_lpm.c
-│   │   ├── test_lpm_perf.c
-│   │   ├── test_malloc.c
-│   │   ├── test_malloc_perf.c
-│   │   ├── test_mbuf.c
-│   │   ├── test_mcslock.c
-│   │   ├── test_member.c
-│   │   ├── test_member_perf.c
-│   │   ├── test_memcpy.c
-│   │   ├── test_memcpy_perf.c
-│   │   ├── test_memory.c
-│   │   ├── test_mempool.c
-│   │   ├── test_mempool_perf.c
-│   │   ├── test_memzone.c
-│   │   ├── test_meter.c
-│   │   ├── test_metrics.c
-│   │   ├── test_mp_secondary.c
-│   │   ├── test_pcapng.c
-│   │   ├── test_pdump.c
-│   │   ├── test_pdump.h
-│   │   ├── test_per_lcore.c
-│   │   ├── test_pflock.c
-│   │   ├── test_pie.c
-│   │   ├── test_pmd_perf.c
-│   │   ├── test_pmd_ring.c
-│   │   ├── test_pmd_ring_perf.c
-│   │   ├── test_power.c
-│   │   ├── test_power_cpufreq.c
-│   │   ├── test_power_kvm_vm.c
-│   │   ├── test_prefetch.c
-│   │   ├── test_rand_perf.c
-│   │   ├── test_rawdev.c
-│   │   ├── test_rcu_qsbr.c
-│   │   ├── test_rcu_qsbr_perf.c
-│   │   ├── test_reciprocal_division.c
-│   │   ├── test_reciprocal_division_perf.c
-│   │   ├── test_red.c
-│   │   ├── test_reorder.c
-│   │   ├── test_resource.c
-│   │   ├── test_rib6.c
-│   │   ├── test_rib.c
-│   │   ├── test_ring.c
-│   │   ├── test_ring.h
-│   │   ├── test_ring_hts_stress.c
-│   │   ├── test_ring_mpmc_stress.c
-│   │   ├── test_ring_mt_peek_stress.c
-│   │   ├── test_ring_mt_peek_stress_zc.c
-│   │   ├── test_ring_perf.c
-│   │   ├── test_ring_rts_stress.c
-│   │   ├── test_ring_st_peek_stress.c
-│   │   ├── test_ring_st_peek_stress_zc.c
-│   │   ├── test_ring_stress.c
-│   │   ├── test_ring_stress.h
-│   │   ├── test_ring_stress_impl.h
-│   │   ├── test_rwlock.c
-│   │   ├── test_sched.c
-│   │   ├── test_security.c
-│   │   ├── test_service_cores.c
-│   │   ├── test_spinlock.c
-│   │   ├── test_stack.c
-│   │   ├── test_stack_perf.c
-│   │   ├── test_string_fns.c
-│   │   ├── test_table_acl.c
-│   │   ├── test_table_acl.h
-│   │   ├── test_table.c
-│   │   ├── test_table_combined.c
-│   │   ├── test_table_combined.h
-│   │   ├── test_table.h
-│   │   ├── test_table_pipeline.c
-│   │   ├── test_table_pipeline.h
-│   │   ├── test_table_ports.c
-│   │   ├── test_table_ports.h
-│   │   ├── test_table_tables.c
-│   │   ├── test_table_tables.h
-│   │   ├── test_tailq.c
-│   │   ├── test_telemetry_data.c
-│   │   ├── test_telemetry_json.c
-│   │   ├── test_thash.c
-│   │   ├── test_thash_perf.c
-│   │   ├── test_ticketlock.c
-│   │   ├── test_timer.c
-│   │   ├── test_timer_perf.c
-│   │   ├── test_timer_racecond.c
-│   │   ├── test_timer_secondary.c
-│   │   ├── test_trace.c
-│   │   ├── test_trace.h
-│   │   ├── test_trace_perf.c
-│   │   ├── test_trace_register.c
-│   │   ├── test_vdev.c
-│   │   ├── test_version.c
-│   │   ├── test_xmmt_ops.h
-│   │   ├── virtual_pmd.c
-│   │   └── virtual_pmd.h
-│   ├── test-acl
-│   │   ├── input
-│   │   │   ├── acl1v4_5_rule
-│   │   │   ├── acl1v4_5_trace
-│   │   │   ├── acl1v6_1_rule
-│   │   │   └── acl1v6_1_trace
-│   │   ├── main.c
-│   │   ├── meson.build
-│   │   └── test-acl.sh
-│   ├── test-bbdev
-│   │   ├── ldpc_dec_default.data -> test_vectors/ldpc_dec_v2342_drop.data
-│   │   ├── ldpc_enc_default.data -> test_vectors/ldpc_enc_v2342.data
-│   │   ├── main.c
-│   │   ├── main.h
-│   │   ├── meson.build
-│   │   ├── test_bbdev.c
-│   │   ├── test_bbdev_perf.c
-│   │   ├── test-bbdev.py
-│   │   ├── test_bbdev_vector.c
-│   │   ├── test_bbdev_vector.h
-│   │   ├── test_vectors
-│   │   │   ├── bbdev_null.data
-│   │   │   ├── ldpc_dec_HARQ_1_0.data
-│   │   │   ├── ldpc_dec_HARQ_1_1.data
-│   │   │   ├── ldpc_dec_HARQ_1_2.data
-│   │   │   ├── ldpc_dec_v11835.data
-│   │   │   ├── ldpc_dec_v2342_drop.data
-│   │   │   ├── ldpc_dec_v7813.data
-│   │   │   ├── ldpc_dec_v8480.data
-│   │   │   ├── ldpc_dec_v8568.data
-│   │   │   ├── ldpc_dec_v9503.data
-│   │   │   ├── ldpc_enc_v11835.data
-│   │   │   ├── ldpc_enc_v2342.data
-│   │   │   ├── ldpc_enc_v7813.data
-│   │   │   ├── ldpc_enc_v8568.data
-│   │   │   ├── ldpc_enc_v9503.data
-│   │   │   ├── turbo_dec_c1_k40_r0_e17280_sbd_negllr.data
-│   │   │   ├── turbo_dec_c1_k6144_r0_e10376_crc24b_sbd_negllr_high_snr.data
-│   │   │   ├── turbo_dec_c1_k6144_r0_e10376_crc24b_sbd_negllr_low_snr.data
-│   │   │   ├── turbo_dec_c1_k6144_r0_e34560_posllr.data
-│   │   │   ├── turbo_dec_c1_k6144_r0_e34560_sbd_negllr.data
-│   │   │   ├── turbo_dec_c1_k6144_r0_e34560_sbd_posllr.data
-│   │   │   ├── turbo_dec_c2_k3136_r0_e4920_sbd_negllr_crc24b.data
-│   │   │   ├── turbo_enc_c1_k40_r0_e1190_rm.data
-│   │   │   ├── turbo_enc_c1_k40_r0_e1194_rm.data
-│   │   │   ├── turbo_enc_c1_k40_r0_e1196_rm.data
-│   │   │   ├── turbo_enc_c1_k40_r0_e272_rm.data
-│   │   │   ├── turbo_enc_c1_k6144_r0_e120_rm_rvidx.data
-│   │   │   ├── turbo_enc_c1_k6144_r0_e18444.data
-│   │   │   ├── turbo_enc_c1_k6144_r0_e18448_crc24a.data
-│   │   │   ├── turbo_enc_c1_k6144_r0_e32256_crc24b_rm.data
-│   │   │   └── turbo_enc_c3_k4800_r2_e14412_crc24b.data
-│   │   ├── turbo_dec_default.data -> test_vectors/turbo_dec_c1_k6144_r0_e10376_crc24b_sbd_negllr_high_snr.data
-│   │   └── turbo_enc_default.data -> test_vectors/turbo_enc_c1_k6144_r0_e18444.data
-│   ├── test-cmdline
-│   │   ├── cmdline_test.c
-│   │   ├── cmdline_test_data.py
-│   │   ├── cmdline_test.h
-│   │   ├── cmdline_test.py
-│   │   ├── commands.c
-│   │   └── meson.build
-│   ├── test-compress-perf
-│   │   ├── comp_perf.h
-│   │   ├── comp_perf_options.h
-│   │   ├── comp_perf_options_parse.c
-│   │   ├── comp_perf_test_common.c
-│   │   ├── comp_perf_test_common.h
-│   │   ├── comp_perf_test_cyclecount.c
-│   │   ├── comp_perf_test_cyclecount.h
-│   │   ├── comp_perf_test_throughput.c
-│   │   ├── comp_perf_test_throughput.h
-│   │   ├── comp_perf_test_verify.c
-│   │   ├── comp_perf_test_verify.h
-│   │   ├── main.c
-│   │   └── meson.build
-│   ├── test-crypto-perf
-│   │   ├── configs
-│   │   │   ├── crypto-perf-aesni-gcm.json
-│   │   │   ├── crypto-perf-aesni-mb.json
-│   │   │   └── crypto-perf-qat.json
-│   │   ├── cperf.h
-│   │   ├── cperf_ops.c
-│   │   ├── cperf_ops.h
-│   │   ├── cperf_options.h
-│   │   ├── cperf_options_parsing.c
-│   │   ├── cperf_test_common.c
-│   │   ├── cperf_test_common.h
-│   │   ├── cperf_test_latency.c
-│   │   ├── cperf_test_latency.h
-│   │   ├── cperf_test_pmd_cyclecount.c
-│   │   ├── cperf_test_pmd_cyclecount.h
-│   │   ├── cperf_test_throughput.c
-│   │   ├── cperf_test_throughput.h
-│   │   ├── cperf_test_vector_parsing.c
-│   │   ├── cperf_test_vector_parsing.h
-│   │   ├── cperf_test_vectors.c
-│   │   ├── cperf_test_vectors.h
-│   │   ├── cperf_test_verify.c
-│   │   ├── cperf_test_verify.h
-│   │   ├── data
-│   │   │   ├── aes_cbc_128_sha.data
-│   │   │   ├── aes_cbc_192_sha.data
-│   │   │   └── aes_cbc_256_sha.data
-│   │   ├── dpdk-graph-crypto-perf.py
-│   │   ├── main.c
-│   │   └── meson.build
-│   ├── test-eventdev
-│   │   ├── evt_common.h
-│   │   ├── evt_main.c
-│   │   ├── evt_options.c
-│   │   ├── evt_options.h
-│   │   ├── evt_test.c
-│   │   ├── evt_test.h
-│   │   ├── meson.build
-│   │   ├── parser.c
-│   │   ├── parser.h
-│   │   ├── test_order_atq.c
-│   │   ├── test_order_common.c
-│   │   ├── test_order_common.h
-│   │   ├── test_order_queue.c
-│   │   ├── test_perf_atq.c
-│   │   ├── test_perf_common.c
-│   │   ├── test_perf_common.h
-│   │   ├── test_perf_queue.c
-│   │   ├── test_pipeline_atq.c
-│   │   ├── test_pipeline_common.c
-│   │   ├── test_pipeline_common.h
-│   │   └── test_pipeline_queue.c
-│   ├── test-fib
-│   │   ├── main.c
-│   │   └── meson.build
-│   ├── test-flow-perf
-│   │   ├── actions_gen.c
-│   │   ├── actions_gen.h
-│   │   ├── config.h
-│   │   ├── flow_gen.c
-│   │   ├── flow_gen.h
-│   │   ├── items_gen.c
-│   │   ├── items_gen.h
-│   │   ├── main.c
-│   │   └── meson.build
-│   ├── test-gpudev
-│   │   ├── main.c
-│   │   └── meson.build
-│   ├── test-pipeline
-│   │   ├── config.c
-│   │   ├── init.c
-│   │   ├── main.c
-│   │   ├── main.h
-│   │   ├── meson.build
-│   │   ├── pipeline_acl.c
-│   │   ├── pipeline_hash.c
-│   │   ├── pipeline_lpm.c
-│   │   ├── pipeline_lpm_ipv6.c
-│   │   ├── pipeline_stub.c
-│   │   └── runtime.c
-│   ├── test-pmd
-│   │   ├── 5tswap.c
-│   │   ├── bpf_cmd.c
-│   │   ├── bpf_cmd.h
-│   │   ├── cmd_flex_item.c
-│   │   ├── cmdline.c
-│   │   ├── cmdline_flow.c
-│   │   ├── cmdline_mtr.c
-│   │   ├── cmdline_mtr.h
-│   │   ├── cmdline_tm.c
-│   │   ├── cmdline_tm.h
-│   │   ├── config.c
-│   │   ├── csumonly.c
-│   │   ├── flowgen.c
-│   │   ├── icmpecho.c
-│   │   ├── ieee1588fwd.c
-│   │   ├── iofwd.c
-│   │   ├── macfwd.c
-│   │   ├── macswap.c
-│   │   ├── macswap_common.h
-│   │   ├── macswap.h
-│   │   ├── macswap_neon.h
-│   │   ├── macswap_sse.h
-│   │   ├── meson.build
-│   │   ├── noisy_vnf.c
-│   │   ├── parameters.c
-│   │   ├── rxonly.c
-│   │   ├── shared_rxq_fwd.c
-│   │   ├── testpmd.c
-│   │   ├── testpmd.h
-│   │   ├── txonly.c
-│   │   └── util.c
-│   ├── test-regex
-│   │   ├── main.c
-│   │   └── meson.build
-│   └── test-sad
-│       ├── main.c
-│       └── meson.build
-├── buildtools
-│   ├── binutils-avx512-check.py
-│   ├── call-sphinx-build.py
-│   ├── check-symbols.sh
-│   ├── chkincs
-│   │   ├── gen_c_file_for_header.py
-│   │   ├── main.c
-│   │   ├── main.cpp
-│   │   └── meson.build
-│   ├── coff.py
-│   ├── gen-pmdinfo-cfile.py
-│   ├── get-cpu-count.py
-│   ├── get-numa-count.py
-│   ├── list-dir-globs.py
-│   ├── map-list-symbol.sh
-│   ├── map_to_win.py
-│   ├── meson.build
-│   ├── options-ibverbs-static.sh
-│   ├── pkg-config
-│   │   ├── meson.build
-│   │   └── set-static-linker-flags.py
-│   ├── pmdinfogen.py
-│   ├── symlink-drivers-solibs.py
-│   └── symlink-drivers-solibs.sh
-├── config
-│   ├── arm
-│   │   ├── arm32_armv8_linux_gcc
-│   │   ├── arm64_armada_linux_gcc
-│   │   ├── arm64_armv8_linux_clang_ubuntu1804
-│   │   ├── arm64_armv8_linux_gcc
-│   │   ├── arm64_bluefield_linux_gcc
-│   │   ├── arm64_centriq2400_linux_gcc
-│   │   ├── arm64_cn10k_linux_gcc
-│   │   ├── arm64_cn9k_linux_gcc
-│   │   ├── arm64_dpaa_linux_gcc
-│   │   ├── arm64_emag_linux_gcc
-│   │   ├── arm64_graviton2_linux_gcc
-│   │   ├── arm64_kunpeng920_linux_gcc
-│   │   ├── arm64_kunpeng930_linux_gcc
-│   │   ├── arm64_n1sdp_linux_gcc
-│   │   ├── arm64_n2_linux_gcc
-│   │   ├── arm64_stingray_linux_gcc
-│   │   ├── arm64_thunderx2_linux_gcc
-│   │   ├── arm64_thunderxt88_linux_gcc
-│   │   ├── armv8_machine.py
-│   │   └── meson.build
-│   ├── meson.build
-│   ├── ppc
-│   │   ├── meson.build
-│   │   ├── ppc64le-power8-linux-gcc
-│   │   └── ppc64le-power8-linux-gcc-ubuntu1804
-│   ├── rte_config.h
-│   └── x86
-│       ├── cross-mingw
-│       └── meson.build
-├── devtools
-│   ├── build-dict.sh
-│   ├── build-tags.sh
-│   ├── check-abi.sh
-│   ├── check-abi-version.sh
-│   ├── check-doc-vs-code.sh
-│   ├── check-dup-includes.sh
-│   ├── check-forbidden-tokens.awk
-│   ├── check-git-log.sh
-│   ├── check-maintainers.sh
-│   ├── check-meson.py
-│   ├── checkpatches.sh
-│   ├── check-spdx-tag.sh
-│   ├── check-symbol-change.sh
-│   ├── check-symbol-maps.sh
-│   ├── cocci
-│   │   ├── mtod-offset.cocci
-│   │   ├── namespace_ethdev.cocci
-│   │   ├── nullfree.cocci
-│   │   ├── prefix_mbuf_offload_flags.cocci
-│   │   ├── strlcpy.cocci
-│   │   └── strlcpy-with-header.cocci
-│   ├── cocci.sh
-│   ├── gen-abi.sh
-│   ├── get-maintainer.sh
-│   ├── git-log-fixes.sh
-│   ├── libabigail.abignore
-│   ├── load-devel-config
-│   ├── parse-flow-support.sh
-│   ├── process-iwyu.py
-│   ├── test-meson-builds.sh
-│   ├── test-null.sh
-│   ├── update-abi.sh
-│   ├── update-patches.py
-│   ├── update_version_map_abi.py
-│   └── words-case.txt
-├── doc
-│   ├── api
-│   │   ├── doxy-api.conf.in
-│   │   ├── doxy-api-index.md
-│   │   ├── doxy-html-custom.sh
-│   │   ├── generate_doxygen.sh
-│   │   ├── generate_examples.sh
-│   │   └── meson.build
-│   ├── guides
-│   │   ├── bbdevs
-│   │   │   ├── acc100.rst
-│   │   │   ├── features
-│   │   │   │   ├── acc100.ini
-│   │   │   │   ├── default.ini
-│   │   │   │   ├── fpga_5gnr_fec.ini
-│   │   │   │   ├── fpga_lte_fec.ini
-│   │   │   │   ├── la12xx.ini
-│   │   │   │   ├── null.ini
-│   │   │   │   └── turbo_sw.ini
-│   │   │   ├── fpga_5gnr_fec.rst
-│   │   │   ├── fpga_lte_fec.rst
-│   │   │   ├── index.rst
-│   │   │   ├── la12xx.rst
-│   │   │   ├── null.rst
-│   │   │   ├── overview.rst
-│   │   │   └── turbo_sw.rst
-│   │   ├── compressdevs
-│   │   │   ├── features
-│   │   │   │   ├── default.ini
-│   │   │   │   ├── isal.ini
-│   │   │   │   ├── mlx5.ini
-│   │   │   │   ├── octeontx.ini
-│   │   │   │   ├── qat.ini
-│   │   │   │   └── zlib.ini
-│   │   │   ├── index.rst
-│   │   │   ├── isal.rst
-│   │   │   ├── mlx5.rst
-│   │   │   ├── octeontx.rst
-│   │   │   ├── overview.rst
-│   │   │   ├── qat_comp.rst
-│   │   │   └── zlib.rst
-│   │   ├── conf.py
-│   │   ├── contributing
-│   │   │   ├── abi_policy.rst
-│   │   │   ├── abi_versioning.rst
-│   │   │   ├── cheatsheet.rst
-│   │   │   ├── coding_style.rst
-│   │   │   ├── design.rst
-│   │   │   ├── documentation.rst
-│   │   │   ├── img
-│   │   │   │   ├── abi_stability_policy.svg
-│   │   │   │   ├── patch_cheatsheet.svg
-│   │   │   │   └── what_is_an_abi.svg
-│   │   │   ├── index.rst
-│   │   │   ├── patches.rst
-│   │   │   ├── stable.rst
-│   │   │   ├── unit_test.rst
-│   │   │   └── vulnerability.rst
-│   │   ├── cryptodevs
-│   │   │   ├── aesni_gcm.rst
-│   │   │   ├── aesni_mb.rst
-│   │   │   ├── armv8.rst
-│   │   │   ├── bcmfs.rst
-│   │   │   ├── caam_jr.rst
-│   │   │   ├── ccp.rst
-│   │   │   ├── chacha20_poly1305.rst
-│   │   │   ├── cnxk.rst
-│   │   │   ├── dpaa2_sec.rst
-│   │   │   ├── dpaa_sec.rst
-│   │   │   ├── features
-│   │   │   │   ├── aesni_gcm.ini
-│   │   │   │   ├── aesni_mb.ini
-│   │   │   │   ├── armv8.ini
-│   │   │   │   ├── bcmfs.ini
-│   │   │   │   ├── caam_jr.ini
-│   │   │   │   ├── ccp.ini
-│   │   │   │   ├── chacha20_poly1305.ini
-│   │   │   │   ├── cn10k.ini
-│   │   │   │   ├── cn9k.ini
-│   │   │   │   ├── default.ini
-│   │   │   │   ├── dpaa2_sec.ini
-│   │   │   │   ├── dpaa_sec.ini
-│   │   │   │   ├── kasumi.ini
-│   │   │   │   ├── mlx5.ini
-│   │   │   │   ├── mvsam.ini
-│   │   │   │   ├── nitrox.ini
-│   │   │   │   ├── null.ini
-│   │   │   │   ├── octeontx.ini
-│   │   │   │   ├── openssl.ini
-│   │   │   │   ├── qat.ini
-│   │   │   │   ├── snow3g.ini
-│   │   │   │   ├── virtio.ini
-│   │   │   │   └── zuc.ini
-│   │   │   ├── img
-│   │   │   │   └── scheduler-overview.svg
-│   │   │   ├── index.rst
-│   │   │   ├── kasumi.rst
-│   │   │   ├── mlx5.rst
-│   │   │   ├── mvsam.rst
-│   │   │   ├── nitrox.rst
-│   │   │   ├── null.rst
-│   │   │   ├── octeontx.rst
-│   │   │   ├── openssl.rst
-│   │   │   ├── overview.rst
-│   │   │   ├── qat.rst
-│   │   │   ├── scheduler.rst
-│   │   │   ├── snow3g.rst
-│   │   │   ├── virtio.rst
-│   │   │   └── zuc.rst
-│   │   ├── custom.css
-│   │   ├── dmadevs
-│   │   │   ├── cnxk.rst
-│   │   │   ├── dpaa.rst
-│   │   │   ├── hisilicon.rst
-│   │   │   ├── idxd.rst
-│   │   │   ├── index.rst
-│   │   │   └── ioat.rst
-│   │   ├── eventdevs
-│   │   │   ├── cnxk.rst
-│   │   │   ├── dlb2.rst
-│   │   │   ├── dpaa2.rst
-│   │   │   ├── dpaa.rst
-│   │   │   ├── dsw.rst
-│   │   │   ├── features
-│   │   │   │   ├── cnxk.ini
-│   │   │   │   ├── default.ini
-│   │   │   │   ├── dlb2.ini
-│   │   │   │   ├── dpaa2.ini
-│   │   │   │   ├── dpaa.ini
-│   │   │   │   ├── dsw.ini
-│   │   │   │   ├── octeontx.ini
-│   │   │   │   ├── opdl.ini
-│   │   │   │   └── sw.ini
-│   │   │   ├── index.rst
-│   │   │   ├── octeontx.rst
-│   │   │   ├── opdl.rst
-│   │   │   ├── overview.rst
-│   │   │   └── sw.rst
-│   │   ├── faq
-│   │   │   ├── faq.rst
-│   │   │   └── index.rst
-│   │   ├── freebsd_gsg
-│   │   │   ├── build_dpdk.rst
-│   │   │   ├── build_sample_apps.rst
-│   │   │   ├── freebsd_eal_parameters.rst
-│   │   │   ├── index.rst
-│   │   │   ├── install_from_ports.rst
-│   │   │   └── intro.rst
-│   │   ├── gpus
-│   │   │   ├── cuda.rst
-│   │   │   ├── features
-│   │   │   │   ├── cuda.ini
-│   │   │   │   └── default.ini
-│   │   │   ├── index.rst
-│   │   │   └── overview.rst
-│   │   ├── howto
-│   │   │   ├── avx512.rst
-│   │   │   ├── debug_troubleshoot.rst
-│   │   │   ├── flow_bifurcation.rst
-│   │   │   ├── img
-│   │   │   │   ├── dtg_consumer_ring.svg
-│   │   │   │   ├── dtg_crypto.svg
-│   │   │   │   ├── dtg_distributor_worker.svg
-│   │   │   │   ├── dtg_mempool.svg
-│   │   │   │   ├── dtg_pdump.svg
-│   │   │   │   ├── dtg_producer_ring.svg
-│   │   │   │   ├── dtg_qos_tx.svg
-│   │   │   │   ├── dtg_rx_rate.svg
-│   │   │   │   ├── dtg_rx_tx_drop.svg
-│   │   │   │   ├── dtg_sample_app_model.svg
-│   │   │   │   ├── dtg_service.svg
-│   │   │   │   ├── flow_bifurcation_overview.svg
-│   │   │   │   ├── lm_bond_virtio_sriov.svg
-│   │   │   │   ├── lm_vhost_user.svg
-│   │   │   │   ├── packet_capture_framework.svg
-│   │   │   │   ├── pvp_2nics.svg
-│   │   │   │   ├── use_models_for_running_dpdk_in_containers.svg
-│   │   │   │   ├── vf_daemon_overview.svg
-│   │   │   │   ├── virtio_user_as_exceptional_path.svg
-│   │   │   │   └── virtio_user_for_container_networking.svg
-│   │   │   ├── index.rst
-│   │   │   ├── lm_bond_virtio_sriov.rst
-│   │   │   ├── lm_virtio_vhost_user.rst
-│   │   │   ├── openwrt.rst
-│   │   │   ├── packet_capture_framework.rst
-│   │   │   ├── pvp_reference_benchmark.rst
-│   │   │   ├── rte_flow.rst
-│   │   │   ├── telemetry.rst
-│   │   │   ├── vfd.rst
-│   │   │   ├── virtio_user_as_exceptional_path.rst
-│   │   │   └── virtio_user_for_container_networking.rst
-│   │   ├── index.rst
-│   │   ├── linux_gsg
-│   │   │   ├── build_dpdk.rst
-│   │   │   ├── build_sample_apps.rst
-│   │   │   ├── cross_build_dpdk_for_arm64.rst
-│   │   │   ├── eal_args.include.rst
-│   │   │   ├── enable_func.rst
-│   │   │   ├── index.rst
-│   │   │   ├── intro.rst
-│   │   │   ├── linux_drivers.rst
-│   │   │   ├── linux_eal_parameters.rst
-│   │   │   ├── nic_perf_intel_platform.rst
-│   │   │   └── sys_reqs.rst
-│   │   ├── mempool
-│   │   │   ├── cnxk.rst
-│   │   │   ├── index.rst
-│   │   │   ├── octeontx.rst
-│   │   │   ├── ring.rst
-│   │   │   └── stack.rst
-│   │   ├── meson.build
-│   │   ├── nics
-│   │   │   ├── af_packet.rst
-│   │   │   ├── af_xdp.rst
-│   │   │   ├── ark.rst
-│   │   │   ├── atlantic.rst
-│   │   │   ├── avp.rst
-│   │   │   ├── axgbe.rst
-│   │   │   ├── bnx2x.rst
-│   │   │   ├── bnxt.rst
-│   │   │   ├── build_and_test.rst
-│   │   │   ├── cnxk.rst
-│   │   │   ├── cxgbe.rst
-│   │   │   ├── dpaa2.rst
-│   │   │   ├── dpaa.rst
-│   │   │   ├── e1000em.rst
-│   │   │   ├── ena.rst
-│   │   │   ├── enetc.rst
-│   │   │   ├── enetfec.rst
-│   │   │   ├── enic.rst
-│   │   │   ├── fail_safe.rst
-│   │   │   ├── features
-│   │   │   │   ├── afpacket.ini
-│   │   │   │   ├── af_xdp.ini
-│   │   │   │   ├── ark.ini
-│   │   │   │   ├── atlantic.ini
-│   │   │   │   ├── avp.ini
-│   │   │   │   ├── axgbe.ini
-│   │   │   │   ├── bnx2x.ini
-│   │   │   │   ├── bnxt.ini
-│   │   │   │   ├── cnxk.ini
-│   │   │   │   ├── cnxk_vec.ini
-│   │   │   │   ├── cnxk_vf.ini
-│   │   │   │   ├── cxgbe.ini
-│   │   │   │   ├── cxgbevf.ini
-│   │   │   │   ├── default.ini
-│   │   │   │   ├── dpaa2.ini
-│   │   │   │   ├── dpaa.ini
-│   │   │   │   ├── e1000.ini
-│   │   │   │   ├── ena.ini
-│   │   │   │   ├── enetc.ini
-│   │   │   │   ├── enetfec.ini
-│   │   │   │   ├── enic.ini
-│   │   │   │   ├── failsafe.ini
-│   │   │   │   ├── fm10k.ini
-│   │   │   │   ├── fm10k_vf.ini
-│   │   │   │   ├── hinic.ini
-│   │   │   │   ├── hns3.ini
-│   │   │   │   ├── hns3_vf.ini
-│   │   │   │   ├── i40e.ini
-│   │   │   │   ├── iavf.ini
-│   │   │   │   ├── ice_dcf.ini
-│   │   │   │   ├── ice.ini
-│   │   │   │   ├── igb.ini
-│   │   │   │   ├── igb_vf.ini
-│   │   │   │   ├── igc.ini
-│   │   │   │   ├── ionic.ini
-│   │   │   │   ├── ipn3ke.ini
-│   │   │   │   ├── ixgbe.ini
-│   │   │   │   ├── ixgbe_vf.ini
-│   │   │   │   ├── liquidio.ini
-│   │   │   │   ├── memif.ini
-│   │   │   │   ├── mlx4.ini
-│   │   │   │   ├── mlx5.ini
-│   │   │   │   ├── mvneta.ini
-│   │   │   │   ├── mvpp2.ini
-│   │   │   │   ├── netvsc.ini
-│   │   │   │   ├── nfb.ini
-│   │   │   │   ├── nfp.ini
-│   │   │   │   ├── ngbe.ini
-│   │   │   │   ├── octeontx_ep.ini
-│   │   │   │   ├── octeontx.ini
-│   │   │   │   ├── pcap.ini
-│   │   │   │   ├── pfe.ini
-│   │   │   │   ├── qede.ini
-│   │   │   │   ├── qede_vf.ini
-│   │   │   │   ├── sfc.ini
-│   │   │   │   ├── tap.ini
-│   │   │   │   ├── thunderx.ini
-│   │   │   │   ├── txgbe.ini
-│   │   │   │   ├── txgbe_vf.ini
-│   │   │   │   ├── vhost.ini
-│   │   │   │   ├── virtio.ini
-│   │   │   │   └── vmxnet3.ini
-│   │   │   ├── features.rst
-│   │   │   ├── fm10k.rst
-│   │   │   ├── hinic.rst
-│   │   │   ├── hns3.rst
-│   │   │   ├── i40e.rst
-│   │   │   ├── ice.rst
-│   │   │   ├── igb.rst
-│   │   │   ├── igc.rst
-│   │   │   ├── img
-│   │   │   │   ├── console.png
-│   │   │   │   ├── fast_pkt_proc.png
-│   │   │   │   ├── forward_stats.png
-│   │   │   │   ├── host_vm_comms.png
-│   │   │   │   ├── host_vm_comms_qemu.png
-│   │   │   │   ├── ice_dcf.svg
-│   │   │   │   ├── intel_perf_test_setup.svg
-│   │   │   │   ├── inter_vm_comms.png
-│   │   │   │   ├── mvpp2_tm.svg
-│   │   │   │   ├── perf_benchmark.png
-│   │   │   │   ├── single_port_nic.png
-│   │   │   │   ├── vm_vm_comms.png
-│   │   │   │   ├── vmxnet3_int.png
-│   │   │   │   └── vswitch_vm.png
-│   │   │   ├── index.rst
-│   │   │   ├── intel_vf.rst
-│   │   │   ├── ionic.rst
-│   │   │   ├── ipn3ke.rst
-│   │   │   ├── ixgbe.rst
-│   │   │   ├── kni.rst
-│   │   │   ├── liquidio.rst
-│   │   │   ├── memif.rst
-│   │   │   ├── mlx4.rst
-│   │   │   ├── mlx5.rst
-│   │   │   ├── mvneta.rst
-│   │   │   ├── mvpp2.rst
-│   │   │   ├── netvsc.rst
-│   │   │   ├── nfb.rst
-│   │   │   ├── nfp.rst
-│   │   │   ├── ngbe.rst
-│   │   │   ├── null.rst
-│   │   │   ├── octeontx_ep.rst
-│   │   │   ├── octeontx.rst
-│   │   │   ├── overview.rst
-│   │   │   ├── pcap_ring.rst
-│   │   │   ├── pfe.rst
-│   │   │   ├── qede.rst
-│   │   │   ├── sfc_efx.rst
-│   │   │   ├── softnic.rst
-│   │   │   ├── tap.rst
-│   │   │   ├── thunderx.rst
-│   │   │   ├── txgbe.rst
-│   │   │   ├── vdev_netvsc.rst
-│   │   │   ├── vhost.rst
-│   │   │   ├── virtio.rst
-│   │   │   └── vmxnet3.rst
-│   │   ├── platform
-│   │   │   ├── bluefield.rst
-│   │   │   ├── cnxk.rst
-│   │   │   ├── dpaa2.rst
-│   │   │   ├── dpaa.rst
-│   │   │   ├── img
-│   │   │   │   ├── cnxk_packet_flow_hw_accelerators.svg
-│   │   │   │   └── cnxk_resource_virtualization.svg
-│   │   │   ├── index.rst
-│   │   │   ├── mlx5.rst
-│   │   │   └── octeontx.rst
-│   │   ├── prog_guide
-│   │   │   ├── asan.rst
-│   │   │   ├── bbdev.rst
-│   │   │   ├── bpf_lib.rst
-│   │   │   ├── build_app.rst
-│   │   │   ├── build-sdk-meson.rst
-│   │   │   ├── compressdev.rst
-│   │   │   ├── cryptodev_lib.rst
-│   │   │   ├── dmadev.rst
-│   │   │   ├── efd_lib.rst
-│   │   │   ├── env_abstraction_layer.rst
-│   │   │   ├── event_crypto_adapter.rst
-│   │   │   ├── eventdev.rst
-│   │   │   ├── event_ethernet_rx_adapter.rst
-│   │   │   ├── event_ethernet_tx_adapter.rst
-│   │   │   ├── event_timer_adapter.rst
-│   │   │   ├── fib_lib.rst
-│   │   │   ├── flow_classify_lib.rst
-│   │   │   ├── generic_receive_offload_lib.rst
-│   │   │   ├── generic_segmentation_offload_lib.rst
-│   │   │   ├── glossary.rst
-│   │   │   ├── gpudev.rst
-│   │   │   ├── graph_lib.rst
-│   │   │   ├── hash_lib.rst
-│   │   │   ├── img
-│   │   │   │   ├── anatomy_of_a_node.svg
-│   │   │   │   ├── architecture-overview.svg
-│   │   │   │   ├── blk_diag_dropper.png
-│   │   │   │   ├── bond-mode-0.svg
-│   │   │   │   ├── bond-mode-1.svg
-│   │   │   │   ├── bond-mode-2.svg
-│   │   │   │   ├── bond-mode-3.svg
-│   │   │   │   ├── bond-mode-4.svg
-│   │   │   │   ├── bond-mode-5.svg
-│   │   │   │   ├── bond-overview.svg
-│   │   │   │   ├── cryptodev_sym_sess.svg
-│   │   │   │   ├── crypto_op.svg
-│   │   │   │   ├── crypto_xform_chain.svg
-│   │   │   │   ├── data_struct_per_port.png
-│   │   │   │   ├── dir_24_8_alg.svg
-│   │   │   │   ├── dmadev.svg
-│   │   │   │   ├── drop_probability_eq3.png
-│   │   │   │   ├── drop_probability_eq4.png
-│   │   │   │   ├── drop_probability_graph.png
-│   │   │   │   ├── efd_i10.svg
-│   │   │   │   ├── efd_i11.svg
-│   │   │   │   ├── efd_i12.svg
-│   │   │   │   ├── efd_i1.svg
-│   │   │   │   ├── efd_i2.svg
-│   │   │   │   ├── efd_i3.svg
-│   │   │   │   ├── efd_i4.svg
-│   │   │   │   ├── efd_i5.svg
-│   │   │   │   ├── efd_i6.svg
-│   │   │   │   ├── efd_i7.svg
-│   │   │   │   ├── efd_i8.svg
-│   │   │   │   ├── efd_i9.svg
-│   │   │   │   ├── eq2_expression.png
-│   │   │   │   ├── eq2_factor.png
-│   │   │   │   ├── event_crypto_adapter_op_forward.svg
-│   │   │   │   ├── event_crypto_adapter_op_new.svg
-│   │   │   │   ├── eventdev_usage.svg
-│   │   │   │   ├── ewma_filter_eq_1.png
-│   │   │   │   ├── ewma_filter_eq_2.png
-│   │   │   │   ├── ex_data_flow_tru_dropper.png
-│   │   │   │   ├── figure32.png
-│   │   │   │   ├── figure33.png
-│   │   │   │   ├── figure34.png
-│   │   │   │   ├── figure35.png
-│   │   │   │   ├── figure37.png
-│   │   │   │   ├── figure38.png
-│   │   │   │   ├── figure39.png
-│   │   │   │   ├── flow_tru_dropper.png
-│   │   │   │   ├── graph_mem_layout.svg
-│   │   │   │   ├── gro-key-algorithm.svg
-│   │   │   │   ├── gso-output-segment-format.svg
-│   │   │   │   ├── gso-three-seg-mbuf.svg
-│   │   │   │   ├── hier_sched_blk.png
-│   │   │   │   ├── kernel_nic_intf.png
-│   │   │   │   ├── kni_traffic_flow.png
-│   │   │   │   ├── link_the_nodes.svg
-│   │   │   │   ├── linuxapp_launch.svg
-│   │   │   │   ├── malloc_heap.svg
-│   │   │   │   ├── mbuf1.svg
-│   │   │   │   ├── mbuf2.svg
-│   │   │   │   ├── m_definition.png
-│   │   │   │   ├── member_i1.svg
-│   │   │   │   ├── member_i2.svg
-│   │   │   │   ├── member_i3.svg
-│   │   │   │   ├── member_i4.svg
-│   │   │   │   ├── member_i5.svg
-│   │   │   │   ├── member_i6.svg
-│   │   │   │   ├── member_i7.svg
-│   │   │   │   ├── memory-management2.svg
-│   │   │   │   ├── memory-management.svg
-│   │   │   │   ├── mempool.svg
-│   │   │   │   ├── multi_process_memory.svg
-│   │   │   │   ├── packet_distributor1.png
-│   │   │   │   ├── packet_distributor2.png
-│   │   │   │   ├── pipe_prefetch_sm.png
-│   │   │   │   ├── pkt_drop_probability.png
-│   │   │   │   ├── pkt_flow_kni.png
-│   │   │   │   ├── pkt_proc_pipeline_qos.png
-│   │   │   │   ├── predictable_snat_1.svg
-│   │   │   │   ├── predictable_snat_2.svg
-│   │   │   │   ├── prefetch_pipeline.png
-│   │   │   │   ├── rcu_general_info.svg
-│   │   │   │   ├── rib_internals.svg
-│   │   │   │   ├── rib_pic.svg
-│   │   │   │   ├── ring1.svg
-│   │   │   │   ├── ring-dequeue1.svg
-│   │   │   │   ├── ring-dequeue2.svg
-│   │   │   │   ├── ring-dequeue3.svg
-│   │   │   │   ├── ring-enqueue1.svg
-│   │   │   │   ├── ring-enqueue2.svg
-│   │   │   │   ├── ring-enqueue3.svg
-│   │   │   │   ├── ring-modulo1.svg
-│   │   │   │   ├── ring-modulo2.svg
-│   │   │   │   ├── ring-mp-enqueue1.svg
-│   │   │   │   ├── ring-mp-enqueue2.svg
-│   │   │   │   ├── ring-mp-enqueue3.svg
-│   │   │   │   ├── ring-mp-enqueue4.svg
-│   │   │   │   ├── ring-mp-enqueue5.svg
-│   │   │   │   ├── rss_queue_assign.svg
-│   │   │   │   ├── rte_flow_async_init.svg
-│   │   │   │   ├── rte_flow_async_usage.svg
-│   │   │   │   ├── rte_mtr_meter_chaining.svg
-│   │   │   │   ├── sched_hier_per_port.svg
-│   │   │   │   ├── stateful-op.svg
-│   │   │   │   ├── stateless-op-shared.svg
-│   │   │   │   ├── stateless-op.svg
-│   │   │   │   ├── tbl24_tbl8.png
-│   │   │   │   ├── tbl24_tbl8_tbl8.png
-│   │   │   │   ├── turbo_tb_decode.svg
-│   │   │   │   ├── turbo_tb_encode.svg
-│   │   │   │   └── vhost_net_arch.png
-│   │   │   ├── index.rst
-│   │   │   ├── intro.rst
-│   │   │   ├── ip_fragment_reassembly_lib.rst
-│   │   │   ├── ipsec_lib.rst
-│   │   │   ├── kernel_nic_interface.rst
-│   │   │   ├── link_bonding_poll_mode_drv_lib.rst
-│   │   │   ├── lpm6_lib.rst
-│   │   │   ├── lpm_lib.rst
-│   │   │   ├── lto.rst
-│   │   │   ├── mbuf_lib.rst
-│   │   │   ├── member_lib.rst
-│   │   │   ├── mempool_lib.rst
-│   │   │   ├── meson_ut.rst
-│   │   │   ├── metrics_lib.rst
-│   │   │   ├── multi_proc_support.rst
-│   │   │   ├── overview.rst
-│   │   │   ├── packet_classif_access_ctrl.rst
-│   │   │   ├── packet_distrib_lib.rst
-│   │   │   ├── packet_framework.rst
-│   │   │   ├── pcapng_lib.rst
-│   │   │   ├── pdump_lib.rst
-│   │   │   ├── perf_opt_guidelines.rst
-│   │   │   ├── poll_mode_drv.rst
-│   │   │   ├── power_man.rst
-│   │   │   ├── profile_app.rst
-│   │   │   ├── qos_framework.rst
-│   │   │   ├── rawdev.rst
-│   │   │   ├── rcu_lib.rst
-│   │   │   ├── regexdev.rst
-│   │   │   ├── reorder_lib.rst
-│   │   │   ├── rib_lib.rst
-│   │   │   ├── ring_lib.rst
-│   │   │   ├── rte_flow.rst
-│   │   │   ├── rte_security.rst
-│   │   │   ├── service_cores.rst
-│   │   │   ├── source_org.rst
-│   │   │   ├── stack_lib.rst
-│   │   │   ├── switch_representation.rst
-│   │   │   ├── telemetry_lib.rst
-│   │   │   ├── thread_safety_dpdk_functions.rst
-│   │   │   ├── timer_lib.rst
-│   │   │   ├── toeplitz_hash_lib.rst
-│   │   │   ├── trace_lib.rst
-│   │   │   ├── traffic_management.rst
-│   │   │   ├── traffic_metering_and_policing.rst
-│   │   │   ├── vhost_lib.rst
-│   │   │   └── writing_efficient_code.rst
-│   │   ├── rawdevs
-│   │   │   ├── cnxk_bphy.rst
-│   │   │   ├── cnxk_gpio.rst
-│   │   │   ├── dpaa2_cmdif.rst
-│   │   │   ├── dpaa2_qdma.rst
-│   │   │   ├── ifpga.rst
-│   │   │   ├── index.rst
-│   │   │   ├── ioat.rst
-│   │   │   └── ntb.rst
-│   │   ├── regexdevs
-│   │   │   ├── cn9k.rst
-│   │   │   ├── features
-│   │   │   │   ├── cn9k.ini
-│   │   │   │   ├── default.ini
-│   │   │   │   └── mlx5.ini
-│   │   │   ├── features_overview.rst
-│   │   │   ├── index.rst
-│   │   │   └── mlx5.rst
-│   │   ├── rel_notes
-│   │   │   ├── deprecation.rst
-│   │   │   ├── index.rst
-│   │   │   ├── known_issues.rst
-│   │   │   ├── release_16_04.rst
-│   │   │   ├── release_16_07.rst
-│   │   │   ├── release_16_11.rst
-│   │   │   ├── release_17_02.rst
-│   │   │   ├── release_17_05.rst
-│   │   │   ├── release_17_08.rst
-│   │   │   ├── release_17_11.rst
-│   │   │   ├── release_18_02.rst
-│   │   │   ├── release_18_05.rst
-│   │   │   ├── release_18_08.rst
-│   │   │   ├── release_18_11.rst
-│   │   │   ├── release_1_8.rst
-│   │   │   ├── release_19_02.rst
-│   │   │   ├── release_19_05.rst
-│   │   │   ├── release_19_08.rst
-│   │   │   ├── release_19_11.rst
-│   │   │   ├── release_20_02.rst
-│   │   │   ├── release_20_05.rst
-│   │   │   ├── release_20_08.rst
-│   │   │   ├── release_20_11.rst
-│   │   │   ├── release_2_0.rst
-│   │   │   ├── release_21_02.rst
-│   │   │   ├── release_21_05.rst
-│   │   │   ├── release_21_08.rst
-│   │   │   ├── release_21_11.rst
-│   │   │   ├── release_2_1.rst
-│   │   │   ├── release_22_03.rst
-│   │   │   └── release_2_2.rst
-│   │   ├── sample_app_ug
-│   │   │   ├── bbdev_app.rst
-│   │   │   ├── cmd_line.rst
-│   │   │   ├── compiling.rst
-│   │   │   ├── dist_app.rst
-│   │   │   ├── dma.rst
-│   │   │   ├── ethtool.rst
-│   │   │   ├── eventdev_pipeline.rst
-│   │   │   ├── fips_validation.rst
-│   │   │   ├── flow_classify.rst
-│   │   │   ├── flow_filtering.rst
-│   │   │   ├── hello_world.rst
-│   │   │   ├── img
-│   │   │   │   ├── client_svr_sym_multi_proc_app.png
-│   │   │   │   ├── dist_app.svg
-│   │   │   │   ├── dist_perf.svg
-│   │   │   │   ├── example_rules.png
-│   │   │   │   ├── exception_path_example.svg
-│   │   │   │   ├── ipsec_endpoints.svg
-│   │   │   │   ├── ipv4_acl_rule.png
-│   │   │   │   ├── kernel_nic.png
-│   │   │   │   ├── l2_fwd_benchmark_setup.svg
-│   │   │   │   ├── l2_fwd_encrypt_flow.svg
-│   │   │   │   ├── l2_fwd_virtenv_benchmark_setup.png
-│   │   │   │   ├── l2_fwd_vm2vm.svg
-│   │   │   │   ├── load_bal_app_arch.png
-│   │   │   │   ├── overlay_networking.svg
-│   │   │   │   ├── pipeline_overview.png
-│   │   │   │   ├── ptpclient.svg
-│   │   │   │   ├── qos_sched_app_arch.png
-│   │   │   │   ├── quickassist_block_diagram.png
-│   │   │   │   ├── ring_pipeline_perf_setup.png
-│   │   │   │   ├── server_node_efd.svg
-│   │   │   │   ├── sym_multi_proc_app.png
-│   │   │   │   ├── test_pipeline_app.png
-│   │   │   │   ├── threads_pipelines.png
-│   │   │   │   ├── vmdq_dcb_example.svg
-│   │   │   │   ├── vm_power_mgr_highlevel.svg
-│   │   │   │   └── vm_power_mgr_vm_request_seq.svg
-│   │   │   ├── index.rst
-│   │   │   ├── intro.rst
-│   │   │   ├── ip_frag.rst
-│   │   │   ├── ip_pipeline.rst
-│   │   │   ├── ip_reassembly.rst
-│   │   │   ├── ipsec_secgw.rst
-│   │   │   ├── ipv4_multicast.rst
-│   │   │   ├── keep_alive.rst
-│   │   │   ├── kernel_nic_interface.rst
-│   │   │   ├── l2_forward_cat.rst
-│   │   │   ├── l2_forward_crypto.rst
-│   │   │   ├── l2_forward_event.rst
-│   │   │   ├── l2_forward_job_stats.rst
-│   │   │   ├── l2_forward_real_virtual.rst
-│   │   │   ├── l3_forward_access_ctrl.rst
-│   │   │   ├── l3_forward_graph.rst
-│   │   │   ├── l3_forward_power_man.rst
-│   │   │   ├── l3_forward.rst
-│   │   │   ├── link_status_intr.rst
-│   │   │   ├── multi_process.rst
-│   │   │   ├── ntb.rst
-│   │   │   ├── packet_ordering.rst
-│   │   │   ├── pipeline.rst
-│   │   │   ├── ptpclient.rst
-│   │   │   ├── qos_metering.rst
-│   │   │   ├── qos_scheduler.rst
-│   │   │   ├── rxtx_callbacks.rst
-│   │   │   ├── server_node_efd.rst
-│   │   │   ├── service_cores.rst
-│   │   │   ├── skeleton.rst
-│   │   │   ├── test_pipeline.rst
-│   │   │   ├── timer.rst
-│   │   │   ├── vdpa.rst
-│   │   │   ├── vhost_blk.rst
-│   │   │   ├── vhost_crypto.rst
-│   │   │   ├── vhost.rst
-│   │   │   ├── vmdq_dcb_forwarding.rst
-│   │   │   ├── vmdq_forwarding.rst
-│   │   │   └── vm_power_management.rst
-│   │   ├── testpmd_app_ug
-│   │   │   ├── build_app.rst
-│   │   │   ├── index.rst
-│   │   │   ├── intro.rst
-│   │   │   ├── run_app.rst
-│   │   │   └── testpmd_funcs.rst
-│   │   ├── tools
-│   │   │   ├── comp_perf.rst
-│   │   │   ├── cryptoperf.rst
-│   │   │   ├── devbind.rst
-│   │   │   ├── dumpcap.rst
-│   │   │   ├── flow-perf.rst
-│   │   │   ├── hugepages.rst
-│   │   │   ├── img
-│   │   │   │   ├── eventdev_order_atq_test.svg
-│   │   │   │   ├── eventdev_order_queue_test.svg
-│   │   │   │   ├── eventdev_perf_atq_test.svg
-│   │   │   │   ├── eventdev_perf_queue_test.svg
-│   │   │   │   ├── eventdev_pipeline_atq_test_generic.svg
-│   │   │   │   ├── eventdev_pipeline_atq_test_internal_port.svg
-│   │   │   │   ├── eventdev_pipeline_queue_test_generic.svg
-│   │   │   │   └── eventdev_pipeline_queue_test_internal_port.svg
-│   │   │   ├── index.rst
-│   │   │   ├── pdump.rst
-│   │   │   ├── pmdinfo.rst
-│   │   │   ├── proc_info.rst
-│   │   │   ├── testbbdev.rst
-│   │   │   ├── testeventdev.rst
-│   │   │   └── testregex.rst
-│   │   ├── vdpadevs
-│   │   │   ├── features
-│   │   │   │   ├── default.ini
-│   │   │   │   ├── ifcvf.ini
-│   │   │   │   ├── mlx5.ini
-│   │   │   │   └── sfc.ini
-│   │   │   ├── features_overview.rst
-│   │   │   ├── ifc.rst
-│   │   │   ├── index.rst
-│   │   │   ├── mlx5.rst
-│   │   │   └── sfc.rst
-│   │   └── windows_gsg
-│   │       ├── build_dpdk.rst
-│   │       ├── index.rst
-│   │       ├── intro.rst
-│   │       └── run_apps.rst
-│   ├── logo
-│   │   ├── DPDK_logo_horizontal_tag.png
-│   │   └── DPDK_logo_vertical_rev_small.png
-│   └── meson.build
-├── drivers
-│   ├── baseband
-│   │   ├── acc100
-│   │   │   ├── acc100_pf_enum.h
-│   │   │   ├── acc100_vf_enum.h
-│   │   │   ├── meson.build
-│   │   │   ├── rte_acc100_cfg.h
-│   │   │   ├── rte_acc100_pmd.c
-│   │   │   ├── rte_acc100_pmd.h
-│   │   │   └── version.map
-│   │   ├── fpga_5gnr_fec
-│   │   │   ├── fpga_5gnr_fec.h
-│   │   │   ├── meson.build
-│   │   │   ├── rte_fpga_5gnr_fec.c
-│   │   │   ├── rte_pmd_fpga_5gnr_fec.h
-│   │   │   └── version.map
-│   │   ├── fpga_lte_fec
-│   │   │   ├── fpga_lte_fec.c
-│   │   │   ├── fpga_lte_fec.h
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── la12xx
-│   │   │   ├── bbdev_la12xx.c
-│   │   │   ├── bbdev_la12xx.h
-│   │   │   ├── bbdev_la12xx_ipc.h
-│   │   │   ├── bbdev_la12xx_pmd_logs.h
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── meson.build
-│   │   ├── null
-│   │   │   ├── bbdev_null.c
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   └── turbo_sw
-│   │       ├── bbdev_turbo_software.c
-│   │       ├── meson.build
-│   │       └── version.map
-│   ├── bus
-│   │   ├── auxiliary
-│   │   │   ├── auxiliary_common.c
-│   │   │   ├── auxiliary_params.c
-│   │   │   ├── linux
-│   │   │   │   └── auxiliary.c
-│   │   │   ├── meson.build
-│   │   │   ├── private.h
-│   │   │   ├── rte_bus_auxiliary.h
-│   │   │   └── version.map
-│   │   ├── dpaa
-│   │   │   ├── base
-│   │   │   │   ├── fman
-│   │   │   │   │   ├── fman.c
-│   │   │   │   │   ├── fman_hw.c
-│   │   │   │   │   └── netcfg_layer.c
-│   │   │   │   └── qbman
-│   │   │   │       ├── bman.c
-│   │   │   │       ├── bman_driver.c
-│   │   │   │       ├── bman.h
-│   │   │   │       ├── bman_priv.h
-│   │   │   │       ├── dpaa_alloc.c
-│   │   │   │       ├── dpaa_sys.c
-│   │   │   │       ├── dpaa_sys.h
-│   │   │   │       ├── process.c
-│   │   │   │       ├── qman.c
-│   │   │   │       ├── qman_driver.c
-│   │   │   │       ├── qman.h
-│   │   │   │       └── qman_priv.h
-│   │   │   ├── dpaa_bus.c
-│   │   │   ├── include
-│   │   │   │   ├── dpaa_bits.h
-│   │   │   │   ├── dpaa_rbtree.h
-│   │   │   │   ├── fman.h
-│   │   │   │   ├── fsl_bman.h
-│   │   │   │   ├── fsl_fman_crc64.h
-│   │   │   │   ├── fsl_fman.h
-│   │   │   │   ├── fsl_qman.h
-│   │   │   │   ├── fsl_usd.h
-│   │   │   │   ├── netcfg.h
-│   │   │   │   └── process.h
-│   │   │   ├── meson.build
-│   │   │   ├── rte_dpaa_bus.h
-│   │   │   ├── rte_dpaa_logs.h
-│   │   │   └── version.map
-│   │   ├── fslmc
-│   │   │   ├── fslmc_bus.c
-│   │   │   ├── fslmc_logs.h
-│   │   │   ├── fslmc_vfio.c
-│   │   │   ├── fslmc_vfio.h
-│   │   │   ├── mc
-│   │   │   │   ├── dpbp.c
-│   │   │   │   ├── dpci.c
-│   │   │   │   ├── dpcon.c
-│   │   │   │   ├── dpdmai.c
-│   │   │   │   ├── dpio.c
-│   │   │   │   ├── dpmng.c
-│   │   │   │   ├── dprc.c
-│   │   │   │   ├── fsl_dpbp_cmd.h
-│   │   │   │   ├── fsl_dpbp.h
-│   │   │   │   ├── fsl_dpci_cmd.h
-│   │   │   │   ├── fsl_dpci.h
-│   │   │   │   ├── fsl_dpcon_cmd.h
-│   │   │   │   ├── fsl_dpcon.h
-│   │   │   │   ├── fsl_dpdmai_cmd.h
-│   │   │   │   ├── fsl_dpdmai.h
-│   │   │   │   ├── fsl_dpio_cmd.h
-│   │   │   │   ├── fsl_dpio.h
-│   │   │   │   ├── fsl_dpmng_cmd.h
-│   │   │   │   ├── fsl_dpmng.h
-│   │   │   │   ├── fsl_dpopr.h
-│   │   │   │   ├── fsl_dprc_cmd.h
-│   │   │   │   ├── fsl_dprc.h
-│   │   │   │   ├── fsl_mc_cmd.h
-│   │   │   │   ├── fsl_mc_sys.h
-│   │   │   │   └── mc_sys.c
-│   │   │   ├── meson.build
-│   │   │   ├── portal
-│   │   │   │   ├── dpaa2_hw_dpbp.c
-│   │   │   │   ├── dpaa2_hw_dpci.c
-│   │   │   │   ├── dpaa2_hw_dpio.c
-│   │   │   │   ├── dpaa2_hw_dpio.h
-│   │   │   │   ├── dpaa2_hw_dprc.c
-│   │   │   │   └── dpaa2_hw_pvt.h
-│   │   │   ├── qbman
-│   │   │   │   ├── include
-│   │   │   │   │   ├── compat.h
-│   │   │   │   │   ├── fsl_qbman_base.h
-│   │   │   │   │   ├── fsl_qbman_debug.h
-│   │   │   │   │   └── fsl_qbman_portal.h
-│   │   │   │   ├── qbman_debug.c
-│   │   │   │   ├── qbman_portal.c
-│   │   │   │   ├── qbman_portal.h
-│   │   │   │   ├── qbman_sys_decl.h
-│   │   │   │   └── qbman_sys.h
-│   │   │   ├── rte_fslmc.h
-│   │   │   └── version.map
-│   │   ├── ifpga
-│   │   │   ├── ifpga_bus.c
-│   │   │   ├── ifpga_common.c
-│   │   │   ├── ifpga_common.h
-│   │   │   ├── ifpga_logs.h
-│   │   │   ├── meson.build
-│   │   │   ├── rte_bus_ifpga.h
-│   │   │   └── version.map
-│   │   ├── meson.build
-│   │   ├── pci
-│   │   │   ├── bsd
-│   │   │   │   └── pci.c
-│   │   │   ├── linux
-│   │   │   │   ├── pci.c
-│   │   │   │   ├── pci_init.h
-│   │   │   │   ├── pci_uio.c
-│   │   │   │   └── pci_vfio.c
-│   │   │   ├── meson.build
-│   │   │   ├── pci_common.c
-│   │   │   ├── pci_common_uio.c
-│   │   │   ├── pci_params.c
-│   │   │   ├── private.h
-│   │   │   ├── rte_bus_pci.h
-│   │   │   ├── version.map
-│   │   │   └── windows
-│   │   │       ├── pci.c
-│   │   │       ├── pci_netuio.c
-│   │   │       └── pci_netuio.h
-│   │   ├── vdev
-│   │   │   ├── meson.build
-│   │   │   ├── rte_bus_vdev.h
-│   │   │   ├── vdev.c
-│   │   │   ├── vdev_logs.h
-│   │   │   ├── vdev_params.c
-│   │   │   ├── vdev_private.h
-│   │   │   └── version.map
-│   │   └── vmbus
-│   │       ├── linux
-│   │       │   ├── vmbus_bus.c
-│   │       │   └── vmbus_uio.c
-│   │       ├── meson.build
-│   │       ├── private.h
-│   │       ├── rte_bus_vmbus.h
-│   │       ├── rte_vmbus_reg.h
-│   │       ├── version.map
-│   │       ├── vmbus_bufring.c
-│   │       ├── vmbus_channel.c
-│   │       ├── vmbus_common.c
-│   │       └── vmbus_common_uio.c
-│   ├── common
-│   │   ├── cnxk
-│   │   │   ├── cnxk_security_ar.h
-│   │   │   ├── cnxk_security.c
-│   │   │   ├── cnxk_security.h
-│   │   │   ├── cnxk_telemetry_bphy.c
-│   │   │   ├── cnxk_telemetry.h
-│   │   │   ├── cnxk_telemetry_nix.c
-│   │   │   ├── cnxk_telemetry_npa.c
-│   │   │   ├── cnxk_telemetry_sso.c
-│   │   │   ├── cnxk_utils.c
-│   │   │   ├── cnxk_utils.h
-│   │   │   ├── hw
-│   │   │   │   ├── cpt.h
-│   │   │   │   ├── dpi.h
-│   │   │   │   ├── nix.h
-│   │   │   │   ├── npa.h
-│   │   │   │   ├── npc.h
-│   │   │   │   ├── ree.h
-│   │   │   │   ├── rvu.h
-│   │   │   │   ├── sdp.h
-│   │   │   │   ├── sso.h
-│   │   │   │   ├── ssow.h
-│   │   │   │   └── tim.h
-│   │   │   ├── meson.build
-│   │   │   ├── roc_ae.c
-│   │   │   ├── roc_ae_fpm_tables.c
-│   │   │   ├── roc_ae_fpm_tables.h
-│   │   │   ├── roc_ae.h
-│   │   │   ├── roc_aes.c
-│   │   │   ├── roc_aes.h
-│   │   │   ├── roc_api.h
-│   │   │   ├── roc_bitfield.h
-│   │   │   ├── roc_bits.h
-│   │   │   ├── roc_bphy.c
-│   │   │   ├── roc_bphy_cgx.c
-│   │   │   ├── roc_bphy_cgx.h
-│   │   │   ├── roc_bphy_cgx_priv.h
-│   │   │   ├── roc_bphy.h
-│   │   │   ├── roc_bphy_irq.c
-│   │   │   ├── roc_bphy_irq.h
-│   │   │   ├── roc_constants.h
-│   │   │   ├── roc_cpt.c
-│   │   │   ├── roc_cpt_debug.c
-│   │   │   ├── roc_cpt.h
-│   │   │   ├── roc_cpt_priv.h
-│   │   │   ├── roc_dev.c
-│   │   │   ├── roc_dev_priv.h
-│   │   │   ├── roc_dpi.c
-│   │   │   ├── roc_dpi.h
-│   │   │   ├── roc_dpi_priv.h
-│   │   │   ├── roc_hash.c
-│   │   │   ├── roc_hash.h
-│   │   │   ├── roc_idev.c
-│   │   │   ├── roc_idev.h
-│   │   │   ├── roc_idev_priv.h
-│   │   │   ├── roc_ie.h
-│   │   │   ├── roc_ie_on.h
-│   │   │   ├── roc_ie_ot.c
-│   │   │   ├── roc_ie_ot.h
-│   │   │   ├── roc_io_generic.h
-│   │   │   ├── roc_io.h
-│   │   │   ├── roc_irq.c
-│   │   │   ├── roc_mbox.c
-│   │   │   ├── roc_mbox.h
-│   │   │   ├── roc_mbox_priv.h
-│   │   │   ├── roc_model.c
-│   │   │   ├── roc_model.h
-│   │   │   ├── roc_nix_bpf.c
-│   │   │   ├── roc_nix.c
-│   │   │   ├── roc_nix_debug.c
-│   │   │   ├── roc_nix_fc.c
-│   │   │   ├── roc_nix.h
-│   │   │   ├── roc_nix_inl.c
-│   │   │   ├── roc_nix_inl_dev.c
-│   │   │   ├── roc_nix_inl_dev_irq.c
-│   │   │   ├── roc_nix_inl.h
-│   │   │   ├── roc_nix_inl_priv.h
-│   │   │   ├── roc_nix_irq.c
-│   │   │   ├── roc_nix_mac.c
-│   │   │   ├── roc_nix_mcast.c
-│   │   │   ├── roc_nix_npc.c
-│   │   │   ├── roc_nix_ops.c
-│   │   │   ├── roc_nix_priv.h
-│   │   │   ├── roc_nix_ptp.c
-│   │   │   ├── roc_nix_queue.c
-│   │   │   ├── roc_nix_rss.c
-│   │   │   ├── roc_nix_stats.c
-│   │   │   ├── roc_nix_tm.c
-│   │   │   ├── roc_nix_tm_mark.c
-│   │   │   ├── roc_nix_tm_ops.c
-│   │   │   ├── roc_nix_tm_utils.c
-│   │   │   ├── roc_nix_vlan.c
-│   │   │   ├── roc_nix_xstats.h
-│   │   │   ├── roc_npa.c
-│   │   │   ├── roc_npa_debug.c
-│   │   │   ├── roc_npa.h
-│   │   │   ├── roc_npa_irq.c
-│   │   │   ├── roc_npa_priv.h
-│   │   │   ├── roc_npc.c
-│   │   │   ├── roc_npc.h
-│   │   │   ├── roc_npc_mcam.c
-│   │   │   ├── roc_npc_mcam_dump.c
-│   │   │   ├── roc_npc_parse.c
-│   │   │   ├── roc_npc_priv.h
-│   │   │   ├── roc_npc_utils.c
-│   │   │   ├── roc_platform.c
-│   │   │   ├── roc_platform.h
-│   │   │   ├── roc_priv.h
-│   │   │   ├── roc_ree.c
-│   │   │   ├── roc_ree.h
-│   │   │   ├── roc_ree_priv.h
-│   │   │   ├── roc_se.c
-│   │   │   ├── roc_se.h
-│   │   │   ├── roc_sso.c
-│   │   │   ├── roc_sso_debug.c
-│   │   │   ├── roc_sso.h
-│   │   │   ├── roc_sso_irq.c
-│   │   │   ├── roc_sso_priv.h
-│   │   │   ├── roc_tim.c
-│   │   │   ├── roc_tim.h
-│   │   │   ├── roc_tim_irq.c
-│   │   │   ├── roc_tim_priv.h
-│   │   │   ├── roc_util_priv.h
-│   │   │   ├── roc_utils.c
-│   │   │   ├── roc_utils.h
-│   │   │   └── version.map
-│   │   ├── cpt
-│   │   │   ├── cpt_common.h
-│   │   │   ├── cpt_fpm_tables.c
-│   │   │   ├── cpt_hw_types.h
-│   │   │   ├── cpt_mcode_defines.h
-│   │   │   ├── cpt_pmd_logs.h
-│   │   │   ├── cpt_pmd_ops_helper.c
-│   │   │   ├── cpt_pmd_ops_helper.h
-│   │   │   ├── cpt_ucode_asym.h
-│   │   │   ├── cpt_ucode.h
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── dpaax
-│   │   │   ├── caamflib
-│   │   │   │   ├── compat.h
-│   │   │   │   ├── desc
-│   │   │   │   │   ├── algo.h
-│   │   │   │   │   ├── common.h
-│   │   │   │   │   ├── ipsec.h
-│   │   │   │   │   ├── pdcp.h
-│   │   │   │   │   └── sdap.h
-│   │   │   │   ├── desc.h
-│   │   │   │   ├── rta
-│   │   │   │   │   ├── fifo_load_store_cmd.h
-│   │   │   │   │   ├── header_cmd.h
-│   │   │   │   │   ├── jump_cmd.h
-│   │   │   │   │   ├── key_cmd.h
-│   │   │   │   │   ├── load_cmd.h
-│   │   │   │   │   ├── math_cmd.h
-│   │   │   │   │   ├── move_cmd.h
-│   │   │   │   │   ├── nfifo_cmd.h
-│   │   │   │   │   ├── operation_cmd.h
-│   │   │   │   │   ├── protocol_cmd.h
-│   │   │   │   │   ├── sec_run_time_asm.h
-│   │   │   │   │   ├── seq_in_out_ptr_cmd.h
-│   │   │   │   │   ├── signature_cmd.h
-│   │   │   │   │   └── store_cmd.h
-│   │   │   │   └── rta.h
-│   │   │   ├── caamflib.c
-│   │   │   ├── compat.h
-│   │   │   ├── dpaa_list.h
-│   │   │   ├── dpaa_of.c
-│   │   │   ├── dpaa_of.h
-│   │   │   ├── dpaax_iova_table.c
-│   │   │   ├── dpaax_iova_table.h
-│   │   │   ├── dpaax_logs.h
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── iavf
-│   │   │   ├── iavf_adminq.c
-│   │   │   ├── iavf_adminq_cmd.h
-│   │   │   ├── iavf_adminq.h
-│   │   │   ├── iavf_alloc.h
-│   │   │   ├── iavf_common.c
-│   │   │   ├── iavf_devids.h
-│   │   │   ├── iavf_impl.c
-│   │   │   ├── iavf_osdep.h
-│   │   │   ├── iavf_prototype.h
-│   │   │   ├── iavf_register.h
-│   │   │   ├── iavf_status.h
-│   │   │   ├── iavf_type.h
-│   │   │   ├── meson.build
-│   │   │   ├── README
-│   │   │   ├── version.map
-│   │   │   ├── virtchnl.h
-│   │   │   └── virtchnl_inline_ipsec.h
-│   │   ├── meson.build
-│   │   ├── mlx5
-│   │   │   ├── linux
-│   │   │   │   ├── meson.build
-│   │   │   │   ├── mlx5_common_auxiliary.c
-│   │   │   │   ├── mlx5_common_os.c
-│   │   │   │   ├── mlx5_common_os.h
-│   │   │   │   ├── mlx5_common_verbs.c
-│   │   │   │   ├── mlx5_glue.c
-│   │   │   │   ├── mlx5_glue.h
-│   │   │   │   ├── mlx5_nl.c
-│   │   │   │   └── mlx5_nl.h
-│   │   │   ├── meson.build
-│   │   │   ├── mlx5_common.c
-│   │   │   ├── mlx5_common_defs.h
-│   │   │   ├── mlx5_common_devx.c
-│   │   │   ├── mlx5_common_devx.h
-│   │   │   ├── mlx5_common.h
-│   │   │   ├── mlx5_common_log.h
-│   │   │   ├── mlx5_common_mp.c
-│   │   │   ├── mlx5_common_mp.h
-│   │   │   ├── mlx5_common_mr.c
-│   │   │   ├── mlx5_common_mr.h
-│   │   │   ├── mlx5_common_pci.c
-│   │   │   ├── mlx5_common_private.h
-│   │   │   ├── mlx5_common_utils.c
-│   │   │   ├── mlx5_common_utils.h
-│   │   │   ├── mlx5_devx_cmds.c
-│   │   │   ├── mlx5_devx_cmds.h
-│   │   │   ├── mlx5_malloc.c
-│   │   │   ├── mlx5_malloc.h
-│   │   │   ├── mlx5_prm.h
-│   │   │   ├── version.map
-│   │   │   └── windows
-│   │   │       ├── meson.build
-│   │   │       ├── mlx5_common_os.c
-│   │   │       ├── mlx5_common_os.h
-│   │   │       ├── mlx5_glue.c
-│   │   │       ├── mlx5_glue.h
-│   │   │       ├── mlx5_win_defs.h
-│   │   │       └── mlx5_win_ext.h
-│   │   ├── mvep
-│   │   │   ├── meson.build
-│   │   │   ├── mvep_common.c
-│   │   │   ├── rte_mvep_common.h
-│   │   │   └── version.map
-│   │   ├── octeontx
-│   │   │   ├── meson.build
-│   │   │   ├── octeontx_mbox.c
-│   │   │   ├── octeontx_mbox.h
-│   │   │   └── version.map
-│   │   ├── qat
-│   │   │   ├── dev
-│   │   │   │   ├── qat_dev_gen1.c
-│   │   │   │   ├── qat_dev_gen2.c
-│   │   │   │   ├── qat_dev_gen3.c
-│   │   │   │   ├── qat_dev_gen4.c
-│   │   │   │   └── qat_dev_gens.h
-│   │   │   ├── meson.build
-│   │   │   ├── qat_adf
-│   │   │   │   ├── adf_pf2vf_msg.h
-│   │   │   │   ├── adf_transport_access_macros_gen4.h
-│   │   │   │   ├── adf_transport_access_macros_gen4vf.h
-│   │   │   │   ├── adf_transport_access_macros.h
-│   │   │   │   ├── icp_qat_fw_comp.h
-│   │   │   │   ├── icp_qat_fw.h
-│   │   │   │   ├── icp_qat_fw_la.h
-│   │   │   │   ├── icp_qat_fw_mmp_ids.h
-│   │   │   │   ├── icp_qat_fw_pke.h
-│   │   │   │   ├── icp_qat_hw_gen4_comp_defs.h
-│   │   │   │   ├── icp_qat_hw_gen4_comp.h
-│   │   │   │   ├── icp_qat_hw.h
-│   │   │   │   └── qat_pke.h
-│   │   │   ├── qat_common.c
-│   │   │   ├── qat_common.h
-│   │   │   ├── qat_device.c
-│   │   │   ├── qat_device.h
-│   │   │   ├── qat_logs.c
-│   │   │   ├── qat_logs.h
-│   │   │   ├── qat_pf2vf.c
-│   │   │   ├── qat_pf2vf.h
-│   │   │   ├── qat_qp.c
-│   │   │   ├── qat_qp.h
-│   │   │   └── version.map
-│   │   └── sfc_efx
-│   │       ├── base
-│   │       │   ├── ef10_evb.c
-│   │       │   ├── ef10_ev.c
-│   │       │   ├── ef10_filter.c
-│   │       │   ├── ef10_firmware_ids.h
-│   │       │   ├── ef10_image.c
-│   │       │   ├── ef10_impl.h
-│   │       │   ├── ef10_intr.c
-│   │       │   ├── ef10_mac.c
-│   │       │   ├── ef10_mcdi.c
-│   │       │   ├── ef10_nic.c
-│   │       │   ├── ef10_nvram.c
-│   │       │   ├── ef10_phy.c
-│   │       │   ├── ef10_proxy.c
-│   │       │   ├── ef10_rx.c
-│   │       │   ├── ef10_signed_image_layout.h
-│   │       │   ├── ef10_tlv_layout.h
-│   │       │   ├── ef10_tx.c
-│   │       │   ├── ef10_vpd.c
-│   │       │   ├── efx_annote.h
-│   │       │   ├── efx_bootcfg.c
-│   │       │   ├── efx_check.h
-│   │       │   ├── efx_crc32.c
-│   │       │   ├── efx_evb.c
-│   │       │   ├── efx_ev.c
-│   │       │   ├── efx_filter.c
-│   │       │   ├── efx.h
-│   │       │   ├── efx_hash.c
-│   │       │   ├── efx_impl.h
-│   │       │   ├── efx_intr.c
-│   │       │   ├── efx_lic.c
-│   │       │   ├── efx_mac.c
-│   │       │   ├── efx_mae.c
-│   │       │   ├── efx_mcdi.c
-│   │       │   ├── efx_mcdi.h
-│   │       │   ├── efx_mon.c
-│   │       │   ├── efx_nic.c
-│   │       │   ├── efx_nvram.c
-│   │       │   ├── efx_pci.c
-│   │       │   ├── efx_phy.c
-│   │       │   ├── efx_phy_ids.h
-│   │       │   ├── efx_port.c
-│   │       │   ├── efx_proxy.c
-│   │       │   ├── efx_regs_counters_pkt_format.h
-│   │       │   ├── efx_regs_ef100.h
-│   │       │   ├── efx_regs_ef10.h
-│   │       │   ├── efx_regs.h
-│   │       │   ├── efx_regs_mcdi_aoe.h
-│   │       │   ├── efx_regs_mcdi.h
-│   │       │   ├── efx_regs_mcdi_strs.h
-│   │       │   ├── efx_regs_pci.h
-│   │       │   ├── efx_rx.c
-│   │       │   ├── efx_sram.c
-│   │       │   ├── efx_tunnel.c
-│   │       │   ├── efx_tx.c
-│   │       │   ├── efx_types.h
-│   │       │   ├── efx_virtio.c
-│   │       │   ├── efx_vpd.c
-│   │       │   ├── hunt_impl.h
-│   │       │   ├── hunt_nic.c
-│   │       │   ├── mcdi_mon.c
-│   │       │   ├── mcdi_mon.h
-│   │       │   ├── medford2_impl.h
-│   │       │   ├── medford2_nic.c
-│   │       │   ├── medford_impl.h
-│   │       │   ├── medford_nic.c
-│   │       │   ├── meson.build
-│   │       │   ├── README
-│   │       │   ├── rhead_ev.c
-│   │       │   ├── rhead_impl.h
-│   │       │   ├── rhead_intr.c
-│   │       │   ├── rhead_nic.c
-│   │       │   ├── rhead_pci.c
-│   │       │   ├── rhead_rx.c
-│   │       │   ├── rhead_tunnel.c
-│   │       │   ├── rhead_tx.c
-│   │       │   ├── rhead_virtio.c
-│   │       │   ├── siena_flash.h
-│   │       │   ├── siena_impl.h
-│   │       │   ├── siena_mac.c
-│   │       │   ├── siena_mcdi.c
-│   │       │   ├── siena_nic.c
-│   │       │   ├── siena_nvram.c
-│   │       │   ├── siena_phy.c
-│   │       │   ├── siena_sram.c
-│   │       │   └── siena_vpd.c
-│   │       ├── efsys.h
-│   │       ├── meson.build
-│   │       ├── sfc_efx.c
-│   │       ├── sfc_efx_debug.h
-│   │       ├── sfc_efx.h
-│   │       ├── sfc_efx_log.h
-│   │       ├── sfc_efx_mcdi.c
-│   │       ├── sfc_efx_mcdi.h
-│   │       └── version.map
-│   ├── compress
-│   │   ├── isal
-│   │   │   ├── isal_compress_pmd.c
-│   │   │   ├── isal_compress_pmd_ops.c
-│   │   │   ├── isal_compress_pmd_private.h
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── meson.build
-│   │   ├── mlx5
-│   │   │   ├── meson.build
-│   │   │   ├── mlx5_compress.c
-│   │   │   ├── mlx5_compress_utils.h
-│   │   │   └── version.map
-│   │   ├── octeontx
-│   │   │   ├── include
-│   │   │   │   └── zip_regs.h
-│   │   │   ├── meson.build
-│   │   │   ├── otx_zip.c
-│   │   │   ├── otx_zip.h
-│   │   │   ├── otx_zip_pmd.c
-│   │   │   └── version.map
-│   │   ├── qat
-│   │   │   ├── dev
-│   │   │   │   ├── qat_comp_pmd_gen1.c
-│   │   │   │   ├── qat_comp_pmd_gen2.c
-│   │   │   │   ├── qat_comp_pmd_gen3.c
-│   │   │   │   ├── qat_comp_pmd_gen4.c
-│   │   │   │   └── qat_comp_pmd_gens.h
-│   │   │   ├── qat_comp.c
-│   │   │   ├── qat_comp.h
-│   │   │   ├── qat_comp_pmd.c
-│   │   │   └── qat_comp_pmd.h
-│   │   └── zlib
-│   │       ├── meson.build
-│   │       ├── version.map
-│   │       ├── zlib_pmd.c
-│   │       ├── zlib_pmd_ops.c
-│   │       └── zlib_pmd_private.h
-│   ├── crypto
-│   │   ├── armv8
-│   │   │   ├── armv8_pmd_private.h
-│   │   │   ├── meson.build
-│   │   │   ├── rte_armv8_pmd.c
-│   │   │   ├── rte_armv8_pmd_ops.c
-│   │   │   └── version.map
-│   │   ├── bcmfs
-│   │   │   ├── bcmfs_device.c
-│   │   │   ├── bcmfs_device.h
-│   │   │   ├── bcmfs_dev_msg.h
-│   │   │   ├── bcmfs_hw_defs.h
-│   │   │   ├── bcmfs_logs.c
-│   │   │   ├── bcmfs_logs.h
-│   │   │   ├── bcmfs_qp.c
-│   │   │   ├── bcmfs_qp.h
-│   │   │   ├── bcmfs_sym.c
-│   │   │   ├── bcmfs_sym_capabilities.c
-│   │   │   ├── bcmfs_sym_capabilities.h
-│   │   │   ├── bcmfs_sym_defs.h
-│   │   │   ├── bcmfs_sym_engine.c
-│   │   │   ├── bcmfs_sym_engine.h
-│   │   │   ├── bcmfs_sym_pmd.c
-│   │   │   ├── bcmfs_sym_pmd.h
-│   │   │   ├── bcmfs_sym_req.h
-│   │   │   ├── bcmfs_sym_session.c
-│   │   │   ├── bcmfs_sym_session.h
-│   │   │   ├── bcmfs_vfio.c
-│   │   │   ├── bcmfs_vfio.h
-│   │   │   ├── hw
-│   │   │   │   ├── bcmfs4_rm.c
-│   │   │   │   ├── bcmfs5_rm.c
-│   │   │   │   ├── bcmfs_rm_common.c
-│   │   │   │   └── bcmfs_rm_common.h
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── caam_jr
-│   │   │   ├── caam_jr.c
-│   │   │   ├── caam_jr_capabilities.c
-│   │   │   ├── caam_jr_capabilities.h
-│   │   │   ├── caam_jr_config.h
-│   │   │   ├── caam_jr_desc.h
-│   │   │   ├── caam_jr_hw.c
-│   │   │   ├── caam_jr_hw_specific.h
-│   │   │   ├── caam_jr_log.h
-│   │   │   ├── caam_jr_pvt.h
-│   │   │   ├── caam_jr_uio.c
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── ccp
-│   │   │   ├── ccp_crypto.c
-│   │   │   ├── ccp_crypto.h
-│   │   │   ├── ccp_dev.c
-│   │   │   ├── ccp_dev.h
-│   │   │   ├── ccp_pci.c
-│   │   │   ├── ccp_pci.h
-│   │   │   ├── ccp_pmd_ops.c
-│   │   │   ├── ccp_pmd_private.h
-│   │   │   ├── meson.build
-│   │   │   ├── rte_ccp_pmd.c
-│   │   │   └── version.map
-│   │   ├── cnxk
-│   │   │   ├── cn10k_cryptodev.c
-│   │   │   ├── cn10k_cryptodev.h
-│   │   │   ├── cn10k_cryptodev_ops.c
-│   │   │   ├── cn10k_cryptodev_ops.h
-│   │   │   ├── cn10k_ipsec.c
-│   │   │   ├── cn10k_ipsec.h
-│   │   │   ├── cn10k_ipsec_la_ops.h
-│   │   │   ├── cn9k_cryptodev.c
-│   │   │   ├── cn9k_cryptodev.h
-│   │   │   ├── cn9k_cryptodev_ops.c
-│   │   │   ├── cn9k_cryptodev_ops.h
-│   │   │   ├── cn9k_ipsec.c
-│   │   │   ├── cn9k_ipsec.h
-│   │   │   ├── cn9k_ipsec_la_ops.h
-│   │   │   ├── cnxk_ae.h
-│   │   │   ├── cnxk_cryptodev.c
-│   │   │   ├── cnxk_cryptodev_capabilities.c
-│   │   │   ├── cnxk_cryptodev_capabilities.h
-│   │   │   ├── cnxk_cryptodev_devargs.c
-│   │   │   ├── cnxk_cryptodev.h
-│   │   │   ├── cnxk_cryptodev_ops.c
-│   │   │   ├── cnxk_cryptodev_ops.h
-│   │   │   ├── cnxk_cryptodev_sec.c
-│   │   │   ├── cnxk_cryptodev_sec.h
-│   │   │   ├── cnxk_ipsec.h
-│   │   │   ├── cnxk_se.h
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── dpaa2_sec
-│   │   │   ├── dpaa2_sec_dpseci.c
-│   │   │   ├── dpaa2_sec_event.h
-│   │   │   ├── dpaa2_sec_logs.h
-│   │   │   ├── dpaa2_sec_priv.h
-│   │   │   ├── dpaa2_sec_raw_dp.c
-│   │   │   ├── mc
-│   │   │   │   ├── dpseci.c
-│   │   │   │   ├── fsl_dpseci_cmd.h
-│   │   │   │   └── fsl_dpseci.h
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── dpaa_sec
-│   │   │   ├── dpaa_sec.c
-│   │   │   ├── dpaa_sec_event.h
-│   │   │   ├── dpaa_sec.h
-│   │   │   ├── dpaa_sec_log.h
-│   │   │   ├── dpaa_sec_raw_dp.c
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── ipsec_mb
-│   │   │   ├── ipsec_mb_ops.c
-│   │   │   ├── ipsec_mb_private.c
-│   │   │   ├── ipsec_mb_private.h
-│   │   │   ├── meson.build
-│   │   │   ├── pmd_aesni_gcm.c
-│   │   │   ├── pmd_aesni_gcm_priv.h
-│   │   │   ├── pmd_aesni_mb.c
-│   │   │   ├── pmd_aesni_mb_priv.h
-│   │   │   ├── pmd_chacha_poly.c
-│   │   │   ├── pmd_chacha_poly_priv.h
-│   │   │   ├── pmd_kasumi.c
-│   │   │   ├── pmd_kasumi_priv.h
-│   │   │   ├── pmd_snow3g.c
-│   │   │   ├── pmd_snow3g_priv.h
-│   │   │   ├── pmd_zuc.c
-│   │   │   ├── pmd_zuc_priv.h
-│   │   │   └── version.map
-│   │   ├── meson.build
-│   │   ├── mlx5
-│   │   │   ├── meson.build
-│   │   │   ├── mlx5_crypto.c
-│   │   │   ├── mlx5_crypto_dek.c
-│   │   │   ├── mlx5_crypto.h
-│   │   │   ├── mlx5_crypto_utils.h
-│   │   │   └── version.map
-│   │   ├── mvsam
-│   │   │   ├── meson.build
-│   │   │   ├── mrvl_pmd_private.h
-│   │   │   ├── rte_mrvl_compat.h
-│   │   │   ├── rte_mrvl_pmd.c
-│   │   │   ├── rte_mrvl_pmd_ops.c
-│   │   │   └── version.map
-│   │   ├── nitrox
-│   │   │   ├── meson.build
-│   │   │   ├── nitrox_csr.h
-│   │   │   ├── nitrox_device.c
-│   │   │   ├── nitrox_device.h
-│   │   │   ├── nitrox_hal.c
-│   │   │   ├── nitrox_hal.h
-│   │   │   ├── nitrox_logs.c
-│   │   │   ├── nitrox_logs.h
-│   │   │   ├── nitrox_qp.c
-│   │   │   ├── nitrox_qp.h
-│   │   │   ├── nitrox_sym.c
-│   │   │   ├── nitrox_sym_capabilities.c
-│   │   │   ├── nitrox_sym_capabilities.h
-│   │   │   ├── nitrox_sym_ctx.h
-│   │   │   ├── nitrox_sym.h
-│   │   │   ├── nitrox_sym_reqmgr.c
-│   │   │   ├── nitrox_sym_reqmgr.h
-│   │   │   └── version.map
-│   │   ├── null
-│   │   │   ├── meson.build
-│   │   │   ├── null_crypto_pmd.c
-│   │   │   ├── null_crypto_pmd_ops.c
-│   │   │   ├── null_crypto_pmd_private.h
-│   │   │   └── version.map
-│   │   ├── octeontx
-│   │   │   ├── meson.build
-│   │   │   ├── otx_cryptodev.c
-│   │   │   ├── otx_cryptodev_capabilities.c
-│   │   │   ├── otx_cryptodev_capabilities.h
-│   │   │   ├── otx_cryptodev.h
-│   │   │   ├── otx_cryptodev_hw_access.c
-│   │   │   ├── otx_cryptodev_hw_access.h
-│   │   │   ├── otx_cryptodev_mbox.c
-│   │   │   ├── otx_cryptodev_mbox.h
-│   │   │   ├── otx_cryptodev_ops.c
-│   │   │   ├── otx_cryptodev_ops.h
-│   │   │   └── version.map
-│   │   ├── openssl
-│   │   │   ├── compat.h
-│   │   │   ├── meson.build
-│   │   │   ├── openssl_pmd_private.h
-│   │   │   ├── rte_openssl_pmd.c
-│   │   │   ├── rte_openssl_pmd_ops.c
-│   │   │   └── version.map
-│   │   ├── qat
-│   │   │   ├── dev
-│   │   │   │   ├── qat_asym_pmd_gen1.c
-│   │   │   │   ├── qat_crypto_pmd_gen2.c
-│   │   │   │   ├── qat_crypto_pmd_gen3.c
-│   │   │   │   ├── qat_crypto_pmd_gen4.c
-│   │   │   │   ├── qat_crypto_pmd_gens.h
-│   │   │   │   └── qat_sym_pmd_gen1.c
-│   │   │   ├── qat_asym.c
-│   │   │   ├── qat_asym.h
-│   │   │   ├── qat_crypto.c
-│   │   │   ├── qat_crypto.h
-│   │   │   ├── qat_ec.h
-│   │   │   ├── qat_sym.c
-│   │   │   ├── qat_sym.h
-│   │   │   ├── qat_sym_session.c
-│   │   │   └── qat_sym_session.h
-│   │   ├── scheduler
-│   │   │   ├── meson.build
-│   │   │   ├── rte_cryptodev_scheduler.c
-│   │   │   ├── rte_cryptodev_scheduler.h
-│   │   │   ├── rte_cryptodev_scheduler_operations.h
-│   │   │   ├── scheduler_failover.c
-│   │   │   ├── scheduler_multicore.c
-│   │   │   ├── scheduler_pkt_size_distr.c
-│   │   │   ├── scheduler_pmd.c
-│   │   │   ├── scheduler_pmd_ops.c
-│   │   │   ├── scheduler_pmd_private.h
-│   │   │   ├── scheduler_roundrobin.c
-│   │   │   └── version.map
-│   │   └── virtio
-│   │       ├── meson.build
-│   │       ├── version.map
-│   │       ├── virtio_crypto_algs.h
-│   │       ├── virtio_crypto_capabilities.h
-│   │       ├── virtio_cryptodev.c
-│   │       ├── virtio_cryptodev.h
-│   │       ├── virtio_logs.h
-│   │       ├── virtio_pci.c
-│   │       ├── virtio_pci.h
-│   │       ├── virtio_ring.h
-│   │       ├── virtio_rxtx.c
-│   │       ├── virtqueue.c
-│   │       └── virtqueue.h
-│   ├── dma
-│   │   ├── cnxk
-│   │   │   ├── cnxk_dmadev.c
-│   │   │   ├── cnxk_dmadev.h
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── dpaa
-│   │   │   ├── dpaa_qdma.c
-│   │   │   ├── dpaa_qdma.h
-│   │   │   ├── dpaa_qdma_logs.h
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── hisilicon
-│   │   │   ├── hisi_dmadev.c
-│   │   │   ├── hisi_dmadev.h
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── idxd
-│   │   │   ├── dpdk_idxd_cfg.py
-│   │   │   ├── idxd_bus.c
-│   │   │   ├── idxd_common.c
-│   │   │   ├── idxd_hw_defs.h
-│   │   │   ├── idxd_internal.h
-│   │   │   ├── idxd_pci.c
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── ioat
-│   │   │   ├── ioat_dmadev.c
-│   │   │   ├── ioat_hw_defs.h
-│   │   │   ├── ioat_internal.h
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── meson.build
-│   │   └── skeleton
-│   │       ├── meson.build
-│   │       ├── skeleton_dmadev.c
-│   │       ├── skeleton_dmadev.h
-│   │       └── version.map
-│   ├── event
-│   │   ├── cnxk
-│   │   │   ├── cn10k_eventdev.c
-│   │   │   ├── cn10k_worker.c
-│   │   │   ├── cn10k_worker.h
-│   │   │   ├── cn9k_eventdev.c
-│   │   │   ├── cn9k_worker.c
-│   │   │   ├── cn9k_worker.h
-│   │   │   ├── cnxk_eventdev_adptr.c
-│   │   │   ├── cnxk_eventdev.c
-│   │   │   ├── cnxk_eventdev.h
-│   │   │   ├── cnxk_eventdev_selftest.c
-│   │   │   ├── cnxk_eventdev_stats.c
-│   │   │   ├── cnxk_tim_evdev.c
-│   │   │   ├── cnxk_tim_evdev.h
-│   │   │   ├── cnxk_tim_worker.c
-│   │   │   ├── cnxk_tim_worker.h
-│   │   │   ├── cnxk_worker.h
-│   │   │   ├── deq
-│   │   │   │   ├── cn10k
-│   │   │   │   │   ├── deq_0_15_burst.c
-│   │   │   │   │   ├── deq_0_15.c
-│   │   │   │   │   ├── deq_0_15_ca_burst.c
-│   │   │   │   │   ├── deq_0_15_ca.c
-│   │   │   │   │   ├── deq_0_15_ca_seg_burst.c
-│   │   │   │   │   ├── deq_0_15_ca_seg.c
-│   │   │   │   │   ├── deq_0_15_ca_tmo_burst.c
-│   │   │   │   │   ├── deq_0_15_ca_tmo.c
-│   │   │   │   │   ├── deq_0_15_ca_tmo_seg_burst.c
-│   │   │   │   │   ├── deq_0_15_ca_tmo_seg.c
-│   │   │   │   │   ├── deq_0_15_dual.c
-│   │   │   │   │   ├── deq_0_15_seg_burst.c
-│   │   │   │   │   ├── deq_0_15_seg.c
-│   │   │   │   │   ├── deq_0_15_tmo_burst.c
-│   │   │   │   │   ├── deq_0_15_tmo.c
-│   │   │   │   │   ├── deq_0_15_tmo_seg_burst.c
-│   │   │   │   │   ├── deq_0_15_tmo_seg.c
-│   │   │   │   │   ├── deq_112_127_burst.c
-│   │   │   │   │   ├── deq_112_127.c
-│   │   │   │   │   ├── deq_112_127_ca_burst.c
-│   │   │   │   │   ├── deq_112_127_ca.c
-│   │   │   │   │   ├── deq_112_127_ca_seg_burst.c
-│   │   │   │   │   ├── deq_112_127_ca_seg.c
-│   │   │   │   │   ├── deq_112_127_ca_tmo_burst.c
-│   │   │   │   │   ├── deq_112_127_ca_tmo.c
-│   │   │   │   │   ├── deq_112_127_ca_tmo_seg_burst.c
-│   │   │   │   │   ├── deq_112_127_ca_tmo_seg.c
-│   │   │   │   │   ├── deq_112_127_dual.c
-│   │   │   │   │   ├── deq_112_127_seg_burst.c
-│   │   │   │   │   ├── deq_112_127_seg.c
-│   │   │   │   │   ├── deq_112_127_tmo_burst.c
-│   │   │   │   │   ├── deq_112_127_tmo.c
-│   │   │   │   │   ├── deq_112_127_tmo_seg_burst.c
-│   │   │   │   │   ├── deq_112_127_tmo_seg.c
-│   │   │   │   │   ├── deq_16_31_burst.c
-│   │   │   │   │   ├── deq_16_31.c
-│   │   │   │   │   ├── deq_16_31_ca_burst.c
-│   │   │   │   │   ├── deq_16_31_ca.c
-│   │   │   │   │   ├── deq_16_31_ca_seg_burst.c
-│   │   │   │   │   ├── deq_16_31_ca_seg.c
-│   │   │   │   │   ├── deq_16_31_ca_tmo_burst.c
-│   │   │   │   │   ├── deq_16_31_ca_tmo.c
-│   │   │   │   │   ├── deq_16_31_ca_tmo_seg_burst.c
-│   │   │   │   │   ├── deq_16_31_ca_tmo_seg.c
-│   │   │   │   │   ├── deq_16_31_dual.c
-│   │   │   │   │   ├── deq_16_31_seg_burst.c
-│   │   │   │   │   ├── deq_16_31_seg.c
-│   │   │   │   │   ├── deq_16_31_tmo_burst.c
-│   │   │   │   │   ├── deq_16_31_tmo.c
-│   │   │   │   │   ├── deq_16_31_tmo_seg_burst.c
-│   │   │   │   │   ├── deq_16_31_tmo_seg.c
-│   │   │   │   │   ├── deq_32_47_burst.c
-│   │   │   │   │   ├── deq_32_47.c
-│   │   │   │   │   ├── deq_32_47_ca_burst.c
-│   │   │   │   │   ├── deq_32_47_ca.c
-│   │   │   │   │   ├── deq_32_47_ca_seg_burst.c
-│   │   │   │   │   ├── deq_32_47_ca_seg.c
-│   │   │   │   │   ├── deq_32_47_ca_tmo_burst.c
-│   │   │   │   │   ├── deq_32_47_ca_tmo.c
-│   │   │   │   │   ├── deq_32_47_ca_tmo_seg_burst.c
-│   │   │   │   │   ├── deq_32_47_ca_tmo_seg.c
-│   │   │   │   │   ├── deq_32_47_dual.c
-│   │   │   │   │   ├── deq_32_47_seg_burst.c
-│   │   │   │   │   ├── deq_32_47_seg.c
-│   │   │   │   │   ├── deq_32_47_tmo_burst.c
-│   │   │   │   │   ├── deq_32_47_tmo.c
-│   │   │   │   │   ├── deq_32_47_tmo_seg_burst.c
-│   │   │   │   │   ├── deq_32_47_tmo_seg.c
-│   │   │   │   │   ├── deq_48_63_burst.c
-│   │   │   │   │   ├── deq_48_63.c
-│   │   │   │   │   ├── deq_48_63_ca_burst.c
-│   │   │   │   │   ├── deq_48_63_ca.c
-│   │   │   │   │   ├── deq_48_63_ca_seg_burst.c
-│   │   │   │   │   ├── deq_48_63_ca_seg.c
-│   │   │   │   │   ├── deq_48_63_ca_tmo_burst.c
-│   │   │   │   │   ├── deq_48_63_ca_tmo.c
-│   │   │   │   │   ├── deq_48_63_ca_tmo_seg_burst.c
-│   │   │   │   │   ├── deq_48_63_ca_tmo_seg.c
-│   │   │   │   │   ├── deq_48_63_dual.c
-│   │   │   │   │   ├── deq_48_63_seg_burst.c
-│   │   │   │   │   ├── deq_48_63_seg.c
-│   │   │   │   │   ├── deq_48_63_tmo_burst.c
-│   │   │   │   │   ├── deq_48_63_tmo.c
-│   │   │   │   │   ├── deq_48_63_tmo_seg_burst.c
-│   │   │   │   │   ├── deq_48_63_tmo_seg.c
-│   │   │   │   │   ├── deq_64_79_burst.c
-│   │   │   │   │   ├── deq_64_79.c
-│   │   │   │   │   ├── deq_64_79_ca_burst.c
-│   │   │   │   │   ├── deq_64_79_ca.c
-│   │   │   │   │   ├── deq_64_79_ca_seg_burst.c
-│   │   │   │   │   ├── deq_64_79_ca_seg.c
-│   │   │   │   │   ├── deq_64_79_ca_tmo_burst.c
-│   │   │   │   │   ├── deq_64_79_ca_tmo.c
-│   │   │   │   │   ├── deq_64_79_ca_tmo_seg_burst.c
-│   │   │   │   │   ├── deq_64_79_ca_tmo_seg.c
-│   │   │   │   │   ├── deq_64_79_dual.c
-│   │   │   │   │   ├── deq_64_79_seg_burst.c
-│   │   │   │   │   ├── deq_64_79_seg.c
-│   │   │   │   │   ├── deq_64_79_tmo_burst.c
-│   │   │   │   │   ├── deq_64_79_tmo.c
-│   │   │   │   │   ├── deq_64_79_tmo_seg_burst.c
-│   │   │   │   │   ├── deq_64_79_tmo_seg.c
-│   │   │   │   │   ├── deq_80_95_burst.c
-│   │   │   │   │   ├── deq_80_95.c
-│   │   │   │   │   ├── deq_80_95_ca_burst.c
-│   │   │   │   │   ├── deq_80_95_ca.c
-│   │   │   │   │   ├── deq_80_95_ca_seg_burst.c
-│   │   │   │   │   ├── deq_80_95_ca_seg.c
-│   │   │   │   │   ├── deq_80_95_ca_tmo_burst.c
-│   │   │   │   │   ├── deq_80_95_ca_tmo.c
-│   │   │   │   │   ├── deq_80_95_ca_tmo_seg_burst.c
-│   │   │   │   │   ├── deq_80_95_ca_tmo_seg.c
-│   │   │   │   │   ├── deq_80_95_dual.c
-│   │   │   │   │   ├── deq_80_95_seg_burst.c
-│   │   │   │   │   ├── deq_80_95_seg.c
-│   │   │   │   │   ├── deq_80_95_tmo_burst.c
-│   │   │   │   │   ├── deq_80_95_tmo.c
-│   │   │   │   │   ├── deq_80_95_tmo_seg_burst.c
-│   │   │   │   │   ├── deq_80_95_tmo_seg.c
-│   │   │   │   │   ├── deq_96_111_burst.c
-│   │   │   │   │   ├── deq_96_111.c
-│   │   │   │   │   ├── deq_96_111_ca_burst.c
-│   │   │   │   │   ├── deq_96_111_ca.c
-│   │   │   │   │   ├── deq_96_111_ca_seg_burst.c
-│   │   │   │   │   ├── deq_96_111_ca_seg.c
-│   │   │   │   │   ├── deq_96_111_ca_tmo_burst.c
-│   │   │   │   │   ├── deq_96_111_ca_tmo.c
-│   │   │   │   │   ├── deq_96_111_ca_tmo_seg_burst.c
-│   │   │   │   │   ├── deq_96_111_ca_tmo_seg.c
-│   │   │   │   │   ├── deq_96_111_dual.c
-│   │   │   │   │   ├── deq_96_111_seg_burst.c
-│   │   │   │   │   ├── deq_96_111_seg.c
-│   │   │   │   │   ├── deq_96_111_tmo_burst.c
-│   │   │   │   │   ├── deq_96_111_tmo.c
-│   │   │   │   │   ├── deq_96_111_tmo_seg_burst.c
-│   │   │   │   │   └── deq_96_111_tmo_seg.c
-│   │   │   │   └── cn9k
-│   │   │   │       ├── deq_0_15_burst.c
-│   │   │   │       ├── deq_0_15.c
-│   │   │   │       ├── deq_0_15_ca_burst.c
-│   │   │   │       ├── deq_0_15_ca.c
-│   │   │   │       ├── deq_0_15_ca_seg_burst.c
-│   │   │   │       ├── deq_0_15_ca_seg.c
-│   │   │   │       ├── deq_0_15_ca_tmo_burst.c
-│   │   │   │       ├── deq_0_15_ca_tmo.c
-│   │   │   │       ├── deq_0_15_ca_tmo_seg_burst.c
-│   │   │   │       ├── deq_0_15_ca_tmo_seg.c
-│   │   │   │       ├── deq_0_15_dual_burst.c
-│   │   │   │       ├── deq_0_15_dual.c
-│   │   │   │       ├── deq_0_15_dual_ca_burst.c
-│   │   │   │       ├── deq_0_15_dual_ca.c
-│   │   │   │       ├── deq_0_15_dual_ca_seg_burst.c
-│   │   │   │       ├── deq_0_15_dual_ca_seg.c
-│   │   │   │       ├── deq_0_15_dual_ca_tmo_burst.c
-│   │   │   │       ├── deq_0_15_dual_ca_tmo.c
-│   │   │   │       ├── deq_0_15_dual_ca_tmo_seg_burst.c
-│   │   │   │       ├── deq_0_15_dual_ca_tmo_seg.c
-│   │   │   │       ├── deq_0_15_dual_seg_burst.c
-│   │   │   │       ├── deq_0_15_dual_seg.c
-│   │   │   │       ├── deq_0_15_dual_tmo_burst.c
-│   │   │   │       ├── deq_0_15_dual_tmo.c
-│   │   │   │       ├── deq_0_15_dual_tmo_seg_burst.c
-│   │   │   │       ├── deq_0_15_dual_tmo_seg.c
-│   │   │   │       ├── deq_0_15_seg_burst.c
-│   │   │   │       ├── deq_0_15_seg.c
-│   │   │   │       ├── deq_0_15_tmo_burst.c
-│   │   │   │       ├── deq_0_15_tmo.c
-│   │   │   │       ├── deq_0_15_tmo_seg_burst.c
-│   │   │   │       ├── deq_0_15_tmo_seg.c
-│   │   │   │       ├── deq_112_127_burst.c
-│   │   │   │       ├── deq_112_127.c
-│   │   │   │       ├── deq_112_127_ca_burst.c
-│   │   │   │       ├── deq_112_127_ca.c
-│   │   │   │       ├── deq_112_127_ca_seg_burst.c
-│   │   │   │       ├── deq_112_127_ca_seg.c
-│   │   │   │       ├── deq_112_127_ca_tmo_burst.c
-│   │   │   │       ├── deq_112_127_ca_tmo.c
-│   │   │   │       ├── deq_112_127_ca_tmo_seg_burst.c
-│   │   │   │       ├── deq_112_127_ca_tmo_seg.c
-│   │   │   │       ├── deq_112_127_dual_burst.c
-│   │   │   │       ├── deq_112_127_dual.c
-│   │   │   │       ├── deq_112_127_dual_ca_burst.c
-│   │   │   │       ├── deq_112_127_dual_ca.c
-│   │   │   │       ├── deq_112_127_dual_ca_seg_burst.c
-│   │   │   │       ├── deq_112_127_dual_ca_seg.c
-│   │   │   │       ├── deq_112_127_dual_ca_tmo_burst.c
-│   │   │   │       ├── deq_112_127_dual_ca_tmo.c
-│   │   │   │       ├── deq_112_127_dual_ca_tmo_seg_burst.c
-│   │   │   │       ├── deq_112_127_dual_ca_tmo_seg.c
-│   │   │   │       ├── deq_112_127_dual_seg_burst.c
-│   │   │   │       ├── deq_112_127_dual_seg.c
-│   │   │   │       ├── deq_112_127_dual_tmo_burst.c
-│   │   │   │       ├── deq_112_127_dual_tmo.c
-│   │   │   │       ├── deq_112_127_dual_tmo_seg_burst.c
-│   │   │   │       ├── deq_112_127_dual_tmo_seg.c
-│   │   │   │       ├── deq_112_127_seg_burst.c
-│   │   │   │       ├── deq_112_127_seg.c
-│   │   │   │       ├── deq_112_127_tmo_burst.c
-│   │   │   │       ├── deq_112_127_tmo.c
-│   │   │   │       ├── deq_112_127_tmo_seg_burst.c
-│   │   │   │       ├── deq_112_127_tmo_seg.c
-│   │   │   │       ├── deq_16_31_burst.c
-│   │   │   │       ├── deq_16_31.c
-│   │   │   │       ├── deq_16_31_ca_burst.c
-│   │   │   │       ├── deq_16_31_ca.c
-│   │   │   │       ├── deq_16_31_ca_seg_burst.c
-│   │   │   │       ├── deq_16_31_ca_seg.c
-│   │   │   │       ├── deq_16_31_ca_tmo_burst.c
-│   │   │   │       ├── deq_16_31_ca_tmo.c
-│   │   │   │       ├── deq_16_31_ca_tmo_seg_burst.c
-│   │   │   │       ├── deq_16_31_ca_tmo_seg.c
-│   │   │   │       ├── deq_16_31_dual_burst.c
-│   │   │   │       ├── deq_16_31_dual.c
-│   │   │   │       ├── deq_16_31_dual_ca_burst.c
-│   │   │   │       ├── deq_16_31_dual_ca.c
-│   │   │   │       ├── deq_16_31_dual_ca_seg_burst.c
-│   │   │   │       ├── deq_16_31_dual_ca_seg.c
-│   │   │   │       ├── deq_16_31_dual_ca_tmo_burst.c
-│   │   │   │       ├── deq_16_31_dual_ca_tmo.c
-│   │   │   │       ├── deq_16_31_dual_ca_tmo_seg_burst.c
-│   │   │   │       ├── deq_16_31_dual_ca_tmo_seg.c
-│   │   │   │       ├── deq_16_31_dual_seg_burst.c
-│   │   │   │       ├── deq_16_31_dual_seg.c
-│   │   │   │       ├── deq_16_31_dual_tmo_burst.c
-│   │   │   │       ├── deq_16_31_dual_tmo.c
-│   │   │   │       ├── deq_16_31_dual_tmo_seg_burst.c
-│   │   │   │       ├── deq_16_31_dual_tmo_seg.c
-│   │   │   │       ├── deq_16_31_seg_burst.c
-│   │   │   │       ├── deq_16_31_seg.c
-│   │   │   │       ├── deq_16_31_tmo_burst.c
-│   │   │   │       ├── deq_16_31_tmo.c
-│   │   │   │       ├── deq_16_31_tmo_seg_burst.c
-│   │   │   │       ├── deq_16_31_tmo_seg.c
-│   │   │   │       ├── deq_32_47_burst.c
-│   │   │   │       ├── deq_32_47.c
-│   │   │   │       ├── deq_32_47_ca_burst.c
-│   │   │   │       ├── deq_32_47_ca.c
-│   │   │   │       ├── deq_32_47_ca_seg_burst.c
-│   │   │   │       ├── deq_32_47_ca_seg.c
-│   │   │   │       ├── deq_32_47_ca_tmo_burst.c
-│   │   │   │       ├── deq_32_47_ca_tmo.c
-│   │   │   │       ├── deq_32_47_ca_tmo_seg_burst.c
-│   │   │   │       ├── deq_32_47_ca_tmo_seg.c
-│   │   │   │       ├── deq_32_47_dual_burst.c
-│   │   │   │       ├── deq_32_47_dual.c
-│   │   │   │       ├── deq_32_47_dual_ca_burst.c
-│   │   │   │       ├── deq_32_47_dual_ca.c
-│   │   │   │       ├── deq_32_47_dual_ca_seg_burst.c
-│   │   │   │       ├── deq_32_47_dual_ca_seg.c
-│   │   │   │       ├── deq_32_47_dual_ca_tmo_burst.c
-│   │   │   │       ├── deq_32_47_dual_ca_tmo.c
-│   │   │   │       ├── deq_32_47_dual_ca_tmo_seg_burst.c
-│   │   │   │       ├── deq_32_47_dual_ca_tmo_seg.c
-│   │   │   │       ├── deq_32_47_dual_seg_burst.c
-│   │   │   │       ├── deq_32_47_dual_seg.c
-│   │   │   │       ├── deq_32_47_dual_tmo_burst.c
-│   │   │   │       ├── deq_32_47_dual_tmo.c
-│   │   │   │       ├── deq_32_47_dual_tmo_seg_burst.c
-│   │   │   │       ├── deq_32_47_dual_tmo_seg.c
-│   │   │   │       ├── deq_32_47_seg_burst.c
-│   │   │   │       ├── deq_32_47_seg.c
-│   │   │   │       ├── deq_32_47_tmo_burst.c
-│   │   │   │       ├── deq_32_47_tmo.c
-│   │   │   │       ├── deq_32_47_tmo_seg_burst.c
-│   │   │   │       ├── deq_32_47_tmo_seg.c
-│   │   │   │       ├── deq_48_63_burst.c
-│   │   │   │       ├── deq_48_63.c
-│   │   │   │       ├── deq_48_63_ca_burst.c
-│   │   │   │       ├── deq_48_63_ca.c
-│   │   │   │       ├── deq_48_63_ca_seg_burst.c
-│   │   │   │       ├── deq_48_63_ca_seg.c
-│   │   │   │       ├── deq_48_63_ca_tmo_burst.c
-│   │   │   │       ├── deq_48_63_ca_tmo.c
-│   │   │   │       ├── deq_48_63_ca_tmo_seg_burst.c
-│   │   │   │       ├── deq_48_63_ca_tmo_seg.c
-│   │   │   │       ├── deq_48_63_dual_burst.c
-│   │   │   │       ├── deq_48_63_dual.c
-│   │   │   │       ├── deq_48_63_dual_ca_burst.c
-│   │   │   │       ├── deq_48_63_dual_ca.c
-│   │   │   │       ├── deq_48_63_dual_ca_seg_burst.c
-│   │   │   │       ├── deq_48_63_dual_ca_seg.c
-│   │   │   │       ├── deq_48_63_dual_ca_tmo_burst.c
-│   │   │   │       ├── deq_48_63_dual_ca_tmo.c
-│   │   │   │       ├── deq_48_63_dual_ca_tmo_seg_burst.c
-│   │   │   │       ├── deq_48_63_dual_ca_tmo_seg.c
-│   │   │   │       ├── deq_48_63_dual_seg_burst.c
-│   │   │   │       ├── deq_48_63_dual_seg.c
-│   │   │   │       ├── deq_48_63_dual_tmo_burst.c
-│   │   │   │       ├── deq_48_63_dual_tmo.c
-│   │   │   │       ├── deq_48_63_dual_tmo_seg_burst.c
-│   │   │   │       ├── deq_48_63_dual_tmo_seg.c
-│   │   │   │       ├── deq_48_63_seg_burst.c
-│   │   │   │       ├── deq_48_63_seg.c
-│   │   │   │       ├── deq_48_63_tmo_burst.c
-│   │   │   │       ├── deq_48_63_tmo.c
-│   │   │   │       ├── deq_48_63_tmo_seg_burst.c
-│   │   │   │       ├── deq_48_63_tmo_seg.c
-│   │   │   │       ├── deq_64_79_burst.c
-│   │   │   │       ├── deq_64_79.c
-│   │   │   │       ├── deq_64_79_ca_burst.c
-│   │   │   │       ├── deq_64_79_ca.c
-│   │   │   │       ├── deq_64_79_ca_seg_burst.c
-│   │   │   │       ├── deq_64_79_ca_seg.c
-│   │   │   │       ├── deq_64_79_ca_tmo_burst.c
-│   │   │   │       ├── deq_64_79_ca_tmo.c
-│   │   │   │       ├── deq_64_79_ca_tmo_seg_burst.c
-│   │   │   │       ├── deq_64_79_ca_tmo_seg.c
-│   │   │   │       ├── deq_64_79_dual_burst.c
-│   │   │   │       ├── deq_64_79_dual.c
-│   │   │   │       ├── deq_64_79_dual_ca_burst.c
-│   │   │   │       ├── deq_64_79_dual_ca.c
-│   │   │   │       ├── deq_64_79_dual_ca_seg_burst.c
-│   │   │   │       ├── deq_64_79_dual_ca_seg.c
-│   │   │   │       ├── deq_64_79_dual_ca_tmo_burst.c
-│   │   │   │       ├── deq_64_79_dual_ca_tmo.c
-│   │   │   │       ├── deq_64_79_dual_ca_tmo_seg_burst.c
-│   │   │   │       ├── deq_64_79_dual_ca_tmo_seg.c
-│   │   │   │       ├── deq_64_79_dual_seg_burst.c
-│   │   │   │       ├── deq_64_79_dual_seg.c
-│   │   │   │       ├── deq_64_79_dual_tmo_burst.c
-│   │   │   │       ├── deq_64_79_dual_tmo.c
-│   │   │   │       ├── deq_64_79_dual_tmo_seg_burst.c
-│   │   │   │       ├── deq_64_79_dual_tmo_seg.c
-│   │   │   │       ├── deq_64_79_seg_burst.c
-│   │   │   │       ├── deq_64_79_seg.c
-│   │   │   │       ├── deq_64_79_tmo_burst.c
-│   │   │   │       ├── deq_64_79_tmo.c
-│   │   │   │       ├── deq_64_79_tmo_seg_burst.c
-│   │   │   │       ├── deq_64_79_tmo_seg.c
-│   │   │   │       ├── deq_80_95_burst.c
-│   │   │   │       ├── deq_80_95.c
-│   │   │   │       ├── deq_80_95_ca_burst.c
-│   │   │   │       ├── deq_80_95_ca.c
-│   │   │   │       ├── deq_80_95_ca_seg_burst.c
-│   │   │   │       ├── deq_80_95_ca_seg.c
-│   │   │   │       ├── deq_80_95_ca_tmo_burst.c
-│   │   │   │       ├── deq_80_95_ca_tmo.c
-│   │   │   │       ├── deq_80_95_ca_tmo_seg_burst.c
-│   │   │   │       ├── deq_80_95_ca_tmo_seg.c
-│   │   │   │       ├── deq_80_95_dual_burst.c
-│   │   │   │       ├── deq_80_95_dual.c
-│   │   │   │       ├── deq_80_95_dual_ca_burst.c
-│   │   │   │       ├── deq_80_95_dual_ca.c
-│   │   │   │       ├── deq_80_95_dual_ca_seg_burst.c
-│   │   │   │       ├── deq_80_95_dual_ca_seg.c
-│   │   │   │       ├── deq_80_95_dual_ca_tmo_burst.c
-│   │   │   │       ├── deq_80_95_dual_ca_tmo.c
-│   │   │   │       ├── deq_80_95_dual_ca_tmo_seg_burst.c
-│   │   │   │       ├── deq_80_95_dual_ca_tmo_seg.c
-│   │   │   │       ├── deq_80_95_dual_seg_burst.c
-│   │   │   │       ├── deq_80_95_dual_seg.c
-│   │   │   │       ├── deq_80_95_dual_tmo_burst.c
-│   │   │   │       ├── deq_80_95_dual_tmo.c
-│   │   │   │       ├── deq_80_95_dual_tmo_seg_burst.c
-│   │   │   │       ├── deq_80_95_dual_tmo_seg.c
-│   │   │   │       ├── deq_80_95_seg_burst.c
-│   │   │   │       ├── deq_80_95_seg.c
-│   │   │   │       ├── deq_80_95_tmo_burst.c
-│   │   │   │       ├── deq_80_95_tmo.c
-│   │   │   │       ├── deq_80_95_tmo_seg_burst.c
-│   │   │   │       ├── deq_80_95_tmo_seg.c
-│   │   │   │       ├── deq_96_111_burst.c
-│   │   │   │       ├── deq_96_111.c
-│   │   │   │       ├── deq_96_111_ca_burst.c
-│   │   │   │       ├── deq_96_111_ca.c
-│   │   │   │       ├── deq_96_111_ca_seg_burst.c
-│   │   │   │       ├── deq_96_111_ca_seg.c
-│   │   │   │       ├── deq_96_111_ca_tmo_burst.c
-│   │   │   │       ├── deq_96_111_ca_tmo.c
-│   │   │   │       ├── deq_96_111_ca_tmo_seg_burst.c
-│   │   │   │       ├── deq_96_111_ca_tmo_seg.c
-│   │   │   │       ├── deq_96_111_dual_burst.c
-│   │   │   │       ├── deq_96_111_dual.c
-│   │   │   │       ├── deq_96_111_dual_ca_burst.c
-│   │   │   │       ├── deq_96_111_dual_ca.c
-│   │   │   │       ├── deq_96_111_dual_ca_seg_burst.c
-│   │   │   │       ├── deq_96_111_dual_ca_seg.c
-│   │   │   │       ├── deq_96_111_dual_ca_tmo_burst.c
-│   │   │   │       ├── deq_96_111_dual_ca_tmo.c
-│   │   │   │       ├── deq_96_111_dual_ca_tmo_seg_burst.c
-│   │   │   │       ├── deq_96_111_dual_ca_tmo_seg.c
-│   │   │   │       ├── deq_96_111_dual_seg_burst.c
-│   │   │   │       ├── deq_96_111_dual_seg.c
-│   │   │   │       ├── deq_96_111_dual_tmo_burst.c
-│   │   │   │       ├── deq_96_111_dual_tmo.c
-│   │   │   │       ├── deq_96_111_dual_tmo_seg_burst.c
-│   │   │   │       ├── deq_96_111_dual_tmo_seg.c
-│   │   │   │       ├── deq_96_111_seg_burst.c
-│   │   │   │       ├── deq_96_111_seg.c
-│   │   │   │       ├── deq_96_111_tmo_burst.c
-│   │   │   │       ├── deq_96_111_tmo.c
-│   │   │   │       ├── deq_96_111_tmo_seg_burst.c
-│   │   │   │       └── deq_96_111_tmo_seg.c
-│   │   │   ├── meson.build
-│   │   │   ├── tx
-│   │   │   │   ├── cn10k
-│   │   │   │   │   ├── tx_0_15.c
-│   │   │   │   │   ├── tx_0_15_seg.c
-│   │   │   │   │   ├── tx_112_127.c
-│   │   │   │   │   ├── tx_112_127_seg.c
-│   │   │   │   │   ├── tx_16_31.c
-│   │   │   │   │   ├── tx_16_31_seg.c
-│   │   │   │   │   ├── tx_32_47.c
-│   │   │   │   │   ├── tx_32_47_seg.c
-│   │   │   │   │   ├── tx_48_63.c
-│   │   │   │   │   ├── tx_48_63_seg.c
-│   │   │   │   │   ├── tx_64_79.c
-│   │   │   │   │   ├── tx_64_79_seg.c
-│   │   │   │   │   ├── tx_80_95.c
-│   │   │   │   │   ├── tx_80_95_seg.c
-│   │   │   │   │   ├── tx_96_111.c
-│   │   │   │   │   └── tx_96_111_seg.c
-│   │   │   │   └── cn9k
-│   │   │   │       ├── tx_0_15.c
-│   │   │   │       ├── tx_0_15_dual.c
-│   │   │   │       ├── tx_0_15_dual_seg.c
-│   │   │   │       ├── tx_0_15_seg.c
-│   │   │   │       ├── tx_112_127.c
-│   │   │   │       ├── tx_112_127_dual.c
-│   │   │   │       ├── tx_112_127_dual_seg.c
-│   │   │   │       ├── tx_112_127_seg.c
-│   │   │   │       ├── tx_16_31.c
-│   │   │   │       ├── tx_16_31_dual.c
-│   │   │   │       ├── tx_16_31_dual_seg.c
-│   │   │   │       ├── tx_16_31_seg.c
-│   │   │   │       ├── tx_32_47.c
-│   │   │   │       ├── tx_32_47_dual.c
-│   │   │   │       ├── tx_32_47_dual_seg.c
-│   │   │   │       ├── tx_32_47_seg.c
-│   │   │   │       ├── tx_48_63.c
-│   │   │   │       ├── tx_48_63_dual.c
-│   │   │   │       ├── tx_48_63_dual_seg.c
-│   │   │   │       ├── tx_48_63_seg.c
-│   │   │   │       ├── tx_64_79.c
-│   │   │   │       ├── tx_64_79_dual.c
-│   │   │   │       ├── tx_64_79_dual_seg.c
-│   │   │   │       ├── tx_64_79_seg.c
-│   │   │   │       ├── tx_80_95.c
-│   │   │   │       ├── tx_80_95_dual.c
-│   │   │   │       ├── tx_80_95_dual_seg.c
-│   │   │   │       ├── tx_80_95_seg.c
-│   │   │   │       ├── tx_96_111.c
-│   │   │   │       ├── tx_96_111_dual.c
-│   │   │   │       ├── tx_96_111_dual_seg.c
-│   │   │   │       └── tx_96_111_seg.c
-│   │   │   └── version.map
-│   │   ├── dlb2
-│   │   │   ├── dlb2.c
-│   │   │   ├── dlb2_iface.c
-│   │   │   ├── dlb2_iface.h
-│   │   │   ├── dlb2_inline_fns.h
-│   │   │   ├── dlb2_log.h
-│   │   │   ├── dlb2_priv.h
-│   │   │   ├── dlb2_selftest.c
-│   │   │   ├── dlb2_user.h
-│   │   │   ├── dlb2_xstats.c
-│   │   │   ├── meson.build
-│   │   │   ├── pf
-│   │   │   │   ├── base
-│   │   │   │   │   ├── dlb2_hw_types.h
-│   │   │   │   │   ├── dlb2_osdep_bitmap.h
-│   │   │   │   │   ├── dlb2_osdep.h
-│   │   │   │   │   ├── dlb2_osdep_list.h
-│   │   │   │   │   ├── dlb2_osdep_types.h
-│   │   │   │   │   ├── dlb2_regs.h
-│   │   │   │   │   ├── dlb2_resource.c
-│   │   │   │   │   └── dlb2_resource.h
-│   │   │   │   ├── dlb2_main.c
-│   │   │   │   ├── dlb2_main.h
-│   │   │   │   └── dlb2_pf.c
-│   │   │   ├── rte_pmd_dlb2.c
-│   │   │   ├── rte_pmd_dlb2.h
-│   │   │   └── version.map
-│   │   ├── dpaa
-│   │   │   ├── dpaa_eventdev.c
-│   │   │   ├── dpaa_eventdev.h
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── dpaa2
-│   │   │   ├── dpaa2_eventdev.c
-│   │   │   ├── dpaa2_eventdev.h
-│   │   │   ├── dpaa2_eventdev_logs.h
-│   │   │   ├── dpaa2_eventdev_selftest.c
-│   │   │   ├── dpaa2_hw_dpcon.c
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── dsw
-│   │   │   ├── dsw_evdev.c
-│   │   │   ├── dsw_evdev.h
-│   │   │   ├── dsw_event.c
-│   │   │   ├── dsw_sort.h
-│   │   │   ├── dsw_xstats.c
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── meson.build
-│   │   ├── octeontx
-│   │   │   ├── meson.build
-│   │   │   ├── ssovf_evdev.c
-│   │   │   ├── ssovf_evdev.h
-│   │   │   ├── ssovf_evdev_selftest.c
-│   │   │   ├── ssovf_probe.c
-│   │   │   ├── ssovf_worker.c
-│   │   │   ├── ssovf_worker.h
-│   │   │   ├── timvf_evdev.c
-│   │   │   ├── timvf_evdev.h
-│   │   │   ├── timvf_probe.c
-│   │   │   ├── timvf_worker.c
-│   │   │   ├── timvf_worker.h
-│   │   │   └── version.map
-│   │   ├── opdl
-│   │   │   ├── meson.build
-│   │   │   ├── opdl_evdev.c
-│   │   │   ├── opdl_evdev.h
-│   │   │   ├── opdl_evdev_init.c
-│   │   │   ├── opdl_evdev_xstats.c
-│   │   │   ├── opdl_log.h
-│   │   │   ├── opdl_ring.c
-│   │   │   ├── opdl_ring.h
-│   │   │   ├── opdl_test.c
-│   │   │   └── version.map
-│   │   ├── skeleton
-│   │   │   ├── meson.build
-│   │   │   ├── skeleton_eventdev.c
-│   │   │   ├── skeleton_eventdev.h
-│   │   │   └── version.map
-│   │   └── sw
-│   │       ├── event_ring.h
-│   │       ├── iq_chunk.h
-│   │       ├── meson.build
-│   │       ├── sw_evdev.c
-│   │       ├── sw_evdev.h
-│   │       ├── sw_evdev_log.h
-│   │       ├── sw_evdev_scheduler.c
-│   │       ├── sw_evdev_selftest.c
-│   │       ├── sw_evdev_worker.c
-│   │       ├── sw_evdev_xstats.c
-│   │       └── version.map
-│   ├── gpu
-│   │   ├── cuda
-│   │   │   ├── common.h
-│   │   │   ├── cuda.c
-│   │   │   ├── gdrcopy.c
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   └── meson.build
-│   ├── mempool
-│   │   ├── bucket
-│   │   │   ├── meson.build
-│   │   │   ├── rte_mempool_bucket.c
-│   │   │   └── version.map
-│   │   ├── cnxk
-│   │   │   ├── cn10k_mempool_ops.c
-│   │   │   ├── cn9k_mempool_ops.c
-│   │   │   ├── cnxk_mempool.c
-│   │   │   ├── cnxk_mempool.h
-│   │   │   ├── cnxk_mempool_ops.c
-│   │   │   ├── cnxk_mempool_telemetry.c
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── dpaa
-│   │   │   ├── dpaa_mempool.c
-│   │   │   ├── dpaa_mempool.h
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── dpaa2
-│   │   │   ├── dpaa2_hw_mempool.c
-│   │   │   ├── dpaa2_hw_mempool.h
-│   │   │   ├── dpaa2_hw_mempool_logs.h
-│   │   │   ├── meson.build
-│   │   │   ├── rte_dpaa2_mempool.h
-│   │   │   └── version.map
-│   │   ├── meson.build
-│   │   ├── octeontx
-│   │   │   ├── meson.build
-│   │   │   ├── octeontx_fpavf.c
-│   │   │   ├── octeontx_fpavf.h
-│   │   │   ├── octeontx_pool_logs.h
-│   │   │   ├── rte_mempool_octeontx.c
-│   │   │   └── version.map
-│   │   ├── ring
-│   │   │   ├── meson.build
-│   │   │   ├── rte_mempool_ring.c
-│   │   │   └── version.map
-│   │   └── stack
-│   │       ├── meson.build
-│   │       ├── rte_mempool_stack.c
-│   │       └── version.map
-│   ├── meson.build
-│   ├── net
-│   │   ├── af_packet
-│   │   │   ├── meson.build
-│   │   │   ├── rte_eth_af_packet.c
-│   │   │   └── version.map
-│   │   ├── af_xdp
-│   │   │   ├── af_xdp_deps.h
-│   │   │   ├── compat.h
-│   │   │   ├── meson.build
-│   │   │   ├── rte_eth_af_xdp.c
-│   │   │   └── version.map
-│   │   ├── ark
-│   │   │   ├── ark_ddm.c
-│   │   │   ├── ark_ddm.h
-│   │   │   ├── ark_ethdev.c
-│   │   │   ├── ark_ethdev_rx.c
-│   │   │   ├── ark_ethdev_rx.h
-│   │   │   ├── ark_ethdev_tx.c
-│   │   │   ├── ark_ethdev_tx.h
-│   │   │   ├── ark_ext.h
-│   │   │   ├── ark_global.h
-│   │   │   ├── ark_logs.h
-│   │   │   ├── ark_mpu.c
-│   │   │   ├── ark_mpu.h
-│   │   │   ├── ark_pktchkr.c
-│   │   │   ├── ark_pktchkr.h
-│   │   │   ├── ark_pktdir.c
-│   │   │   ├── ark_pktdir.h
-│   │   │   ├── ark_pktgen.c
-│   │   │   ├── ark_pktgen.h
-│   │   │   ├── ark_rqp.c
-│   │   │   ├── ark_rqp.h
-│   │   │   ├── ark_udm.c
-│   │   │   ├── ark_udm.h
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── atlantic
-│   │   │   ├── atl_common.h
-│   │   │   ├── atl_ethdev.c
-│   │   │   ├── atl_ethdev.h
-│   │   │   ├── atl_hw_regs.c
-│   │   │   ├── atl_hw_regs.h
-│   │   │   ├── atl_logs.h
-│   │   │   ├── atl_rxtx.c
-│   │   │   ├── atl_types.h
-│   │   │   ├── hw_atl
-│   │   │   │   ├── hw_atl_b0.c
-│   │   │   │   ├── hw_atl_b0.h
-│   │   │   │   ├── hw_atl_b0_internal.h
-│   │   │   │   ├── hw_atl_llh.c
-│   │   │   │   ├── hw_atl_llh.h
-│   │   │   │   ├── hw_atl_llh_internal.h
-│   │   │   │   ├── hw_atl_utils.c
-│   │   │   │   ├── hw_atl_utils_fw2x.c
-│   │   │   │   └── hw_atl_utils.h
-│   │   │   ├── meson.build
-│   │   │   ├── rte_pmd_atlantic.c
-│   │   │   ├── rte_pmd_atlantic.h
-│   │   │   └── version.map
-│   │   ├── avp
-│   │   │   ├── avp_ethdev.c
-│   │   │   ├── avp_logs.h
-│   │   │   ├── meson.build
-│   │   │   ├── rte_avp_common.h
-│   │   │   ├── rte_avp_fifo.h
-│   │   │   └── version.map
-│   │   ├── axgbe
-│   │   │   ├── axgbe_common.h
-│   │   │   ├── axgbe_dev.c
-│   │   │   ├── axgbe_ethdev.c
-│   │   │   ├── axgbe_ethdev.h
-│   │   │   ├── axgbe_i2c.c
-│   │   │   ├── axgbe_logs.h
-│   │   │   ├── axgbe_mdio.c
-│   │   │   ├── axgbe_phy.h
-│   │   │   ├── axgbe_phy_impl.c
-│   │   │   ├── axgbe_regs.h
-│   │   │   ├── axgbe_rxtx.c
-│   │   │   ├── axgbe_rxtx.h
-│   │   │   ├── axgbe_rxtx_vec_sse.c
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── bnx2x
-│   │   │   ├── bnx2x.c
-│   │   │   ├── bnx2x_ethdev.c
-│   │   │   ├── bnx2x_ethdev.h
-│   │   │   ├── bnx2x.h
-│   │   │   ├── bnx2x_logs.h
-│   │   │   ├── bnx2x_osal.h
-│   │   │   ├── bnx2x_rxtx.c
-│   │   │   ├── bnx2x_rxtx.h
-│   │   │   ├── bnx2x_stats.c
-│   │   │   ├── bnx2x_stats.h
-│   │   │   ├── bnx2x_vfpf.c
-│   │   │   ├── bnx2x_vfpf.h
-│   │   │   ├── ecore_fw_defs.h
-│   │   │   ├── ecore_hsi.h
-│   │   │   ├── ecore_init.h
-│   │   │   ├── ecore_init_ops.h
-│   │   │   ├── ecore_mfw_req.h
-│   │   │   ├── ecore_reg.h
-│   │   │   ├── ecore_sp.c
-│   │   │   ├── ecore_sp.h
-│   │   │   ├── elink.c
-│   │   │   ├── elink.h
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── bnxt
-│   │   │   ├── bnxt_cpr.c
-│   │   │   ├── bnxt_cpr.h
-│   │   │   ├── bnxt_ethdev.c
-│   │   │   ├── bnxt_filter.c
-│   │   │   ├── bnxt_filter.h
-│   │   │   ├── bnxt_flow.c
-│   │   │   ├── bnxt.h
-│   │   │   ├── bnxt_hwrm.c
-│   │   │   ├── bnxt_hwrm.h
-│   │   │   ├── bnxt_irq.c
-│   │   │   ├── bnxt_irq.h
-│   │   │   ├── bnxt_nvm_defs.h
-│   │   │   ├── bnxt_reps.c
-│   │   │   ├── bnxt_reps.h
-│   │   │   ├── bnxt_ring.c
-│   │   │   ├── bnxt_ring.h
-│   │   │   ├── bnxt_rxq.c
-│   │   │   ├── bnxt_rxq.h
-│   │   │   ├── bnxt_rxr.c
-│   │   │   ├── bnxt_rxr.h
-│   │   │   ├── bnxt_rxtx_vec_avx2.c
-│   │   │   ├── bnxt_rxtx_vec_common.h
-│   │   │   ├── bnxt_rxtx_vec_neon.c
-│   │   │   ├── bnxt_rxtx_vec_sse.c
-│   │   │   ├── bnxt_stats.c
-│   │   │   ├── bnxt_stats.h
-│   │   │   ├── bnxt_txq.c
-│   │   │   ├── bnxt_txq.h
-│   │   │   ├── bnxt_txr.c
-│   │   │   ├── bnxt_txr.h
-│   │   │   ├── bnxt_util.c
-│   │   │   ├── bnxt_util.h
-│   │   │   ├── bnxt_vnic.c
-│   │   │   ├── bnxt_vnic.h
-│   │   │   ├── hcapi
-│   │   │   │   └── cfa
-│   │   │   │       ├── hcapi_cfa_common.c
-│   │   │   │       ├── hcapi_cfa_defs.h
-│   │   │   │       ├── hcapi_cfa.h
-│   │   │   │       ├── hcapi_cfa_p4.c
-│   │   │   │       ├── hcapi_cfa_p4.h
-│   │   │   │       ├── hcapi_cfa_p58.c
-│   │   │   │       ├── hcapi_cfa_p58.h
-│   │   │   │       └── meson.build
-│   │   │   ├── hsi_struct_def_dpdk.h
-│   │   │   ├── meson.build
-│   │   │   ├── rte_pmd_bnxt.c
-│   │   │   ├── rte_pmd_bnxt.h
-│   │   │   ├── tf_core
-│   │   │   │   ├── bitalloc.c
-│   │   │   │   ├── bitalloc.h
-│   │   │   │   ├── cfa_resource_types.h
-│   │   │   │   ├── dpool.c
-│   │   │   │   ├── dpool.h
-│   │   │   │   ├── ll.c
-│   │   │   │   ├── ll.h
-│   │   │   │   ├── lookup3.h
-│   │   │   │   ├── meson.build
-│   │   │   │   ├── rand.c
-│   │   │   │   ├── rand.h
-│   │   │   │   ├── stack.c
-│   │   │   │   ├── stack.h
-│   │   │   │   ├── tf_common.h
-│   │   │   │   ├── tf_core.c
-│   │   │   │   ├── tf_core.h
-│   │   │   │   ├── tf_device.c
-│   │   │   │   ├── tf_device.h
-│   │   │   │   ├── tf_device_p4.c
-│   │   │   │   ├── tf_device_p4.h
-│   │   │   │   ├── tf_device_p58.c
-│   │   │   │   ├── tf_device_p58.h
-│   │   │   │   ├── tf_em_common.c
-│   │   │   │   ├── tf_em_common.h
-│   │   │   │   ├── tf_em.h
-│   │   │   │   ├── tf_em_hash_internal.c
-│   │   │   │   ├── tf_em_host.c
-│   │   │   │   ├── tf_em_internal.c
-│   │   │   │   ├── tf_ext_flow_handle.h
-│   │   │   │   ├── tf_global_cfg.c
-│   │   │   │   ├── tf_global_cfg.h
-│   │   │   │   ├── tf_hash.c
-│   │   │   │   ├── tf_hash.h
-│   │   │   │   ├── tf_identifier.c
-│   │   │   │   ├── tf_identifier.h
-│   │   │   │   ├── tf_if_tbl.c
-│   │   │   │   ├── tf_if_tbl.h
-│   │   │   │   ├── tf_msg.c
-│   │   │   │   ├── tf_msg_common.h
-│   │   │   │   ├── tf_msg.h
-│   │   │   │   ├── tfp.c
-│   │   │   │   ├── tfp.h
-│   │   │   │   ├── tf_project.h
-│   │   │   │   ├── tf_resources.h
-│   │   │   │   ├── tf_rm.c
-│   │   │   │   ├── tf_rm.h
-│   │   │   │   ├── tf_session.c
-│   │   │   │   ├── tf_session.h
-│   │   │   │   ├── tf_shadow_identifier.c
-│   │   │   │   ├── tf_shadow_identifier.h
-│   │   │   │   ├── tf_shadow_tcam.c
-│   │   │   │   ├── tf_shadow_tcam.h
-│   │   │   │   ├── tf_sram_mgr.c
-│   │   │   │   ├── tf_sram_mgr.h
-│   │   │   │   ├── tf_tbl.c
-│   │   │   │   ├── tf_tbl.h
-│   │   │   │   ├── tf_tbl_sram.c
-│   │   │   │   ├── tf_tbl_sram.h
-│   │   │   │   ├── tf_tcam.c
-│   │   │   │   ├── tf_tcam.h
-│   │   │   │   ├── tf_tcam_shared.c
-│   │   │   │   ├── tf_tcam_shared.h
-│   │   │   │   ├── tf_util.c
-│   │   │   │   └── tf_util.h
-│   │   │   ├── tf_ulp
-│   │   │   │   ├── bnxt_tf_common.h
-│   │   │   │   ├── bnxt_tf_pmd_shim.c
-│   │   │   │   ├── bnxt_tf_pmd_shim.h
-│   │   │   │   ├── bnxt_ulp.c
-│   │   │   │   ├── bnxt_ulp_flow.c
-│   │   │   │   ├── bnxt_ulp.h
-│   │   │   │   ├── generic_templates
-│   │   │   │   │   ├── meson.build
-│   │   │   │   │   ├── ulp_template_db_act.c
-│   │   │   │   │   ├── ulp_template_db_class.c
-│   │   │   │   │   ├── ulp_template_db_enum.h
-│   │   │   │   │   ├── ulp_template_db_field.h
-│   │   │   │   │   ├── ulp_template_db_tbl.c
-│   │   │   │   │   ├── ulp_template_db_tbl.h
-│   │   │   │   │   ├── ulp_template_db_thor_act.c
-│   │   │   │   │   ├── ulp_template_db_thor_class.c
-│   │   │   │   │   ├── ulp_template_db_wh_plus_act.c
-│   │   │   │   │   └── ulp_template_db_wh_plus_class.c
-│   │   │   │   ├── meson.build
-│   │   │   │   ├── ulp_def_rules.c
-│   │   │   │   ├── ulp_fc_mgr.c
-│   │   │   │   ├── ulp_fc_mgr.h
-│   │   │   │   ├── ulp_flow_db.c
-│   │   │   │   ├── ulp_flow_db.h
-│   │   │   │   ├── ulp_gen_hash.c
-│   │   │   │   ├── ulp_gen_hash.h
-│   │   │   │   ├── ulp_gen_tbl.c
-│   │   │   │   ├── ulp_gen_tbl.h
-│   │   │   │   ├── ulp_ha_mgr.c
-│   │   │   │   ├── ulp_ha_mgr.h
-│   │   │   │   ├── ulp_mapper.c
-│   │   │   │   ├── ulp_mapper.h
-│   │   │   │   ├── ulp_mark_mgr.c
-│   │   │   │   ├── ulp_mark_mgr.h
-│   │   │   │   ├── ulp_matcher.c
-│   │   │   │   ├── ulp_matcher.h
-│   │   │   │   ├── ulp_port_db.c
-│   │   │   │   ├── ulp_port_db.h
-│   │   │   │   ├── ulp_rte_handler_tbl.c
-│   │   │   │   ├── ulp_rte_parser.c
-│   │   │   │   ├── ulp_rte_parser.h
-│   │   │   │   ├── ulp_template_struct.h
-│   │   │   │   ├── ulp_tun.c
-│   │   │   │   ├── ulp_tun.h
-│   │   │   │   ├── ulp_utils.c
-│   │   │   │   └── ulp_utils.h
-│   │   │   └── version.map
-│   │   ├── bonding
-│   │   │   ├── eth_bond_8023ad_private.h
-│   │   │   ├── eth_bond_private.h
-│   │   │   ├── meson.build
-│   │   │   ├── rte_eth_bond_8023ad.c
-│   │   │   ├── rte_eth_bond_8023ad.h
-│   │   │   ├── rte_eth_bond_alb.c
-│   │   │   ├── rte_eth_bond_alb.h
-│   │   │   ├── rte_eth_bond_api.c
-│   │   │   ├── rte_eth_bond_args.c
-│   │   │   ├── rte_eth_bond_flow.c
-│   │   │   ├── rte_eth_bond.h
-│   │   │   ├── rte_eth_bond_pmd.c
-│   │   │   └── version.map
-│   │   ├── cnxk
-│   │   │   ├── cn10k_ethdev.c
-│   │   │   ├── cn10k_ethdev.h
-│   │   │   ├── cn10k_ethdev_sec.c
-│   │   │   ├── cn10k_flow.c
-│   │   │   ├── cn10k_flow.h
-│   │   │   ├── cn10k_rx.h
-│   │   │   ├── cn10k_rx_select.c
-│   │   │   ├── cn10k_tx.h
-│   │   │   ├── cn10k_tx_select.c
-│   │   │   ├── cn9k_ethdev.c
-│   │   │   ├── cn9k_ethdev.h
-│   │   │   ├── cn9k_ethdev_sec.c
-│   │   │   ├── cn9k_flow.c
-│   │   │   ├── cn9k_flow.h
-│   │   │   ├── cn9k_rx.h
-│   │   │   ├── cn9k_rx_select.c
-│   │   │   ├── cn9k_tx.h
-│   │   │   ├── cn9k_tx_select.c
-│   │   │   ├── cnxk_ethdev.c
-│   │   │   ├── cnxk_ethdev_devargs.c
-│   │   │   ├── cnxk_ethdev.h
-│   │   │   ├── cnxk_ethdev_mtr.c
-│   │   │   ├── cnxk_ethdev_ops.c
-│   │   │   ├── cnxk_ethdev_sec.c
-│   │   │   ├── cnxk_ethdev_sec_telemetry.c
-│   │   │   ├── cnxk_ethdev_telemetry.c
-│   │   │   ├── cnxk_flow.c
-│   │   │   ├── cnxk_flow.h
-│   │   │   ├── cnxk_link.c
-│   │   │   ├── cnxk_lookup.c
-│   │   │   ├── cnxk_ptp.c
-│   │   │   ├── cnxk_stats.c
-│   │   │   ├── cnxk_tm.c
-│   │   │   ├── cnxk_tm.h
-│   │   │   ├── meson.build
-│   │   │   ├── rx
-│   │   │   │   ├── cn10k
-│   │   │   │   │   ├── rx_0_15.c
-│   │   │   │   │   ├── rx_0_15_mseg.c
-│   │   │   │   │   ├── rx_0_15_vec.c
-│   │   │   │   │   ├── rx_0_15_vec_mseg.c
-│   │   │   │   │   ├── rx_112_127.c
-│   │   │   │   │   ├── rx_112_127_mseg.c
-│   │   │   │   │   ├── rx_112_127_vec.c
-│   │   │   │   │   ├── rx_112_127_vec_mseg.c
-│   │   │   │   │   ├── rx_16_31.c
-│   │   │   │   │   ├── rx_16_31_mseg.c
-│   │   │   │   │   ├── rx_16_31_vec.c
-│   │   │   │   │   ├── rx_16_31_vec_mseg.c
-│   │   │   │   │   ├── rx_32_47.c
-│   │   │   │   │   ├── rx_32_47_mseg.c
-│   │   │   │   │   ├── rx_32_47_vec.c
-│   │   │   │   │   ├── rx_32_47_vec_mseg.c
-│   │   │   │   │   ├── rx_48_63.c
-│   │   │   │   │   ├── rx_48_63_mseg.c
-│   │   │   │   │   ├── rx_48_63_vec.c
-│   │   │   │   │   ├── rx_48_63_vec_mseg.c
-│   │   │   │   │   ├── rx_64_79.c
-│   │   │   │   │   ├── rx_64_79_mseg.c
-│   │   │   │   │   ├── rx_64_79_vec.c
-│   │   │   │   │   ├── rx_64_79_vec_mseg.c
-│   │   │   │   │   ├── rx_80_95.c
-│   │   │   │   │   ├── rx_80_95_mseg.c
-│   │   │   │   │   ├── rx_80_95_vec.c
-│   │   │   │   │   ├── rx_80_95_vec_mseg.c
-│   │   │   │   │   ├── rx_96_111.c
-│   │   │   │   │   ├── rx_96_111_mseg.c
-│   │   │   │   │   ├── rx_96_111_vec.c
-│   │   │   │   │   └── rx_96_111_vec_mseg.c
-│   │   │   │   └── cn9k
-│   │   │   │       ├── rx_0_15.c
-│   │   │   │       ├── rx_0_15_mseg.c
-│   │   │   │       ├── rx_0_15_vec.c
-│   │   │   │       ├── rx_0_15_vec_mseg.c
-│   │   │   │       ├── rx_112_127.c
-│   │   │   │       ├── rx_112_127_mseg.c
-│   │   │   │       ├── rx_112_127_vec.c
-│   │   │   │       ├── rx_112_127_vec_mseg.c
-│   │   │   │       ├── rx_16_31.c
-│   │   │   │       ├── rx_16_31_mseg.c
-│   │   │   │       ├── rx_16_31_vec.c
-│   │   │   │       ├── rx_16_31_vec_mseg.c
-│   │   │   │       ├── rx_32_47.c
-│   │   │   │       ├── rx_32_47_mseg.c
-│   │   │   │       ├── rx_32_47_vec.c
-│   │   │   │       ├── rx_32_47_vec_mseg.c
-│   │   │   │       ├── rx_48_63.c
-│   │   │   │       ├── rx_48_63_mseg.c
-│   │   │   │       ├── rx_48_63_vec.c
-│   │   │   │       ├── rx_48_63_vec_mseg.c
-│   │   │   │       ├── rx_64_79.c
-│   │   │   │       ├── rx_64_79_mseg.c
-│   │   │   │       ├── rx_64_79_vec.c
-│   │   │   │       ├── rx_64_79_vec_mseg.c
-│   │   │   │       ├── rx_80_95.c
-│   │   │   │       ├── rx_80_95_mseg.c
-│   │   │   │       ├── rx_80_95_vec.c
-│   │   │   │       ├── rx_80_95_vec_mseg.c
-│   │   │   │       ├── rx_96_111.c
-│   │   │   │       ├── rx_96_111_mseg.c
-│   │   │   │       ├── rx_96_111_vec.c
-│   │   │   │       └── rx_96_111_vec_mseg.c
-│   │   │   ├── tx
-│   │   │   │   ├── cn10k
-│   │   │   │   │   ├── tx_0_15.c
-│   │   │   │   │   ├── tx_0_15_mseg.c
-│   │   │   │   │   ├── tx_0_15_vec.c
-│   │   │   │   │   ├── tx_0_15_vec_mseg.c
-│   │   │   │   │   ├── tx_112_127.c
-│   │   │   │   │   ├── tx_112_127_mseg.c
-│   │   │   │   │   ├── tx_112_127_vec.c
-│   │   │   │   │   ├── tx_112_127_vec_mseg.c
-│   │   │   │   │   ├── tx_16_31.c
-│   │   │   │   │   ├── tx_16_31_mseg.c
-│   │   │   │   │   ├── tx_16_31_vec.c
-│   │   │   │   │   ├── tx_16_31_vec_mseg.c
-│   │   │   │   │   ├── tx_32_47.c
-│   │   │   │   │   ├── tx_32_47_mseg.c
-│   │   │   │   │   ├── tx_32_47_vec.c
-│   │   │   │   │   ├── tx_32_47_vec_mseg.c
-│   │   │   │   │   ├── tx_48_63.c
-│   │   │   │   │   ├── tx_48_63_mseg.c
-│   │   │   │   │   ├── tx_48_63_vec.c
-│   │   │   │   │   ├── tx_48_63_vec_mseg.c
-│   │   │   │   │   ├── tx_64_79.c
-│   │   │   │   │   ├── tx_64_79_mseg.c
-│   │   │   │   │   ├── tx_64_79_vec.c
-│   │   │   │   │   ├── tx_64_79_vec_mseg.c
-│   │   │   │   │   ├── tx_80_95.c
-│   │   │   │   │   ├── tx_80_95_mseg.c
-│   │   │   │   │   ├── tx_80_95_vec.c
-│   │   │   │   │   ├── tx_80_95_vec_mseg.c
-│   │   │   │   │   ├── tx_96_111.c
-│   │   │   │   │   ├── tx_96_111_mseg.c
-│   │   │   │   │   ├── tx_96_111_vec.c
-│   │   │   │   │   └── tx_96_111_vec_mseg.c
-│   │   │   │   └── cn9k
-│   │   │   │       ├── tx_0_15.c
-│   │   │   │       ├── tx_0_15_mseg.c
-│   │   │   │       ├── tx_0_15_vec.c
-│   │   │   │       ├── tx_0_15_vec_mseg.c
-│   │   │   │       ├── tx_112_127.c
-│   │   │   │       ├── tx_112_127_mseg.c
-│   │   │   │       ├── tx_112_127_vec.c
-│   │   │   │       ├── tx_112_127_vec_mseg.c
-│   │   │   │       ├── tx_16_31.c
-│   │   │   │       ├── tx_16_31_mseg.c
-│   │   │   │       ├── tx_16_31_vec.c
-│   │   │   │       ├── tx_16_31_vec_mseg.c
-│   │   │   │       ├── tx_32_47.c
-│   │   │   │       ├── tx_32_47_mseg.c
-│   │   │   │       ├── tx_32_47_vec.c
-│   │   │   │       ├── tx_32_47_vec_mseg.c
-│   │   │   │       ├── tx_48_63.c
-│   │   │   │       ├── tx_48_63_mseg.c
-│   │   │   │       ├── tx_48_63_vec.c
-│   │   │   │       ├── tx_48_63_vec_mseg.c
-│   │   │   │       ├── tx_64_79.c
-│   │   │   │       ├── tx_64_79_mseg.c
-│   │   │   │       ├── tx_64_79_vec.c
-│   │   │   │       ├── tx_64_79_vec_mseg.c
-│   │   │   │       ├── tx_80_95.c
-│   │   │   │       ├── tx_80_95_mseg.c
-│   │   │   │       ├── tx_80_95_vec.c
-│   │   │   │       ├── tx_80_95_vec_mseg.c
-│   │   │   │       ├── tx_96_111.c
-│   │   │   │       ├── tx_96_111_mseg.c
-│   │   │   │       ├── tx_96_111_vec.c
-│   │   │   │       └── tx_96_111_vec_mseg.c
-│   │   │   └── version.map
-│   │   ├── cxgbe
-│   │   │   ├── base
-│   │   │   │   ├── adapter.h
-│   │   │   │   ├── common.h
-│   │   │   │   ├── t4_chip_type.h
-│   │   │   │   ├── t4fw_interface.h
-│   │   │   │   ├── t4_hw.c
-│   │   │   │   ├── t4_hw.h
-│   │   │   │   ├── t4_msg.h
-│   │   │   │   ├── t4_pci_id_tbl.h
-│   │   │   │   ├── t4_regs.h
-│   │   │   │   ├── t4_regs_values.h
-│   │   │   │   ├── t4_tcb.h
-│   │   │   │   ├── t4vf_hw.c
-│   │   │   │   └── t4vf_hw.h
-│   │   │   ├── clip_tbl.c
-│   │   │   ├── clip_tbl.h
-│   │   │   ├── cxgbe_compat.h
-│   │   │   ├── cxgbe_ethdev.c
-│   │   │   ├── cxgbe_filter.c
-│   │   │   ├── cxgbe_filter.h
-│   │   │   ├── cxgbe_flow.c
-│   │   │   ├── cxgbe_flow.h
-│   │   │   ├── cxgbe.h
-│   │   │   ├── cxgbe_main.c
-│   │   │   ├── cxgbe_ofld.h
-│   │   │   ├── cxgbe_pfvf.h
-│   │   │   ├── cxgbevf_ethdev.c
-│   │   │   ├── cxgbevf_main.c
-│   │   │   ├── l2t.c
-│   │   │   ├── l2t.h
-│   │   │   ├── meson.build
-│   │   │   ├── mps_tcam.c
-│   │   │   ├── mps_tcam.h
-│   │   │   ├── sge.c
-│   │   │   ├── smt.c
-│   │   │   ├── smt.h
-│   │   │   └── version.map
-│   │   ├── dpaa
-│   │   │   ├── dpaa_ethdev.c
-│   │   │   ├── dpaa_ethdev.h
-│   │   │   ├── dpaa_flow.c
-│   │   │   ├── dpaa_flow.h
-│   │   │   ├── dpaa_fmc.c
-│   │   │   ├── dpaa_rxtx.c
-│   │   │   ├── dpaa_rxtx.h
-│   │   │   ├── fmlib
-│   │   │   │   ├── dpaa_integration.h
-│   │   │   │   ├── fm_ext.h
-│   │   │   │   ├── fm_lib.c
-│   │   │   │   ├── fm_pcd_ext.h
-│   │   │   │   ├── fm_port_ext.h
-│   │   │   │   ├── fm_vsp.c
-│   │   │   │   ├── fm_vsp_ext.h
-│   │   │   │   ├── ncsw_ext.h
-│   │   │   │   └── net_ext.h
-│   │   │   ├── meson.build
-│   │   │   ├── rte_pmd_dpaa.h
-│   │   │   └── version.map
-│   │   ├── dpaa2
-│   │   │   ├── base
-│   │   │   │   ├── dpaa2_hw_dpni_annot.h
-│   │   │   │   ├── dpaa2_hw_dpni.c
-│   │   │   │   └── dpaa2_tlu_hash.c
-│   │   │   ├── dpaa2_ethdev.c
-│   │   │   ├── dpaa2_ethdev.h
-│   │   │   ├── dpaa2_flow.c
-│   │   │   ├── dpaa2_mux.c
-│   │   │   ├── dpaa2_pmd_logs.h
-│   │   │   ├── dpaa2_ptp.c
-│   │   │   ├── dpaa2_recycle.c
-│   │   │   ├── dpaa2_rxtx.c
-│   │   │   ├── dpaa2_sparser.c
-│   │   │   ├── dpaa2_sparser.h
-│   │   │   ├── dpaa2_tm.c
-│   │   │   ├── dpaa2_tm.h
-│   │   │   ├── mc
-│   │   │   │   ├── dpdmux.c
-│   │   │   │   ├── dpkg.c
-│   │   │   │   ├── dpni.c
-│   │   │   │   ├── dprtc.c
-│   │   │   │   ├── fsl_dpdmux_cmd.h
-│   │   │   │   ├── fsl_dpdmux.h
-│   │   │   │   ├── fsl_dpkg.h
-│   │   │   │   ├── fsl_dpni_cmd.h
-│   │   │   │   ├── fsl_dpni.h
-│   │   │   │   ├── fsl_dprtc_cmd.h
-│   │   │   │   ├── fsl_dprtc.h
-│   │   │   │   └── fsl_net.h
-│   │   │   ├── meson.build
-│   │   │   ├── rte_pmd_dpaa2.h
-│   │   │   └── version.map
-│   │   ├── e1000
-│   │   │   ├── base
-│   │   │   │   ├── e1000_80003es2lan.c
-│   │   │   │   ├── e1000_80003es2lan.h
-│   │   │   │   ├── e1000_82540.c
-│   │   │   │   ├── e1000_82541.c
-│   │   │   │   ├── e1000_82541.h
-│   │   │   │   ├── e1000_82542.c
-│   │   │   │   ├── e1000_82543.c
-│   │   │   │   ├── e1000_82543.h
-│   │   │   │   ├── e1000_82571.c
-│   │   │   │   ├── e1000_82571.h
-│   │   │   │   ├── e1000_82575.c
-│   │   │   │   ├── e1000_82575.h
-│   │   │   │   ├── e1000_api.c
-│   │   │   │   ├── e1000_api.h
-│   │   │   │   ├── e1000_base.c
-│   │   │   │   ├── e1000_base.h
-│   │   │   │   ├── e1000_defines.h
-│   │   │   │   ├── e1000_hw.h
-│   │   │   │   ├── e1000_i210.c
-│   │   │   │   ├── e1000_i210.h
-│   │   │   │   ├── e1000_ich8lan.c
-│   │   │   │   ├── e1000_ich8lan.h
-│   │   │   │   ├── e1000_mac.c
-│   │   │   │   ├── e1000_mac.h
-│   │   │   │   ├── e1000_manage.c
-│   │   │   │   ├── e1000_manage.h
-│   │   │   │   ├── e1000_mbx.c
-│   │   │   │   ├── e1000_mbx.h
-│   │   │   │   ├── e1000_nvm.c
-│   │   │   │   ├── e1000_nvm.h
-│   │   │   │   ├── e1000_osdep.c
-│   │   │   │   ├── e1000_osdep.h
-│   │   │   │   ├── e1000_phy.c
-│   │   │   │   ├── e1000_phy.h
-│   │   │   │   ├── e1000_regs.h
-│   │   │   │   ├── e1000_vf.c
-│   │   │   │   ├── e1000_vf.h
-│   │   │   │   ├── meson.build
-│   │   │   │   └── README
-│   │   │   ├── e1000_ethdev.h
-│   │   │   ├── e1000_logs.c
-│   │   │   ├── e1000_logs.h
-│   │   │   ├── em_ethdev.c
-│   │   │   ├── em_rxtx.c
-│   │   │   ├── igb_ethdev.c
-│   │   │   ├── igb_flow.c
-│   │   │   ├── igb_pf.c
-│   │   │   ├── igb_regs.h
-│   │   │   ├── igb_rxtx.c
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── ena
-│   │   │   ├── base
-│   │   │   │   ├── ena_com.c
-│   │   │   │   ├── ena_com.h
-│   │   │   │   ├── ena_defs
-│   │   │   │   │   ├── ena_admin_defs.h
-│   │   │   │   │   ├── ena_common_defs.h
-│   │   │   │   │   ├── ena_eth_io_defs.h
-│   │   │   │   │   ├── ena_gen_info.h
-│   │   │   │   │   ├── ena_includes.h
-│   │   │   │   │   └── ena_regs_defs.h
-│   │   │   │   ├── ena_eth_com.c
-│   │   │   │   ├── ena_eth_com.h
-│   │   │   │   ├── ena_plat_dpdk.h
-│   │   │   │   └── ena_plat.h
-│   │   │   ├── ena_ethdev.c
-│   │   │   ├── ena_ethdev.h
-│   │   │   ├── ena_logs.h
-│   │   │   ├── ena_platform.h
-│   │   │   ├── ena_rss.c
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── enetc
-│   │   │   ├── base
-│   │   │   │   └── enetc_hw.h
-│   │   │   ├── enetc_ethdev.c
-│   │   │   ├── enetc.h
-│   │   │   ├── enetc_logs.h
-│   │   │   ├── enetc_rxtx.c
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── enetfec
-│   │   │   ├── enet_ethdev.c
-│   │   │   ├── enet_ethdev.h
-│   │   │   ├── enet_pmd_logs.h
-│   │   │   ├── enet_regs.h
-│   │   │   ├── enet_rxtx.c
-│   │   │   ├── enet_uio.c
-│   │   │   ├── enet_uio.h
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── enic
-│   │   │   ├── base
-│   │   │   │   ├── cq_desc.h
-│   │   │   │   ├── cq_enet_desc.h
-│   │   │   │   ├── rq_enet_desc.h
-│   │   │   │   ├── vnic_cq.c
-│   │   │   │   ├── vnic_cq.h
-│   │   │   │   ├── vnic_dev.c
-│   │   │   │   ├── vnic_devcmd.h
-│   │   │   │   ├── vnic_dev.h
-│   │   │   │   ├── vnic_enet.h
-│   │   │   │   ├── vnic_flowman.h
-│   │   │   │   ├── vnic_intr.c
-│   │   │   │   ├── vnic_intr.h
-│   │   │   │   ├── vnic_nic.h
-│   │   │   │   ├── vnic_resource.h
-│   │   │   │   ├── vnic_rq.c
-│   │   │   │   ├── vnic_rq.h
-│   │   │   │   ├── vnic_rss.h
-│   │   │   │   ├── vnic_stats.h
-│   │   │   │   ├── vnic_wq.c
-│   │   │   │   ├── vnic_wq.h
-│   │   │   │   └── wq_enet_desc.h
-│   │   │   ├── enic_compat.h
-│   │   │   ├── enic_ethdev.c
-│   │   │   ├── enic_flow.c
-│   │   │   ├── enic_fm_flow.c
-│   │   │   ├── enic.h
-│   │   │   ├── enic_main.c
-│   │   │   ├── enic_res.c
-│   │   │   ├── enic_res.h
-│   │   │   ├── enic_rxtx.c
-│   │   │   ├── enic_rxtx_common.h
-│   │   │   ├── enic_rxtx_vec_avx2.c
-│   │   │   ├── enic_vf_representor.c
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── failsafe
-│   │   │   ├── failsafe_args.c
-│   │   │   ├── failsafe.c
-│   │   │   ├── failsafe_eal.c
-│   │   │   ├── failsafe_ether.c
-│   │   │   ├── failsafe_flow.c
-│   │   │   ├── failsafe_intr.c
-│   │   │   ├── failsafe_ops.c
-│   │   │   ├── failsafe_private.h
-│   │   │   ├── failsafe_rxtx.c
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── fm10k
-│   │   │   ├── base
-│   │   │   │   ├── fm10k_api.c
-│   │   │   │   ├── fm10k_api.h
-│   │   │   │   ├── fm10k_common.c
-│   │   │   │   ├── fm10k_common.h
-│   │   │   │   ├── fm10k_mbx.c
-│   │   │   │   ├── fm10k_mbx.h
-│   │   │   │   ├── fm10k_osdep.h
-│   │   │   │   ├── fm10k_pf.c
-│   │   │   │   ├── fm10k_pf.h
-│   │   │   │   ├── fm10k_tlv.c
-│   │   │   │   ├── fm10k_tlv.h
-│   │   │   │   ├── fm10k_type.h
-│   │   │   │   ├── fm10k_vf.c
-│   │   │   │   ├── fm10k_vf.h
-│   │   │   │   └── meson.build
-│   │   │   ├── fm10k_ethdev.c
-│   │   │   ├── fm10k.h
-│   │   │   ├── fm10k_logs.h
-│   │   │   ├── fm10k_rxtx.c
-│   │   │   ├── fm10k_rxtx_vec.c
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── hinic
-│   │   │   ├── base
-│   │   │   │   ├── hinic_compat.h
-│   │   │   │   ├── hinic_csr.h
-│   │   │   │   ├── hinic_pmd_api_cmd.c
-│   │   │   │   ├── hinic_pmd_api_cmd.h
-│   │   │   │   ├── hinic_pmd_cfg.c
-│   │   │   │   ├── hinic_pmd_cfg.h
-│   │   │   │   ├── hinic_pmd_cmd.h
-│   │   │   │   ├── hinic_pmd_cmdq.c
-│   │   │   │   ├── hinic_pmd_cmdq.h
-│   │   │   │   ├── hinic_pmd_eqs.c
-│   │   │   │   ├── hinic_pmd_eqs.h
-│   │   │   │   ├── hinic_pmd_hwdev.c
-│   │   │   │   ├── hinic_pmd_hwdev.h
-│   │   │   │   ├── hinic_pmd_hwif.c
-│   │   │   │   ├── hinic_pmd_hwif.h
-│   │   │   │   ├── hinic_pmd_mbox.c
-│   │   │   │   ├── hinic_pmd_mbox.h
-│   │   │   │   ├── hinic_pmd_mgmt.c
-│   │   │   │   ├── hinic_pmd_mgmt.h
-│   │   │   │   ├── hinic_pmd_niccfg.c
-│   │   │   │   ├── hinic_pmd_niccfg.h
-│   │   │   │   ├── hinic_pmd_nicio.c
-│   │   │   │   ├── hinic_pmd_nicio.h
-│   │   │   │   ├── hinic_pmd_wq.c
-│   │   │   │   ├── hinic_pmd_wq.h
-│   │   │   │   └── meson.build
-│   │   │   ├── hinic_pmd_ethdev.c
-│   │   │   ├── hinic_pmd_ethdev.h
-│   │   │   ├── hinic_pmd_flow.c
-│   │   │   ├── hinic_pmd_rx.c
-│   │   │   ├── hinic_pmd_rx.h
-│   │   │   ├── hinic_pmd_tx.c
-│   │   │   ├── hinic_pmd_tx.h
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── hns3
-│   │   │   ├── hns3_cmd.c
-│   │   │   ├── hns3_cmd.h
-│   │   │   ├── hns3_common.c
-│   │   │   ├── hns3_common.h
-│   │   │   ├── hns3_dcb.c
-│   │   │   ├── hns3_dcb.h
-│   │   │   ├── hns3_ethdev.c
-│   │   │   ├── hns3_ethdev_dump.c
-│   │   │   ├── hns3_ethdev.h
-│   │   │   ├── hns3_ethdev_vf.c
-│   │   │   ├── hns3_fdir.c
-│   │   │   ├── hns3_fdir.h
-│   │   │   ├── hns3_flow.c
-│   │   │   ├── hns3_flow.h
-│   │   │   ├── hns3_intr.c
-│   │   │   ├── hns3_intr.h
-│   │   │   ├── hns3_logs.h
-│   │   │   ├── hns3_mbx.c
-│   │   │   ├── hns3_mbx.h
-│   │   │   ├── hns3_mp.c
-│   │   │   ├── hns3_mp.h
-│   │   │   ├── hns3_ptp.c
-│   │   │   ├── hns3_regs.c
-│   │   │   ├── hns3_regs.h
-│   │   │   ├── hns3_rss.c
-│   │   │   ├── hns3_rss.h
-│   │   │   ├── hns3_rxtx.c
-│   │   │   ├── hns3_rxtx.h
-│   │   │   ├── hns3_rxtx_vec.c
-│   │   │   ├── hns3_rxtx_vec.h
-│   │   │   ├── hns3_rxtx_vec_neon.h
-│   │   │   ├── hns3_rxtx_vec_sve.c
-│   │   │   ├── hns3_stats.c
-│   │   │   ├── hns3_stats.h
-│   │   │   ├── hns3_tm.c
-│   │   │   ├── hns3_tm.h
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── i40e
-│   │   │   ├── base
-│   │   │   │   ├── i40e_adminq.c
-│   │   │   │   ├── i40e_adminq_cmd.h
-│   │   │   │   ├── i40e_adminq.h
-│   │   │   │   ├── i40e_alloc.h
-│   │   │   │   ├── i40e_common.c
-│   │   │   │   ├── i40e_dcb.c
-│   │   │   │   ├── i40e_dcb.h
-│   │   │   │   ├── i40e_devids.h
-│   │   │   │   ├── i40e_diag.c
-│   │   │   │   ├── i40e_diag.h
-│   │   │   │   ├── i40e_hmc.c
-│   │   │   │   ├── i40e_hmc.h
-│   │   │   │   ├── i40e_lan_hmc.c
-│   │   │   │   ├── i40e_lan_hmc.h
-│   │   │   │   ├── i40e_nvm.c
-│   │   │   │   ├── i40e_osdep.h
-│   │   │   │   ├── i40e_prototype.h
-│   │   │   │   ├── i40e_register.h
-│   │   │   │   ├── i40e_status.h
-│   │   │   │   ├── i40e_type.h
-│   │   │   │   ├── meson.build
-│   │   │   │   ├── README
-│   │   │   │   └── virtchnl.h
-│   │   │   ├── i40e_ethdev.c
-│   │   │   ├── i40e_ethdev.h
-│   │   │   ├── i40e_fdir.c
-│   │   │   ├── i40e_flow.c
-│   │   │   ├── i40e_hash.c
-│   │   │   ├── i40e_hash.h
-│   │   │   ├── i40e_logs.h
-│   │   │   ├── i40e_pf.c
-│   │   │   ├── i40e_pf.h
-│   │   │   ├── i40e_regs.h
-│   │   │   ├── i40e_rxtx.c
-│   │   │   ├── i40e_rxtx_common_avx.h
-│   │   │   ├── i40e_rxtx.h
-│   │   │   ├── i40e_rxtx_vec_altivec.c
-│   │   │   ├── i40e_rxtx_vec_avx2.c
-│   │   │   ├── i40e_rxtx_vec_avx512.c
-│   │   │   ├── i40e_rxtx_vec_common.h
-│   │   │   ├── i40e_rxtx_vec_neon.c
-│   │   │   ├── i40e_rxtx_vec_sse.c
-│   │   │   ├── i40e_tm.c
-│   │   │   ├── i40e_vf_representor.c
-│   │   │   ├── meson.build
-│   │   │   ├── rte_pmd_i40e.c
-│   │   │   ├── rte_pmd_i40e.h
-│   │   │   └── version.map
-│   │   ├── iavf
-│   │   │   ├── iavf_ethdev.c
-│   │   │   ├── iavf_fdir.c
-│   │   │   ├── iavf_generic_flow.c
-│   │   │   ├── iavf_generic_flow.h
-│   │   │   ├── iavf.h
-│   │   │   ├── iavf_hash.c
-│   │   │   ├── iavf_ipsec_crypto.c
-│   │   │   ├── iavf_ipsec_crypto_capabilities.h
-│   │   │   ├── iavf_ipsec_crypto.h
-│   │   │   ├── iavf_log.h
-│   │   │   ├── iavf_rxtx.c
-│   │   │   ├── iavf_rxtx.h
-│   │   │   ├── iavf_rxtx_vec_avx2.c
-│   │   │   ├── iavf_rxtx_vec_avx512.c
-│   │   │   ├── iavf_rxtx_vec_common.h
-│   │   │   ├── iavf_rxtx_vec_sse.c
-│   │   │   ├── iavf_tm.c
-│   │   │   ├── iavf_vchnl.c
-│   │   │   ├── meson.build
-│   │   │   ├── rte_pmd_iavf.h
-│   │   │   └── version.map
-│   │   ├── ice
-│   │   │   ├── base
-│   │   │   │   ├── ice_acl.c
-│   │   │   │   ├── ice_acl_ctrl.c
-│   │   │   │   ├── ice_acl.h
-│   │   │   │   ├── ice_adminq_cmd.h
-│   │   │   │   ├── ice_alloc.h
-│   │   │   │   ├── ice_bitops.h
-│   │   │   │   ├── ice_bst_tcam.c
-│   │   │   │   ├── ice_bst_tcam.h
-│   │   │   │   ├── ice_cgu_regs.h
-│   │   │   │   ├── ice_common.c
-│   │   │   │   ├── ice_common.h
-│   │   │   │   ├── ice_controlq.c
-│   │   │   │   ├── ice_controlq.h
-│   │   │   │   ├── ice_dcb.c
-│   │   │   │   ├── ice_dcb.h
-│   │   │   │   ├── ice_devids.h
-│   │   │   │   ├── ice_fdir.c
-│   │   │   │   ├── ice_fdir.h
-│   │   │   │   ├── ice_flex_pipe.c
-│   │   │   │   ├── ice_flex_pipe.h
-│   │   │   │   ├── ice_flex_type.h
-│   │   │   │   ├── ice_flg_rd.c
-│   │   │   │   ├── ice_flg_rd.h
-│   │   │   │   ├── ice_flow.c
-│   │   │   │   ├── ice_flow.h
-│   │   │   │   ├── ice_hw_autogen.h
-│   │   │   │   ├── ice_imem.c
-│   │   │   │   ├── ice_imem.h
-│   │   │   │   ├── ice_lan_tx_rx.h
-│   │   │   │   ├── ice_metainit.c
-│   │   │   │   ├── ice_metainit.h
-│   │   │   │   ├── ice_mk_grp.c
-│   │   │   │   ├── ice_mk_grp.h
-│   │   │   │   ├── ice_nvm.c
-│   │   │   │   ├── ice_nvm.h
-│   │   │   │   ├── ice_osdep.h
-│   │   │   │   ├── ice_parser.c
-│   │   │   │   ├── ice_parser.h
-│   │   │   │   ├── ice_parser_rt.c
-│   │   │   │   ├── ice_parser_rt.h
-│   │   │   │   ├── ice_parser_util.h
-│   │   │   │   ├── ice_pg_cam.c
-│   │   │   │   ├── ice_pg_cam.h
-│   │   │   │   ├── ice_protocol_type.h
-│   │   │   │   ├── ice_proto_grp.c
-│   │   │   │   ├── ice_proto_grp.h
-│   │   │   │   ├── ice_ptp_consts.h
-│   │   │   │   ├── ice_ptp_hw.c
-│   │   │   │   ├── ice_ptp_hw.h
-│   │   │   │   ├── ice_ptype_mk.c
-│   │   │   │   ├── ice_ptype_mk.h
-│   │   │   │   ├── ice_sbq_cmd.h
-│   │   │   │   ├── ice_sched.c
-│   │   │   │   ├── ice_sched.h
-│   │   │   │   ├── ice_status.h
-│   │   │   │   ├── ice_switch.c
-│   │   │   │   ├── ice_switch.h
-│   │   │   │   ├── ice_tmatch.h
-│   │   │   │   ├── ice_type.h
-│   │   │   │   ├── ice_vlan_mode.c
-│   │   │   │   ├── ice_vlan_mode.h
-│   │   │   │   ├── ice_xlt_kb.c
-│   │   │   │   ├── ice_xlt_kb.h
-│   │   │   │   ├── meson.build
-│   │   │   │   └── README
-│   │   │   ├── ice_acl_filter.c
-│   │   │   ├── ice_dcf.c
-│   │   │   ├── ice_dcf_ethdev.c
-│   │   │   ├── ice_dcf_ethdev.h
-│   │   │   ├── ice_dcf.h
-│   │   │   ├── ice_dcf_parent.c
-│   │   │   ├── ice_dcf_sched.c
-│   │   │   ├── ice_dcf_vf_representor.c
-│   │   │   ├── ice_ethdev.c
-│   │   │   ├── ice_ethdev.h
-│   │   │   ├── ice_fdir_filter.c
-│   │   │   ├── ice_generic_flow.c
-│   │   │   ├── ice_generic_flow.h
-│   │   │   ├── ice_hash.c
-│   │   │   ├── ice_logs.h
-│   │   │   ├── ice_rxtx.c
-│   │   │   ├── ice_rxtx_common_avx.h
-│   │   │   ├── ice_rxtx.h
-│   │   │   ├── ice_rxtx_vec_avx2.c
-│   │   │   ├── ice_rxtx_vec_avx512.c
-│   │   │   ├── ice_rxtx_vec_common.h
-│   │   │   ├── ice_rxtx_vec_sse.c
-│   │   │   ├── ice_switch_filter.c
-│   │   │   ├── meson.build
-│   │   │   ├── rte_pmd_ice.h
-│   │   │   └── version.map
-│   │   ├── igc
-│   │   │   ├── base
-│   │   │   │   ├── igc_82571.h
-│   │   │   │   ├── igc_82575.h
-│   │   │   │   ├── igc_api.c
-│   │   │   │   ├── igc_api.h
-│   │   │   │   ├── igc_base.c
-│   │   │   │   ├── igc_base.h
-│   │   │   │   ├── igc_defines.h
-│   │   │   │   ├── igc_hw.h
-│   │   │   │   ├── igc_i225.c
-│   │   │   │   ├── igc_i225.h
-│   │   │   │   ├── igc_ich8lan.h
-│   │   │   │   ├── igc_mac.c
-│   │   │   │   ├── igc_mac.h
-│   │   │   │   ├── igc_manage.c
-│   │   │   │   ├── igc_manage.h
-│   │   │   │   ├── igc_nvm.c
-│   │   │   │   ├── igc_nvm.h
-│   │   │   │   ├── igc_osdep.c
-│   │   │   │   ├── igc_osdep.h
-│   │   │   │   ├── igc_phy.c
-│   │   │   │   ├── igc_phy.h
-│   │   │   │   ├── igc_regs.h
-│   │   │   │   ├── meson.build
-│   │   │   │   └── README
-│   │   │   ├── igc_ethdev.c
-│   │   │   ├── igc_ethdev.h
-│   │   │   ├── igc_filter.c
-│   │   │   ├── igc_filter.h
-│   │   │   ├── igc_flow.c
-│   │   │   ├── igc_flow.h
-│   │   │   ├── igc_logs.c
-│   │   │   ├── igc_logs.h
-│   │   │   ├── igc_txrx.c
-│   │   │   ├── igc_txrx.h
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── ionic
-│   │   │   ├── ionic_dev.c
-│   │   │   ├── ionic_dev.h
-│   │   │   ├── ionic_ethdev.c
-│   │   │   ├── ionic_ethdev.h
-│   │   │   ├── ionic.h
-│   │   │   ├── ionic_if.h
-│   │   │   ├── ionic_lif.c
-│   │   │   ├── ionic_lif.h
-│   │   │   ├── ionic_logs.h
-│   │   │   ├── ionic_mac_api.c
-│   │   │   ├── ionic_mac_api.h
-│   │   │   ├── ionic_main.c
-│   │   │   ├── ionic_osdep.h
-│   │   │   ├── ionic_regs.h
-│   │   │   ├── ionic_rx_filter.c
-│   │   │   ├── ionic_rx_filter.h
-│   │   │   ├── ionic_rxtx.c
-│   │   │   ├── ionic_rxtx.h
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── ipn3ke
-│   │   │   ├── ipn3ke_ethdev.c
-│   │   │   ├── ipn3ke_ethdev.h
-│   │   │   ├── ipn3ke_flow.c
-│   │   │   ├── ipn3ke_flow.h
-│   │   │   ├── ipn3ke_logs.h
-│   │   │   ├── ipn3ke_rawdev_api.h
-│   │   │   ├── ipn3ke_representor.c
-│   │   │   ├── ipn3ke_tm.c
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── ixgbe
-│   │   │   ├── base
-│   │   │   │   ├── ixgbe_82598.c
-│   │   │   │   ├── ixgbe_82598.h
-│   │   │   │   ├── ixgbe_82599.c
-│   │   │   │   ├── ixgbe_82599.h
-│   │   │   │   ├── ixgbe_api.c
-│   │   │   │   ├── ixgbe_api.h
-│   │   │   │   ├── ixgbe_common.c
-│   │   │   │   ├── ixgbe_common.h
-│   │   │   │   ├── ixgbe_dcb_82598.c
-│   │   │   │   ├── ixgbe_dcb_82598.h
-│   │   │   │   ├── ixgbe_dcb_82599.c
-│   │   │   │   ├── ixgbe_dcb_82599.h
-│   │   │   │   ├── ixgbe_dcb.c
-│   │   │   │   ├── ixgbe_dcb.h
-│   │   │   │   ├── ixgbe_hv_vf.c
-│   │   │   │   ├── ixgbe_hv_vf.h
-│   │   │   │   ├── ixgbe_mbx.c
-│   │   │   │   ├── ixgbe_mbx.h
-│   │   │   │   ├── ixgbe_osdep.h
-│   │   │   │   ├── ixgbe_phy.c
-│   │   │   │   ├── ixgbe_phy.h
-│   │   │   │   ├── ixgbe_type.h
-│   │   │   │   ├── ixgbe_vf.c
-│   │   │   │   ├── ixgbe_vf.h
-│   │   │   │   ├── ixgbe_x540.c
-│   │   │   │   ├── ixgbe_x540.h
-│   │   │   │   ├── ixgbe_x550.c
-│   │   │   │   ├── ixgbe_x550.h
-│   │   │   │   ├── meson.build
-│   │   │   │   └── README
-│   │   │   ├── ixgbe_82599_bypass.c
-│   │   │   ├── ixgbe_bypass_api.h
-│   │   │   ├── ixgbe_bypass.c
-│   │   │   ├── ixgbe_bypass_defines.h
-│   │   │   ├── ixgbe_bypass.h
-│   │   │   ├── ixgbe_ethdev.c
-│   │   │   ├── ixgbe_ethdev.h
-│   │   │   ├── ixgbe_fdir.c
-│   │   │   ├── ixgbe_flow.c
-│   │   │   ├── ixgbe_ipsec.c
-│   │   │   ├── ixgbe_ipsec.h
-│   │   │   ├── ixgbe_logs.h
-│   │   │   ├── ixgbe_pf.c
-│   │   │   ├── ixgbe_regs.h
-│   │   │   ├── ixgbe_rxtx.c
-│   │   │   ├── ixgbe_rxtx.h
-│   │   │   ├── ixgbe_rxtx_vec_common.h
-│   │   │   ├── ixgbe_rxtx_vec_neon.c
-│   │   │   ├── ixgbe_rxtx_vec_sse.c
-│   │   │   ├── ixgbe_tm.c
-│   │   │   ├── ixgbe_vf_representor.c
-│   │   │   ├── meson.build
-│   │   │   ├── rte_pmd_ixgbe.c
-│   │   │   ├── rte_pmd_ixgbe.h
-│   │   │   └── version.map
-│   │   ├── kni
-│   │   │   ├── meson.build
-│   │   │   ├── rte_eth_kni.c
-│   │   │   └── version.map
-│   │   ├── liquidio
-│   │   │   ├── base
-│   │   │   │   ├── lio_23xx_reg.h
-│   │   │   │   ├── lio_23xx_vf.c
-│   │   │   │   ├── lio_23xx_vf.h
-│   │   │   │   ├── lio_hw_defs.h
-│   │   │   │   ├── lio_mbox.c
-│   │   │   │   └── lio_mbox.h
-│   │   │   ├── lio_ethdev.c
-│   │   │   ├── lio_ethdev.h
-│   │   │   ├── lio_logs.h
-│   │   │   ├── lio_rxtx.c
-│   │   │   ├── lio_rxtx.h
-│   │   │   ├── lio_struct.h
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── memif
-│   │   │   ├── memif.h
-│   │   │   ├── memif_socket.c
-│   │   │   ├── memif_socket.h
-│   │   │   ├── meson.build
-│   │   │   ├── rte_eth_memif.c
-│   │   │   ├── rte_eth_memif.h
-│   │   │   └── version.map
-│   │   ├── meson.build
-│   │   ├── mlx4
-│   │   │   ├── meson.build
-│   │   │   ├── mlx4.c
-│   │   │   ├── mlx4_ethdev.c
-│   │   │   ├── mlx4_flow.c
-│   │   │   ├── mlx4_flow.h
-│   │   │   ├── mlx4_glue.c
-│   │   │   ├── mlx4_glue.h
-│   │   │   ├── mlx4.h
-│   │   │   ├── mlx4_intr.c
-│   │   │   ├── mlx4_mp.c
-│   │   │   ├── mlx4_mr.c
-│   │   │   ├── mlx4_mr.h
-│   │   │   ├── mlx4_prm.h
-│   │   │   ├── mlx4_rxq.c
-│   │   │   ├── mlx4_rxtx.c
-│   │   │   ├── mlx4_rxtx.h
-│   │   │   ├── mlx4_txq.c
-│   │   │   ├── mlx4_utils.c
-│   │   │   ├── mlx4_utils.h
-│   │   │   └── version.map
-│   │   ├── mlx5
-│   │   │   ├── linux
-│   │   │   │   ├── meson.build
-│   │   │   │   ├── mlx5_ethdev_os.c
-│   │   │   │   ├── mlx5_flow_os.c
-│   │   │   │   ├── mlx5_flow_os.h
-│   │   │   │   ├── mlx5_mp_os.c
-│   │   │   │   ├── mlx5_os.c
-│   │   │   │   ├── mlx5_os.h
-│   │   │   │   ├── mlx5_socket.c
-│   │   │   │   ├── mlx5_verbs.c
-│   │   │   │   ├── mlx5_verbs.h
-│   │   │   │   └── mlx5_vlan_os.c
-│   │   │   ├── meson.build
-│   │   │   ├── mlx5.c
-│   │   │   ├── mlx5_defs.h
-│   │   │   ├── mlx5_devx.c
-│   │   │   ├── mlx5_devx.h
-│   │   │   ├── mlx5_dr.c
-│   │   │   ├── mlx5_dr.h
-│   │   │   ├── mlx5_ethdev.c
-│   │   │   ├── mlx5_flow_aso.c
-│   │   │   ├── mlx5_flow.c
-│   │   │   ├── mlx5_flow_dv.c
-│   │   │   ├── mlx5_flow_flex.c
-│   │   │   ├── mlx5_flow.h
-│   │   │   ├── mlx5_flow_hw.c
-│   │   │   ├── mlx5_flow_meter.c
-│   │   │   ├── mlx5_flow_verbs.c
-│   │   │   ├── mlx5.h
-│   │   │   ├── mlx5_mac.c
-│   │   │   ├── mlx5_rss.c
-│   │   │   ├── mlx5_rx.c
-│   │   │   ├── mlx5_rx.h
-│   │   │   ├── mlx5_rxmode.c
-│   │   │   ├── mlx5_rxq.c
-│   │   │   ├── mlx5_rxtx.c
-│   │   │   ├── mlx5_rxtx.h
-│   │   │   ├── mlx5_rxtx_vec_altivec.h
-│   │   │   ├── mlx5_rxtx_vec.c
-│   │   │   ├── mlx5_rxtx_vec.h
-│   │   │   ├── mlx5_rxtx_vec_neon.h
-│   │   │   ├── mlx5_rxtx_vec_sse.h
-│   │   │   ├── mlx5_stats.c
-│   │   │   ├── mlx5_trigger.c
-│   │   │   ├── mlx5_tx.c
-│   │   │   ├── mlx5_tx_empw.c
-│   │   │   ├── mlx5_tx.h
-│   │   │   ├── mlx5_tx_mpw.c
-│   │   │   ├── mlx5_tx_nompw.c
-│   │   │   ├── mlx5_txpp.c
-│   │   │   ├── mlx5_txq.c
-│   │   │   ├── mlx5_tx_txpp.c
-│   │   │   ├── mlx5_utils.c
-│   │   │   ├── mlx5_utils.h
-│   │   │   ├── mlx5_vlan.c
-│   │   │   ├── rte_pmd_mlx5.h
-│   │   │   ├── version.map
-│   │   │   └── windows
-│   │   │       ├── meson.build
-│   │   │       ├── mlx5_ethdev_os.c
-│   │   │       ├── mlx5_flow_os.c
-│   │   │       ├── mlx5_flow_os.h
-│   │   │       ├── mlx5_mp_os.c
-│   │   │       ├── mlx5_os.c
-│   │   │       ├── mlx5_os.h
-│   │   │       └── mlx5_vlan_os.c
-│   │   ├── mvneta
-│   │   │   ├── meson.build
-│   │   │   ├── mvneta_ethdev.c
-│   │   │   ├── mvneta_ethdev.h
-│   │   │   ├── mvneta_rxtx.c
-│   │   │   ├── mvneta_rxtx.h
-│   │   │   └── version.map
-│   │   ├── mvpp2
-│   │   │   ├── meson.build
-│   │   │   ├── mrvl_ethdev.c
-│   │   │   ├── mrvl_ethdev.h
-│   │   │   ├── mrvl_flow.c
-│   │   │   ├── mrvl_flow.h
-│   │   │   ├── mrvl_mtr.c
-│   │   │   ├── mrvl_mtr.h
-│   │   │   ├── mrvl_qos.c
-│   │   │   ├── mrvl_qos.h
-│   │   │   ├── mrvl_tm.c
-│   │   │   ├── mrvl_tm.h
-│   │   │   └── version.map
-│   │   ├── netvsc
-│   │   │   ├── hn_ethdev.c
-│   │   │   ├── hn_logs.h
-│   │   │   ├── hn_nvs.c
-│   │   │   ├── hn_nvs.h
-│   │   │   ├── hn_rndis.c
-│   │   │   ├── hn_rndis.h
-│   │   │   ├── hn_rxtx.c
-│   │   │   ├── hn_var.h
-│   │   │   ├── hn_vf.c
-│   │   │   ├── meson.build
-│   │   │   ├── ndis.h
-│   │   │   ├── rndis.h
-│   │   │   └── version.map
-│   │   ├── nfb
-│   │   │   ├── meson.build
-│   │   │   ├── nfb_ethdev.c
-│   │   │   ├── nfb.h
-│   │   │   ├── nfb_rx.c
-│   │   │   ├── nfb_rx.h
-│   │   │   ├── nfb_rxmode.c
-│   │   │   ├── nfb_rxmode.h
-│   │   │   ├── nfb_stats.c
-│   │   │   ├── nfb_stats.h
-│   │   │   ├── nfb_tx.c
-│   │   │   ├── nfb_tx.h
-│   │   │   └── version.map
-│   │   ├── nfp
-│   │   │   ├── meson.build
-│   │   │   ├── nfp_common.c
-│   │   │   ├── nfp_common.h
-│   │   │   ├── nfpcore
-│   │   │   │   ├── nfp6000
-│   │   │   │   │   ├── nfp6000.h
-│   │   │   │   │   └── nfp_xpb.h
-│   │   │   │   ├── nfp-common
-│   │   │   │   │   ├── nfp_cppat.h
-│   │   │   │   │   ├── nfp_platform.h
-│   │   │   │   │   └── nfp_resid.h
-│   │   │   │   ├── nfp_cppcore.c
-│   │   │   │   ├── nfp_cpp.h
-│   │   │   │   ├── nfp_cpp_pcie_ops.c
-│   │   │   │   ├── nfp_crc.c
-│   │   │   │   ├── nfp_crc.h
-│   │   │   │   ├── nfp_hwinfo.c
-│   │   │   │   ├── nfp_hwinfo.h
-│   │   │   │   ├── nfp_mip.c
-│   │   │   │   ├── nfp_mip.h
-│   │   │   │   ├── nfp_mutex.c
-│   │   │   │   ├── nfp_nffw.c
-│   │   │   │   ├── nfp_nffw.h
-│   │   │   │   ├── nfp_nsp.c
-│   │   │   │   ├── nfp_nsp_cmds.c
-│   │   │   │   ├── nfp_nsp_eth.c
-│   │   │   │   ├── nfp_nsp.h
-│   │   │   │   ├── nfp_resource.c
-│   │   │   │   ├── nfp_resource.h
-│   │   │   │   ├── nfp_rtsym.c
-│   │   │   │   ├── nfp_rtsym.h
-│   │   │   │   └── nfp_target.h
-│   │   │   ├── nfp_cpp_bridge.c
-│   │   │   ├── nfp_cpp_bridge.h
-│   │   │   ├── nfp_ctrl.h
-│   │   │   ├── nfp_ethdev.c
-│   │   │   ├── nfp_ethdev_vf.c
-│   │   │   ├── nfp_logs.h
-│   │   │   ├── nfp_rxtx.c
-│   │   │   ├── nfp_rxtx.h
-│   │   │   └── version.map
-│   │   ├── ngbe
-│   │   │   ├── base
-│   │   │   │   ├── meson.build
-│   │   │   │   ├── ngbe_devids.h
-│   │   │   │   ├── ngbe_dummy.h
-│   │   │   │   ├── ngbe_eeprom.c
-│   │   │   │   ├── ngbe_eeprom.h
-│   │   │   │   ├── ngbe.h
-│   │   │   │   ├── ngbe_hw.c
-│   │   │   │   ├── ngbe_hw.h
-│   │   │   │   ├── ngbe_mbx.c
-│   │   │   │   ├── ngbe_mbx.h
-│   │   │   │   ├── ngbe_mng.c
-│   │   │   │   ├── ngbe_mng.h
-│   │   │   │   ├── ngbe_osdep.h
-│   │   │   │   ├── ngbe_phy.c
-│   │   │   │   ├── ngbe_phy.h
-│   │   │   │   ├── ngbe_phy_mvl.c
-│   │   │   │   ├── ngbe_phy_mvl.h
-│   │   │   │   ├── ngbe_phy_rtl.c
-│   │   │   │   ├── ngbe_phy_rtl.h
-│   │   │   │   ├── ngbe_phy_yt.c
-│   │   │   │   ├── ngbe_phy_yt.h
-│   │   │   │   ├── ngbe_regs.h
-│   │   │   │   ├── ngbe_status.h
-│   │   │   │   └── ngbe_type.h
-│   │   │   ├── meson.build
-│   │   │   ├── ngbe_ethdev.c
-│   │   │   ├── ngbe_ethdev.h
-│   │   │   ├── ngbe_logs.h
-│   │   │   ├── ngbe_pf.c
-│   │   │   ├── ngbe_ptypes.c
-│   │   │   ├── ngbe_ptypes.h
-│   │   │   ├── ngbe_regs_group.h
-│   │   │   ├── ngbe_rxtx.c
-│   │   │   ├── ngbe_rxtx.h
-│   │   │   └── version.map
-│   │   ├── null
-│   │   │   ├── meson.build
-│   │   │   ├── rte_eth_null.c
-│   │   │   └── version.map
-│   │   ├── octeontx
-│   │   │   ├── base
-│   │   │   │   ├── meson.build
-│   │   │   │   ├── octeontx_bgx.c
-│   │   │   │   ├── octeontx_bgx.h
-│   │   │   │   ├── octeontx_io.h
-│   │   │   │   ├── octeontx_pki_var.h
-│   │   │   │   ├── octeontx_pkivf.c
-│   │   │   │   ├── octeontx_pkivf.h
-│   │   │   │   ├── octeontx_pkovf.c
-│   │   │   │   └── octeontx_pkovf.h
-│   │   │   ├── meson.build
-│   │   │   ├── octeontx_ethdev.c
-│   │   │   ├── octeontx_ethdev.h
-│   │   │   ├── octeontx_ethdev_ops.c
-│   │   │   ├── octeontx_logs.h
-│   │   │   ├── octeontx_rxtx.c
-│   │   │   ├── octeontx_rxtx.h
-│   │   │   └── version.map
-│   │   ├── octeontx_ep
-│   │   │   ├── meson.build
-│   │   │   ├── otx2_ep_vf.c
-│   │   │   ├── otx2_ep_vf.h
-│   │   │   ├── otx_ep_common.h
-│   │   │   ├── otx_ep_ethdev.c
-│   │   │   ├── otx_ep_rxtx.c
-│   │   │   ├── otx_ep_rxtx.h
-│   │   │   ├── otx_ep_vf.c
-│   │   │   ├── otx_ep_vf.h
-│   │   │   └── version.map
-│   │   ├── pcap
-│   │   │   ├── meson.build
-│   │   │   ├── pcap_ethdev.c
-│   │   │   ├── pcap_osdep_freebsd.c
-│   │   │   ├── pcap_osdep.h
-│   │   │   ├── pcap_osdep_linux.c
-│   │   │   ├── pcap_osdep_windows.c
-│   │   │   └── version.map
-│   │   ├── pfe
-│   │   │   ├── base
-│   │   │   │   ├── cbus
-│   │   │   │   │   ├── bmu.h
-│   │   │   │   │   ├── class_csr.h
-│   │   │   │   │   ├── emac_mtip.h
-│   │   │   │   │   ├── gpi.h
-│   │   │   │   │   ├── hif.h
-│   │   │   │   │   ├── hif_nocpy.h
-│   │   │   │   │   ├── tmu_csr.h
-│   │   │   │   │   └── util_csr.h
-│   │   │   │   ├── cbus.h
-│   │   │   │   └── pfe.h
-│   │   │   ├── meson.build
-│   │   │   ├── pfe_ethdev.c
-│   │   │   ├── pfe_eth.h
-│   │   │   ├── pfe_hal.c
-│   │   │   ├── pfe_hif.c
-│   │   │   ├── pfe_hif.h
-│   │   │   ├── pfe_hif_lib.c
-│   │   │   ├── pfe_hif_lib.h
-│   │   │   ├── pfe_logs.h
-│   │   │   ├── pfe_mod.h
-│   │   │   └── version.map
-│   │   ├── qede
-│   │   │   ├── base
-│   │   │   │   ├── bcm_osal.c
-│   │   │   │   ├── bcm_osal.h
-│   │   │   │   ├── common_hsi.h
-│   │   │   │   ├── ecore_attn_values.h
-│   │   │   │   ├── ecore_chain.h
-│   │   │   │   ├── ecore_cxt_api.h
-│   │   │   │   ├── ecore_cxt.c
-│   │   │   │   ├── ecore_cxt.h
-│   │   │   │   ├── ecore_dcbx_api.h
-│   │   │   │   ├── ecore_dcbx.c
-│   │   │   │   ├── ecore_dcbx.h
-│   │   │   │   ├── ecore_dev_api.h
-│   │   │   │   ├── ecore_dev.c
-│   │   │   │   ├── ecore_gtt_reg_addr.h
-│   │   │   │   ├── ecore_gtt_values.h
-│   │   │   │   ├── ecore.h
-│   │   │   │   ├── ecore_hsi_common.h
-│   │   │   │   ├── ecore_hsi_debug_tools.h
-│   │   │   │   ├── ecore_hsi_eth.h
-│   │   │   │   ├── ecore_hsi_func_common.h
-│   │   │   │   ├── ecore_hsi_init_func.h
-│   │   │   │   ├── ecore_hsi_init_tool.h
-│   │   │   │   ├── ecore_hw.c
-│   │   │   │   ├── ecore_hw_defs.h
-│   │   │   │   ├── ecore_hw.h
-│   │   │   │   ├── ecore_init_fw_funcs.c
-│   │   │   │   ├── ecore_init_fw_funcs.h
-│   │   │   │   ├── ecore_init_ops.c
-│   │   │   │   ├── ecore_init_ops.h
-│   │   │   │   ├── ecore_int_api.h
-│   │   │   │   ├── ecore_int.c
-│   │   │   │   ├── ecore_int.h
-│   │   │   │   ├── ecore_iov_api.h
-│   │   │   │   ├── ecore_iro.h
-│   │   │   │   ├── ecore_iro_values.h
-│   │   │   │   ├── ecore_l2_api.h
-│   │   │   │   ├── ecore_l2.c
-│   │   │   │   ├── ecore_l2.h
-│   │   │   │   ├── ecore_mcp_api.h
-│   │   │   │   ├── ecore_mcp.c
-│   │   │   │   ├── ecore_mcp.h
-│   │   │   │   ├── ecore_mng_tlv.c
-│   │   │   │   ├── ecore_proto_if.h
-│   │   │   │   ├── ecore_rt_defs.h
-│   │   │   │   ├── ecore_sp_api.h
-│   │   │   │   ├── ecore_sp_commands.c
-│   │   │   │   ├── ecore_sp_commands.h
-│   │   │   │   ├── ecore_spq.c
-│   │   │   │   ├── ecore_spq.h
-│   │   │   │   ├── ecore_sriov.c
-│   │   │   │   ├── ecore_sriov.h
-│   │   │   │   ├── ecore_status.h
-│   │   │   │   ├── ecore_utils.h
-│   │   │   │   ├── ecore_vf_api.h
-│   │   │   │   ├── ecore_vf.c
-│   │   │   │   ├── ecore_vf.h
-│   │   │   │   ├── ecore_vfpf_if.h
-│   │   │   │   ├── eth_common.h
-│   │   │   │   ├── mcp_public.h
-│   │   │   │   ├── meson.build
-│   │   │   │   ├── nvm_cfg.h
-│   │   │   │   └── reg_addr.h
-│   │   │   ├── meson.build
-│   │   │   ├── qede_debug.c
-│   │   │   ├── qede_debug.h
-│   │   │   ├── qede_ethdev.c
-│   │   │   ├── qede_ethdev.h
-│   │   │   ├── qede_filter.c
-│   │   │   ├── qede_if.h
-│   │   │   ├── qede_logs.h
-│   │   │   ├── qede_main.c
-│   │   │   ├── qede_regs.c
-│   │   │   ├── qede_rxtx.c
-│   │   │   ├── qede_rxtx.h
-│   │   │   ├── qede_sriov.c
-│   │   │   ├── qede_sriov.h
-│   │   │   └── version.map
-│   │   ├── ring
-│   │   │   ├── meson.build
-│   │   │   ├── rte_eth_ring.c
-│   │   │   ├── rte_eth_ring.h
-│   │   │   └── version.map
-│   │   ├── sfc
-│   │   │   ├── meson.build
-│   │   │   ├── sfc.c
-│   │   │   ├── sfc_debug.h
-│   │   │   ├── sfc_dp.c
-│   │   │   ├── sfc_dp.h
-│   │   │   ├── sfc_dp_rx.h
-│   │   │   ├── sfc_dp_tx.h
-│   │   │   ├── sfc_ef100.h
-│   │   │   ├── sfc_ef100_rx.c
-│   │   │   ├── sfc_ef100_tx.c
-│   │   │   ├── sfc_ef10_essb_rx.c
-│   │   │   ├── sfc_ef10.h
-│   │   │   ├── sfc_ef10_rx.c
-│   │   │   ├── sfc_ef10_rx_ev.h
-│   │   │   ├── sfc_ef10_tx.c
-│   │   │   ├── sfc_ethdev.c
-│   │   │   ├── sfc_ethdev_state.h
-│   │   │   ├── sfc_ev.c
-│   │   │   ├── sfc_ev.h
-│   │   │   ├── sfc_filter.c
-│   │   │   ├── sfc_filter.h
-│   │   │   ├── sfc_flow.c
-│   │   │   ├── sfc_flow.h
-│   │   │   ├── sfc_flow_rss.c
-│   │   │   ├── sfc_flow_rss.h
-│   │   │   ├── sfc_flow_tunnel.c
-│   │   │   ├── sfc_flow_tunnel.h
-│   │   │   ├── sfc.h
-│   │   │   ├── sfc_intr.c
-│   │   │   ├── sfc_kvargs.c
-│   │   │   ├── sfc_kvargs.h
-│   │   │   ├── sfc_log.h
-│   │   │   ├── sfc_mae.c
-│   │   │   ├── sfc_mae_counter.c
-│   │   │   ├── sfc_mae_counter.h
-│   │   │   ├── sfc_mae.h
-│   │   │   ├── sfc_mcdi.c
-│   │   │   ├── sfc_nic_dma.c
-│   │   │   ├── sfc_nic_dma_dp.h
-│   │   │   ├── sfc_nic_dma.h
-│   │   │   ├── sfc_port.c
-│   │   │   ├── sfc_repr.c
-│   │   │   ├── sfc_repr.h
-│   │   │   ├── sfc_repr_proxy_api.h
-│   │   │   ├── sfc_repr_proxy.c
-│   │   │   ├── sfc_repr_proxy.h
-│   │   │   ├── sfc_rx.c
-│   │   │   ├── sfc_rx.h
-│   │   │   ├── sfc_service.c
-│   │   │   ├── sfc_service.h
-│   │   │   ├── sfc_sriov.c
-│   │   │   ├── sfc_sriov.h
-│   │   │   ├── sfc_stats.h
-│   │   │   ├── sfc_switch.c
-│   │   │   ├── sfc_switch.h
-│   │   │   ├── sfc_sw_stats.c
-│   │   │   ├── sfc_sw_stats.h
-│   │   │   ├── sfc_tso.c
-│   │   │   ├── sfc_tso.h
-│   │   │   ├── sfc_tweak.h
-│   │   │   ├── sfc_tx.c
-│   │   │   ├── sfc_tx.h
-│   │   │   └── version.map
-│   │   ├── softnic
-│   │   │   ├── conn.c
-│   │   │   ├── conn.h
-│   │   │   ├── firmware.cli
-│   │   │   ├── meson.build
-│   │   │   ├── parser.c
-│   │   │   ├── parser.h
-│   │   │   ├── rte_eth_softnic_action.c
-│   │   │   ├── rte_eth_softnic.c
-│   │   │   ├── rte_eth_softnic_cli.c
-│   │   │   ├── rte_eth_softnic_cryptodev.c
-│   │   │   ├── rte_eth_softnic_flow.c
-│   │   │   ├── rte_eth_softnic.h
-│   │   │   ├── rte_eth_softnic_internals.h
-│   │   │   ├── rte_eth_softnic_link.c
-│   │   │   ├── rte_eth_softnic_mempool.c
-│   │   │   ├── rte_eth_softnic_meter.c
-│   │   │   ├── rte_eth_softnic_pipeline.c
-│   │   │   ├── rte_eth_softnic_swq.c
-│   │   │   ├── rte_eth_softnic_tap.c
-│   │   │   ├── rte_eth_softnic_thread.c
-│   │   │   ├── rte_eth_softnic_tm.c
-│   │   │   └── version.map
-│   │   ├── tap
-│   │   │   ├── meson.build
-│   │   │   ├── rte_eth_tap.c
-│   │   │   ├── rte_eth_tap.h
-│   │   │   ├── tap_bpf_api.c
-│   │   │   ├── tap_bpf.h
-│   │   │   ├── tap_bpf_insns.h
-│   │   │   ├── tap_bpf_program.c
-│   │   │   ├── tap_flow.c
-│   │   │   ├── tap_flow.h
-│   │   │   ├── tap_intr.c
-│   │   │   ├── tap_log.h
-│   │   │   ├── tap_netlink.c
-│   │   │   ├── tap_netlink.h
-│   │   │   ├── tap_rss.h
-│   │   │   ├── tap_tcmsgs.c
-│   │   │   ├── tap_tcmsgs.h
-│   │   │   └── version.map
-│   │   ├── thunderx
-│   │   │   ├── base
-│   │   │   │   ├── meson.build
-│   │   │   │   ├── nicvf_bsvf.c
-│   │   │   │   ├── nicvf_bsvf.h
-│   │   │   │   ├── nicvf_hw.c
-│   │   │   │   ├── nicvf_hw_defs.h
-│   │   │   │   ├── nicvf_hw.h
-│   │   │   │   ├── nicvf_mbox.c
-│   │   │   │   ├── nicvf_mbox.h
-│   │   │   │   └── nicvf_plat.h
-│   │   │   ├── meson.build
-│   │   │   ├── nicvf_ethdev.c
-│   │   │   ├── nicvf_ethdev.h
-│   │   │   ├── nicvf_logs.h
-│   │   │   ├── nicvf_rxtx.c
-│   │   │   ├── nicvf_rxtx.h
-│   │   │   ├── nicvf_struct.h
-│   │   │   ├── nicvf_svf.c
-│   │   │   ├── nicvf_svf.h
-│   │   │   └── version.map
-│   │   ├── txgbe
-│   │   │   ├── base
-│   │   │   │   ├── meson.build
-│   │   │   │   ├── txgbe_dcb.c
-│   │   │   │   ├── txgbe_dcb.h
-│   │   │   │   ├── txgbe_dcb_hw.c
-│   │   │   │   ├── txgbe_dcb_hw.h
-│   │   │   │   ├── txgbe_devids.h
-│   │   │   │   ├── txgbe_dummy.h
-│   │   │   │   ├── txgbe_eeprom.c
-│   │   │   │   ├── txgbe_eeprom.h
-│   │   │   │   ├── txgbe.h
-│   │   │   │   ├── txgbe_hw.c
-│   │   │   │   ├── txgbe_hw.h
-│   │   │   │   ├── txgbe_mbx.c
-│   │   │   │   ├── txgbe_mbx.h
-│   │   │   │   ├── txgbe_mng.c
-│   │   │   │   ├── txgbe_mng.h
-│   │   │   │   ├── txgbe_osdep.h
-│   │   │   │   ├── txgbe_phy.c
-│   │   │   │   ├── txgbe_phy.h
-│   │   │   │   ├── txgbe_regs.h
-│   │   │   │   ├── txgbe_status.h
-│   │   │   │   ├── txgbe_type.h
-│   │   │   │   ├── txgbe_vf.c
-│   │   │   │   └── txgbe_vf.h
-│   │   │   ├── meson.build
-│   │   │   ├── rte_pmd_txgbe.h
-│   │   │   ├── txgbe_ethdev.c
-│   │   │   ├── txgbe_ethdev.h
-│   │   │   ├── txgbe_ethdev_vf.c
-│   │   │   ├── txgbe_fdir.c
-│   │   │   ├── txgbe_flow.c
-│   │   │   ├── txgbe_ipsec.c
-│   │   │   ├── txgbe_ipsec.h
-│   │   │   ├── txgbe_logs.h
-│   │   │   ├── txgbe_pf.c
-│   │   │   ├── txgbe_ptypes.c
-│   │   │   ├── txgbe_ptypes.h
-│   │   │   ├── txgbe_regs_group.h
-│   │   │   ├── txgbe_rxtx.c
-│   │   │   ├── txgbe_rxtx.h
-│   │   │   ├── txgbe_tm.c
-│   │   │   └── version.map
-│   │   ├── vdev_netvsc
-│   │   │   ├── meson.build
-│   │   │   ├── vdev_netvsc.c
-│   │   │   └── version.map
-│   │   ├── vhost
-│   │   │   ├── meson.build
-│   │   │   ├── rte_eth_vhost.c
-│   │   │   ├── rte_eth_vhost.h
-│   │   │   └── version.map
-│   │   ├── virtio
-│   │   │   ├── meson.build
-│   │   │   ├── version.map
-│   │   │   ├── virtio.c
-│   │   │   ├── virtio_ethdev.c
-│   │   │   ├── virtio_ethdev.h
-│   │   │   ├── virtio.h
-│   │   │   ├── virtio_logs.h
-│   │   │   ├── virtio_pci.c
-│   │   │   ├── virtio_pci_ethdev.c
-│   │   │   ├── virtio_pci.h
-│   │   │   ├── virtio_ring.h
-│   │   │   ├── virtio_rxtx.c
-│   │   │   ├── virtio_rxtx.h
-│   │   │   ├── virtio_rxtx_packed_avx.h
-│   │   │   ├── virtio_rxtx_packed.c
-│   │   │   ├── virtio_rxtx_packed.h
-│   │   │   ├── virtio_rxtx_packed_neon.h
-│   │   │   ├── virtio_rxtx_simple_altivec.c
-│   │   │   ├── virtio_rxtx_simple.c
-│   │   │   ├── virtio_rxtx_simple.h
-│   │   │   ├── virtio_rxtx_simple_neon.c
-│   │   │   ├── virtio_rxtx_simple_sse.c
-│   │   │   ├── virtio_user
-│   │   │   │   ├── vhost.h
-│   │   │   │   ├── vhost_kernel.c
-│   │   │   │   ├── vhost_kernel_tap.c
-│   │   │   │   ├── vhost_kernel_tap.h
-│   │   │   │   ├── vhost_user.c
-│   │   │   │   ├── vhost_vdpa.c
-│   │   │   │   ├── virtio_user_dev.c
-│   │   │   │   └── virtio_user_dev.h
-│   │   │   ├── virtio_user_ethdev.c
-│   │   │   ├── virtqueue.c
-│   │   │   └── virtqueue.h
-│   │   └── vmxnet3
-│   │       ├── base
-│   │       │   ├── README
-│   │       │   ├── upt1_defs.h
-│   │       │   ├── vmware_pack_begin.h
-│   │       │   ├── vmware_pack_end.h
-│   │       │   ├── vmxnet3_defs.h
-│   │       │   └── vmxnet3_osdep.h
-│   │       ├── meson.build
-│   │       ├── version.map
-│   │       ├── vmxnet3_ethdev.c
-│   │       ├── vmxnet3_ethdev.h
-│   │       ├── vmxnet3_logs.h
-│   │       ├── vmxnet3_ring.h
-│   │       └── vmxnet3_rxtx.c
-│   ├── raw
-│   │   ├── cnxk_bphy
-│   │   │   ├── cnxk_bphy.c
-│   │   │   ├── cnxk_bphy_cgx.c
-│   │   │   ├── cnxk_bphy_cgx.h
-│   │   │   ├── cnxk_bphy_cgx_test.c
-│   │   │   ├── cnxk_bphy_irq.c
-│   │   │   ├── cnxk_bphy_irq.h
-│   │   │   ├── meson.build
-│   │   │   ├── rte_pmd_bphy.h
-│   │   │   └── version.map
-│   │   ├── cnxk_gpio
-│   │   │   ├── cnxk_gpio.c
-│   │   │   ├── cnxk_gpio.h
-│   │   │   ├── cnxk_gpio_irq.c
-│   │   │   ├── cnxk_gpio_selftest.c
-│   │   │   ├── meson.build
-│   │   │   ├── rte_pmd_cnxk_gpio.h
-│   │   │   └── version.map
-│   │   ├── dpaa2_cmdif
-│   │   │   ├── dpaa2_cmdif.c
-│   │   │   ├── dpaa2_cmdif_logs.h
-│   │   │   ├── meson.build
-│   │   │   ├── rte_pmd_dpaa2_cmdif.h
-│   │   │   └── version.map
-│   │   ├── dpaa2_qdma
-│   │   │   ├── dpaa2_qdma.c
-│   │   │   ├── dpaa2_qdma.h
-│   │   │   ├── dpaa2_qdma_logs.h
-│   │   │   ├── meson.build
-│   │   │   ├── rte_pmd_dpaa2_qdma.h
-│   │   │   └── version.map
-│   │   ├── ifpga
-│   │   │   ├── base
-│   │   │   │   ├── ifpga_api.c
-│   │   │   │   ├── ifpga_api.h
-│   │   │   │   ├── ifpga_compat.h
-│   │   │   │   ├── ifpga_defines.h
-│   │   │   │   ├── ifpga_enumerate.c
-│   │   │   │   ├── ifpga_enumerate.h
-│   │   │   │   ├── ifpga_feature_dev.c
-│   │   │   │   ├── ifpga_feature_dev.h
-│   │   │   │   ├── ifpga_fme.c
-│   │   │   │   ├── ifpga_fme_dperf.c
-│   │   │   │   ├── ifpga_fme_error.c
-│   │   │   │   ├── ifpga_fme_iperf.c
-│   │   │   │   ├── ifpga_fme_pr.c
-│   │   │   │   ├── ifpga_fme_rsu.c
-│   │   │   │   ├── ifpga_hw.h
-│   │   │   │   ├── ifpga_port.c
-│   │   │   │   ├── ifpga_port_error.c
-│   │   │   │   ├── ifpga_sec_mgr.c
-│   │   │   │   ├── ifpga_sec_mgr.h
-│   │   │   │   ├── meson.build
-│   │   │   │   ├── opae_at24_eeprom.c
-│   │   │   │   ├── opae_at24_eeprom.h
-│   │   │   │   ├── opae_debug.c
-│   │   │   │   ├── opae_debug.h
-│   │   │   │   ├── opae_eth_group.c
-│   │   │   │   ├── opae_eth_group.h
-│   │   │   │   ├── opae_hw_api.c
-│   │   │   │   ├── opae_hw_api.h
-│   │   │   │   ├── opae_i2c.c
-│   │   │   │   ├── opae_i2c.h
-│   │   │   │   ├── opae_ifpga_hw_api.c
-│   │   │   │   ├── opae_ifpga_hw_api.h
-│   │   │   │   ├── opae_intel_max10.c
-│   │   │   │   ├── opae_intel_max10.h
-│   │   │   │   ├── opae_osdep.h
-│   │   │   │   ├── opae_spi.c
-│   │   │   │   ├── opae_spi.h
-│   │   │   │   ├── opae_spi_transaction.c
-│   │   │   │   ├── osdep_raw
-│   │   │   │   │   └── osdep_generic.h
-│   │   │   │   ├── osdep_rte
-│   │   │   │   │   └── osdep_generic.h
-│   │   │   │   └── README
-│   │   │   ├── ifpga_rawdev.c
-│   │   │   ├── ifpga_rawdev.h
-│   │   │   ├── meson.build
-│   │   │   ├── rte_pmd_ifpga.c
-│   │   │   ├── rte_pmd_ifpga.h
-│   │   │   └── version.map
-│   │   ├── ioat
-│   │   │   ├── dpdk_idxd_cfg.py -> ../../dma/idxd/dpdk_idxd_cfg.py
-│   │   │   ├── idxd_bus.c
-│   │   │   ├── idxd_pci.c
-│   │   │   ├── ioat_common.c
-│   │   │   ├── ioat_private.h
-│   │   │   ├── ioat_rawdev.c
-│   │   │   ├── ioat_rawdev_test.c
-│   │   │   ├── ioat_spec.h
-│   │   │   ├── meson.build
-│   │   │   ├── rte_idxd_rawdev_fns.h
-│   │   │   ├── rte_ioat_rawdev_fns.h
-│   │   │   ├── rte_ioat_rawdev.h
-│   │   │   └── version.map
-│   │   ├── meson.build
-│   │   ├── ntb
-│   │   │   ├── meson.build
-│   │   │   ├── ntb.c
-│   │   │   ├── ntb.h
-│   │   │   ├── ntb_hw_intel.c
-│   │   │   ├── ntb_hw_intel.h
-│   │   │   ├── rte_pmd_ntb.h
-│   │   │   └── version.map
-│   │   └── skeleton
-│   │       ├── meson.build
-│   │       ├── skeleton_rawdev.c
-│   │       ├── skeleton_rawdev.h
-│   │       ├── skeleton_rawdev_test.c
-│   │       └── version.map
-│   ├── regex
-│   │   ├── cn9k
-│   │   │   ├── cn9k_regexdev.c
-│   │   │   ├── cn9k_regexdev_compiler.c
-│   │   │   ├── cn9k_regexdev_compiler.h
-│   │   │   ├── cn9k_regexdev.h
-│   │   │   ├── meson.build
-│   │   │   └── version.map
-│   │   ├── meson.build
-│   │   └── mlx5
-│   │       ├── meson.build
-│   │       ├── mlx5_regex.c
-│   │       ├── mlx5_regex_control.c
-│   │       ├── mlx5_regex_devx.c
-│   │       ├── mlx5_regex_fastpath.c
-│   │       ├── mlx5_regex.h
-│   │       ├── mlx5_regex_utils.h
-│   │       ├── mlx5_rxp.c
-│   │       ├── mlx5_rxp.h
-│   │       └── version.map
-│   └── vdpa
-│       ├── ifc
-│       │   ├── base
-│       │   │   ├── ifcvf.c
-│       │   │   ├── ifcvf.h
-│       │   │   └── ifcvf_osdep.h
-│       │   ├── ifcvf_vdpa.c
-│       │   ├── meson.build
-│       │   └── version.map
-│       ├── meson.build
-│       ├── mlx5
-│       │   ├── meson.build
-│       │   ├── mlx5_vdpa.c
-│       │   ├── mlx5_vdpa_event.c
-│       │   ├── mlx5_vdpa.h
-│       │   ├── mlx5_vdpa_lm.c
-│       │   ├── mlx5_vdpa_mem.c
-│       │   ├── mlx5_vdpa_steer.c
-│       │   ├── mlx5_vdpa_utils.h
-│       │   ├── mlx5_vdpa_virtq.c
-│       │   └── version.map
-│       └── sfc
-│           ├── meson.build
-│           ├── sfc_vdpa.c
-│           ├── sfc_vdpa_debug.h
-│           ├── sfc_vdpa_filter.c
-│           ├── sfc_vdpa.h
-│           ├── sfc_vdpa_hw.c
-│           ├── sfc_vdpa_log.h
-│           ├── sfc_vdpa_mcdi.c
-│           ├── sfc_vdpa_ops.c
-│           ├── sfc_vdpa_ops.h
-│           └── version.map
-├── examples
-│   ├── bbdev_app
-│   │   ├── main.c
-│   │   ├── Makefile
-│   │   └── meson.build
-│   ├── bond
-│   │   ├── main.c
-│   │   ├── main.h
-│   │   ├── Makefile
-│   │   └── meson.build
-│   ├── bpf
-│   │   ├── dummy.c
-│   │   ├── README
-│   │   ├── t1.c
-│   │   ├── t2.c
-│   │   └── t3.c
-│   ├── cmdline
-│   │   ├── commands.c
-│   │   ├── commands.h
-│   │   ├── main.c
-│   │   ├── Makefile
-│   │   ├── meson.build
-│   │   ├── parse_obj_list.c
-│   │   └── parse_obj_list.h
-│   ├── distributor
-│   │   ├── main.c
-│   │   ├── Makefile
-│   │   └── meson.build
-│   ├── dma
-│   │   ├── dmafwd.c
-│   │   ├── Makefile
-│   │   └── meson.build
-│   ├── ethtool
-│   │   ├── ethtool-app
-│   │   │   ├── ethapp.c
-│   │   │   ├── ethapp.h
-│   │   │   ├── main.c
-│   │   │   └── Makefile
-│   │   ├── lib
-│   │   │   ├── Makefile
-│   │   │   ├── rte_ethtool.c
-│   │   │   └── rte_ethtool.h
-│   │   ├── Makefile
-│   │   └── meson.build
-│   ├── eventdev_pipeline
-│   │   ├── main.c
-│   │   ├── Makefile
-│   │   ├── meson.build
-│   │   ├── pipeline_common.h
-│   │   ├── pipeline_worker_generic.c
-│   │   └── pipeline_worker_tx.c
-│   ├── fips_validation
-│   │   ├── fips_dev_self_test.c
-│   │   ├── fips_dev_self_test.h
-│   │   ├── fips_validation_aes.c
-│   │   ├── fips_validation.c
-│   │   ├── fips_validation_ccm.c
-│   │   ├── fips_validation_cmac.c
-│   │   ├── fips_validation_gcm.c
-│   │   ├── fips_validation.h
-│   │   ├── fips_validation_hmac.c
-│   │   ├── fips_validation_sha.c
-│   │   ├── fips_validation_tdes.c
-│   │   ├── fips_validation_xts.c
-│   │   ├── main.c
-│   │   ├── Makefile
-│   │   └── meson.build
-│   ├── flow_classify
-│   │   ├── flow_classify.c
-│   │   ├── ipv4_rules_file.txt
-│   │   ├── Makefile
-│   │   └── meson.build
-│   ├── flow_filtering
-│   │   ├── flow_blocks.c
-│   │   ├── main.c
-│   │   ├── Makefile
-│   │   └── meson.build
-│   ├── helloworld
-│   │   ├── main.c
-│   │   ├── Makefile
-│   │   └── meson.build
-│   ├── ip_fragmentation
-│   │   ├── main.c
-│   │   ├── Makefile
-│   │   └── meson.build
-│   ├── ip_pipeline
-│   │   ├── action.c
-│   │   ├── action.h
-│   │   ├── cli.c
-│   │   ├── cli.h
-│   │   ├── common.h
-│   │   ├── conn.c
-│   │   ├── conn.h
-│   │   ├── cryptodev.c
-│   │   ├── cryptodev.h
-│   │   ├── examples
-│   │   │   ├── firewall.cli
-│   │   │   ├── flow.cli
-│   │   │   ├── flow_crypto.cli
-│   │   │   ├── kni.cli
-│   │   │   ├── l2fwd.cli
-│   │   │   ├── route.cli
-│   │   │   ├── route_ecmp.cli
-│   │   │   ├── rss.cli
-│   │   │   └── tap.cli
-│   │   ├── kni.c
-│   │   ├── kni.h
-│   │   ├── link.c
-│   │   ├── link.h
-│   │   ├── main.c
-│   │   ├── Makefile
-│   │   ├── mempool.c
-│   │   ├── mempool.h
-│   │   ├── meson.build
-│   │   ├── parser.c
-│   │   ├── parser.h
-│   │   ├── pipeline.c
-│   │   ├── pipeline.h
-│   │   ├── swq.c
-│   │   ├── swq.h
-│   │   ├── tap.c
-│   │   ├── tap.h
-│   │   ├── thread.c
-│   │   ├── thread.h
-│   │   ├── tmgr.c
-│   │   └── tmgr.h
-│   ├── ip_reassembly
-│   │   ├── main.c
-│   │   ├── Makefile
-│   │   └── meson.build
-│   ├── ipsec-secgw
-│   │   ├── ep0.cfg
-│   │   ├── ep1.cfg
-│   │   ├── esp.c
-│   │   ├── esp.h
-│   │   ├── event_helper.c
-│   │   ├── event_helper.h
-│   │   ├── flow.c
-│   │   ├── flow.h
-│   │   ├── ipip.h
-│   │   ├── ipsec.c
-│   │   ├── ipsec.h
-│   │   ├── ipsec_process.c
-│   │   ├── ipsec-secgw.c
-│   │   ├── ipsec-secgw.h
-│   │   ├── ipsec_worker.c
-│   │   ├── ipsec_worker.h
-│   │   ├── Makefile
-│   │   ├── meson.build
-│   │   ├── parser.c
-│   │   ├── parser.h
-│   │   ├── rt.c
-│   │   ├── sa.c
-│   │   ├── sad.c
-│   │   ├── sad.h
-│   │   ├── sp4.c
-│   │   ├── sp6.c
-│   │   └── test
-│   │       ├── bypass_defs.sh
-│   │       ├── common_defs_secgw.sh
-│   │       ├── common_defs.sh
-│   │       ├── data_rxtx.sh
-│   │       ├── linux_test.sh
-│   │       ├── load_env.sh
-│   │       ├── pkttest.py
-│   │       ├── pkttest.sh
-│   │       ├── run_test.sh
-│   │       ├── trs_3descbc_sha1_common_defs.sh
-│   │       ├── trs_3descbc_sha1_defs.sh
-│   │       ├── trs_aescbc_sha1_common_defs.sh
-│   │       ├── trs_aescbc_sha1_defs.sh
-│   │       ├── trs_aesctr_sha1_common_defs.sh
-│   │       ├── trs_aesctr_sha1_defs.sh
-│   │       ├── trs_aesgcm_common_defs.sh
-│   │       ├── trs_aesgcm_defs.sh
-│   │       ├── trs_ipv6opts.py
-│   │       ├── tun_3descbc_sha1_common_defs.sh
-│   │       ├── tun_3descbc_sha1_defs.sh
-│   │       ├── tun_aescbc_sha1_common_defs.sh
-│   │       ├── tun_aescbc_sha1_defs.sh
-│   │       ├── tun_aesctr_sha1_common_defs.sh
-│   │       ├── tun_aesctr_sha1_defs.sh
-│   │       ├── tun_aesgcm_common_defs.sh
-│   │       ├── tun_aesgcm_defs.sh
-│   │       └── tun_null_header_reconstruct.py
-│   ├── ipv4_multicast
-│   │   ├── main.c
-│   │   ├── Makefile
-│   │   └── meson.build
-│   ├── kni
-│   │   ├── main.c
-│   │   ├── Makefile
-│   │   └── meson.build
-│   ├── l2fwd
-│   │   ├── main.c
-│   │   ├── Makefile
-│   │   └── meson.build
-│   ├── l2fwd-cat
-│   │   ├── cat.c
-│   │   ├── cat.h
-│   │   ├── l2fwd-cat.c
-│   │   ├── Makefile
-│   │   └── meson.build
-│   ├── l2fwd-crypto
-│   │   ├── main.c
-│   │   ├── Makefile
-│   │   └── meson.build
-│   ├── l2fwd-event
-│   │   ├── l2fwd_common.c
-│   │   ├── l2fwd_common.h
-│   │   ├── l2fwd_event.c
-│   │   ├── l2fwd_event_generic.c
-│   │   ├── l2fwd_event.h
-│   │   ├── l2fwd_event_internal_port.c
-│   │   ├── l2fwd_poll.c
-│   │   ├── l2fwd_poll.h
-│   │   ├── main.c
-│   │   ├── Makefile
-│   │   └── meson.build
-│   ├── l2fwd-jobstats
-│   │   ├── main.c
-│   │   ├── Makefile
-│   │   └── meson.build
-│   ├── l2fwd-keepalive
-│   │   ├── ka-agent
-│   │   │   ├── main.c
-│   │   │   └── Makefile
-│   │   ├── main.c
-│   │   ├── Makefile
-│   │   ├── meson.build
-│   │   ├── shm.c
-│   │   └── shm.h
-│   ├── l3fwd
-│   │   ├── em_default_v4.cfg
-│   │   ├── em_default_v6.cfg
-│   │   ├── em_route_parse.c
-│   │   ├── l3fwd_altivec.h
-│   │   ├── l3fwd_common.h
-│   │   ├── l3fwd_em.c
-│   │   ├── l3fwd_em.h
-│   │   ├── l3fwd_em_hlm.h
-│   │   ├── l3fwd_em_hlm_neon.h
-│   │   ├── l3fwd_em_hlm_sse.h
-│   │   ├── l3fwd_em_sequential.h
-│   │   ├── l3fwd_event.c
-│   │   ├── l3fwd_event_generic.c
-│   │   ├── l3fwd_event.h
-│   │   ├── l3fwd_event_internal_port.c
-│   │   ├── l3fwd_fib.c
-│   │   ├── l3fwd.h
-│   │   ├── l3fwd_lpm_altivec.h
-│   │   ├── l3fwd_lpm.c
-│   │   ├── l3fwd_lpm.h
-│   │   ├── l3fwd_lpm_neon.h
-│   │   ├── l3fwd_lpm_sse.h
-│   │   ├── l3fwd_neon.h
-│   │   ├── l3fwd_route.h
-│   │   ├── l3fwd_sse.h
-│   │   ├── lpm_default_v4.cfg
-│   │   ├── lpm_default_v6.cfg
-│   │   ├── lpm_route_parse.c
-│   │   ├── main.c
-│   │   ├── Makefile
-│   │   └── meson.build
-│   ├── l3fwd-acl
-│   │   ├── main.c
-│   │   ├── Makefile
-│   │   └── meson.build
-│   ├── l3fwd-graph
-│   │   ├── main.c
-│   │   ├── Makefile
-│   │   └── meson.build
-│   ├── l3fwd-power
-│   │   ├── main.c
-│   │   ├── main.h
-│   │   ├── Makefile
-│   │   ├── meson.build
-│   │   ├── perf_core.c
-│   │   └── perf_core.h
-│   ├── link_status_interrupt
-│   │   ├── main.c
-│   │   ├── Makefile
-│   │   └── meson.build
-│   ├── meson.build
-│   ├── multi_process
-│   │   ├── client_server_mp
-│   │   │   ├── Makefile
-│   │   │   ├── mp_client
-│   │   │   │   ├── client.c
-│   │   │   │   ├── Makefile
-│   │   │   │   └── meson.build
-│   │   │   ├── mp_server
-│   │   │   │   ├── args.c
-│   │   │   │   ├── args.h
-│   │   │   │   ├── init.c
-│   │   │   │   ├── init.h
-│   │   │   │   ├── main.c
-│   │   │   │   ├── Makefile
-│   │   │   │   └── meson.build
-│   │   │   └── shared
-│   │   │       └── common.h
-│   │   ├── hotplug_mp
-│   │   │   ├── commands.c
-│   │   │   ├── commands.h
-│   │   │   ├── main.c
-│   │   │   ├── Makefile
-│   │   │   └── meson.build
-│   │   ├── Makefile
-│   │   ├── simple_mp
-│   │   │   ├── main.c
-│   │   │   ├── Makefile
-│   │   │   ├── meson.build
-│   │   │   ├── mp_commands.c
-│   │   │   └── mp_commands.h
-│   │   └── symmetric_mp
-│   │       ├── main.c
-│   │       ├── Makefile
-│   │       └── meson.build
-│   ├── ntb
-│   │   ├── Makefile
-│   │   ├── meson.build
-│   │   └── ntb_fwd.c
-│   ├── packet_ordering
-│   │   ├── main.c
-│   │   ├── Makefile
-│   │   └── meson.build
-│   ├── pipeline
-│   │   ├── cli.c
-│   │   ├── cli.h
-│   │   ├── conn.c
-│   │   ├── conn.h
-│   │   ├── examples
-│   │   │   ├── fib.cli
-│   │   │   ├── fib_nexthop_group_table.txt
-│   │   │   ├── fib_nexthop_table.txt
-│   │   │   ├── fib_routing_table.txt
-│   │   │   ├── fib.spec
-│   │   │   ├── l2fwd.cli
-│   │   │   ├── l2fwd_macswp.cli
-│   │   │   ├── l2fwd_macswp_pcap.cli
-│   │   │   ├── l2fwd_macswp.spec
-│   │   │   ├── l2fwd_pcap.cli
-│   │   │   ├── l2fwd.spec
-│   │   │   ├── learner.cli
-│   │   │   ├── learner.spec
-│   │   │   ├── meter.cli
-│   │   │   ├── meter.spec
-│   │   │   ├── packet.txt
-│   │   │   ├── registers.cli
-│   │   │   ├── registers.spec
-│   │   │   ├── selector.cli
-│   │   │   ├── selector.spec
-│   │   │   ├── selector.txt
-│   │   │   ├── varbit.cli
-│   │   │   ├── varbit.spec
-│   │   │   ├── vxlan.cli
-│   │   │   ├── vxlan_pcap.cli
-│   │   │   ├── vxlan.spec
-│   │   │   ├── vxlan_table.py
-│   │   │   └── vxlan_table.txt
-│   │   ├── main.c
-│   │   ├── Makefile
-│   │   ├── meson.build
-│   │   ├── obj.c
-│   │   ├── obj.h
-│   │   ├── thread.c
-│   │   └── thread.h
-│   ├── ptpclient
-│   │   ├── Makefile
-│   │   ├── meson.build
-│   │   └── ptpclient.c
-│   ├── qos_meter
-│   │   ├── main.c
-│   │   ├── main.h
-│   │   ├── Makefile
-│   │   ├── meson.build
-│   │   ├── rte_policer.c
-│   │   └── rte_policer.h
-│   ├── qos_sched
-│   │   ├── app_thread.c
-│   │   ├── args.c
-│   │   ├── cfg_file.c
-│   │   ├── cfg_file.h
-│   │   ├── cmdline.c
-│   │   ├── init.c
-│   │   ├── main.c
-│   │   ├── main.h
-│   │   ├── Makefile
-│   │   ├── meson.build
-│   │   ├── profile.cfg
-│   │   ├── profile_ov.cfg
-│   │   └── stats.c
-│   ├── rxtx_callbacks
-│   │   ├── main.c
-│   │   ├── Makefile
-│   │   └── meson.build
-│   ├── server_node_efd
-│   │   ├── Makefile
-│   │   ├── node
-│   │   │   ├── Makefile
-│   │   │   ├── meson.build
-│   │   │   └── node.c
-│   │   ├── server
-│   │   │   ├── args.c
-│   │   │   ├── args.h
-│   │   │   ├── init.c
-│   │   │   ├── init.h
-│   │   │   ├── main.c
-│   │   │   ├── Makefile
-│   │   │   └── meson.build
-│   │   └── shared
-│   │       └── common.h
-│   ├── service_cores
-│   │   ├── main.c
-│   │   ├── Makefile
-│   │   └── meson.build
-│   ├── skeleton
-│   │   ├── basicfwd.c
-│   │   ├── Makefile
-│   │   └── meson.build
-│   ├── timer
-│   │   ├── main.c
-│   │   ├── Makefile
-│   │   └── meson.build
-│   ├── vdpa
-│   │   ├── main.c
-│   │   ├── Makefile
-│   │   └── meson.build
-│   ├── vhost
-│   │   ├── main.c
-│   │   ├── main.h
-│   │   ├── Makefile
-│   │   ├── meson.build
-│   │   └── virtio_net.c
-│   ├── vhost_blk
-│   │   ├── blk.c
-│   │   ├── blk_spec.h
-│   │   ├── Makefile
-│   │   ├── meson.build
-│   │   ├── vhost_blk.c
-│   │   ├── vhost_blk_compat.c
-│   │   └── vhost_blk.h
-│   ├── vhost_crypto
-│   │   ├── main.c
-│   │   ├── Makefile
-│   │   └── meson.build
-│   ├── vmdq
-│   │   ├── main.c
-│   │   ├── Makefile
-│   │   └── meson.build
-│   ├── vmdq_dcb
-│   │   ├── main.c
-│   │   ├── Makefile
-│   │   └── meson.build
-│   └── vm_power_manager
-│       ├── channel_manager.c
-│       ├── channel_manager.h
-│       ├── channel_monitor.c
-│       ├── channel_monitor.h
-│       ├── guest_cli
-│       │   ├── main.c
-│       │   ├── Makefile
-│       │   ├── meson.build
-│       │   ├── parse.c
-│       │   ├── parse.h
-│       │   ├── vm_power_cli_guest.c
-│       │   └── vm_power_cli_guest.h
-│       ├── main.c
-│       ├── Makefile
-│       ├── meson.build
-│       ├── oob_monitor.h
-│       ├── oob_monitor_nop.c
-│       ├── oob_monitor_x86.c
-│       ├── parse.c
-│       ├── parse.h
-│       ├── power_manager.c
-│       ├── power_manager.h
-│       ├── vm_power_cli.c
-│       └── vm_power_cli.h
-├── kernel
-│   ├── freebsd
-│   │   ├── BSDmakefile.meson
-│   │   ├── contigmem
-│   │   │   ├── BSDmakefile
-│   │   │   ├── contigmem.c
-│   │   │   └── meson.build
-│   │   ├── meson.build
-│   │   └── nic_uio
-│   │       ├── BSDmakefile
-│   │       ├── meson.build
-│   │       └── nic_uio.c
-│   ├── linux
-│   │   ├── kni
-│   │   │   ├── compat.h
-│   │   │   ├── Kbuild
-│   │   │   ├── kni_dev.h
-│   │   │   ├── kni_fifo.h
-│   │   │   ├── kni_misc.c
-│   │   │   ├── kni_net.c
-│   │   │   └── meson.build
-│   │   └── meson.build
-│   └── meson.build
-├── lib
-│   ├── acl
-│   │   ├── acl_bld.c
-│   │   ├── acl_gen.c
-│   │   ├── acl.h
-│   │   ├── acl_run_altivec.c
-│   │   ├── acl_run_altivec.h
-│   │   ├── acl_run_avx2.c
-│   │   ├── acl_run_avx2.h
-│   │   ├── acl_run_avx512.c
-│   │   ├── acl_run_avx512_common.h
-│   │   ├── acl_run_avx512x16.h
-│   │   ├── acl_run_avx512x8.h
-│   │   ├── acl_run.h
-│   │   ├── acl_run_neon.c
-│   │   ├── acl_run_neon.h
-│   │   ├── acl_run_scalar.c
-│   │   ├── acl_run_sse.c
-│   │   ├── acl_run_sse.h
-│   │   ├── acl_vect.h
-│   │   ├── meson.build
-│   │   ├── rte_acl.c
-│   │   ├── rte_acl.h
-│   │   ├── rte_acl_osdep.h
-│   │   ├── tb_mem.c
-│   │   ├── tb_mem.h
-│   │   └── version.map
-│   ├── bbdev
-│   │   ├── meson.build
-│   │   ├── rte_bbdev.c
-│   │   ├── rte_bbdev.h
-│   │   ├── rte_bbdev_op.h
-│   │   ├── rte_bbdev_pmd.h
-│   │   └── version.map
-│   ├── bitratestats
-│   │   ├── meson.build
-│   │   ├── rte_bitrate.c
-│   │   ├── rte_bitrate.h
-│   │   └── version.map
-│   ├── bpf
-│   │   ├── bpf.c
-│   │   ├── bpf_convert.c
-│   │   ├── bpf_def.h
-│   │   ├── bpf_dump.c
-│   │   ├── bpf_exec.c
-│   │   ├── bpf_impl.h
-│   │   ├── bpf_jit_arm64.c
-│   │   ├── bpf_jit_x86.c
-│   │   ├── bpf_load.c
-│   │   ├── bpf_load_elf.c
-│   │   ├── bpf_pkt.c
-│   │   ├── bpf_stub.c
-│   │   ├── bpf_validate.c
-│   │   ├── meson.build
-│   │   ├── rte_bpf_ethdev.h
-│   │   ├── rte_bpf.h
-│   │   └── version.map
-│   ├── cfgfile
-│   │   ├── meson.build
-│   │   ├── rte_cfgfile.c
-│   │   ├── rte_cfgfile.h
-│   │   └── version.map
-│   ├── cmdline
-│   │   ├── cmdline.c
-│   │   ├── cmdline_cirbuf.c
-│   │   ├── cmdline_cirbuf.h
-│   │   ├── cmdline.h
-│   │   ├── cmdline_os_unix.c
-│   │   ├── cmdline_os_windows.c
-│   │   ├── cmdline_parse.c
-│   │   ├── cmdline_parse_etheraddr.c
-│   │   ├── cmdline_parse_etheraddr.h
-│   │   ├── cmdline_parse.h
-│   │   ├── cmdline_parse_ipaddr.c
-│   │   ├── cmdline_parse_ipaddr.h
-│   │   ├── cmdline_parse_num.c
-│   │   ├── cmdline_parse_num.h
-│   │   ├── cmdline_parse_portlist.c
-│   │   ├── cmdline_parse_portlist.h
-│   │   ├── cmdline_parse_string.c
-│   │   ├── cmdline_parse_string.h
-│   │   ├── cmdline_private.h
-│   │   ├── cmdline_rdline.c
-│   │   ├── cmdline_rdline.h
-│   │   ├── cmdline_socket.c
-│   │   ├── cmdline_socket.h
-│   │   ├── cmdline_vt100.c
-│   │   ├── cmdline_vt100.h
-│   │   ├── meson.build
-│   │   └── version.map
-│   ├── compressdev
-│   │   ├── meson.build
-│   │   ├── rte_comp.c
-│   │   ├── rte_comp.h
-│   │   ├── rte_compressdev.c
-│   │   ├── rte_compressdev.h
-│   │   ├── rte_compressdev_internal.h
-│   │   ├── rte_compressdev_pmd.c
-│   │   ├── rte_compressdev_pmd.h
-│   │   └── version.map
-│   ├── cryptodev
-│   │   ├── cryptodev_pmd.c
-│   │   ├── cryptodev_pmd.h
-│   │   ├── cryptodev_trace_points.c
-│   │   ├── meson.build
-│   │   ├── rte_crypto_asym.h
-│   │   ├── rte_cryptodev.c
-│   │   ├── rte_cryptodev_core.h
-│   │   ├── rte_cryptodev.h
-│   │   ├── rte_cryptodev_trace_fp.h
-│   │   ├── rte_cryptodev_trace.h
-│   │   ├── rte_crypto.h
-│   │   ├── rte_crypto_sym.h
-│   │   └── version.map
-│   ├── distributor
-│   │   ├── distributor_private.h
-│   │   ├── meson.build
-│   │   ├── rte_distributor.c
-│   │   ├── rte_distributor.h
-│   │   ├── rte_distributor_match_generic.c
-│   │   ├── rte_distributor_match_sse.c
-│   │   ├── rte_distributor_single.c
-│   │   ├── rte_distributor_single.h
-│   │   └── version.map
-│   ├── dmadev
-│   │   ├── meson.build
-│   │   ├── rte_dmadev.c
-│   │   ├── rte_dmadev_core.h
-│   │   ├── rte_dmadev.h
-│   │   ├── rte_dmadev_pmd.h
-│   │   └── version.map
-│   ├── eal
-│   │   ├── arm
-│   │   │   ├── include
-│   │   │   │   ├── meson.build
-│   │   │   │   ├── rte_atomic_32.h
-│   │   │   │   ├── rte_atomic_64.h
-│   │   │   │   ├── rte_atomic.h
-│   │   │   │   ├── rte_byteorder.h
-│   │   │   │   ├── rte_cpuflags_32.h
-│   │   │   │   ├── rte_cpuflags_64.h
-│   │   │   │   ├── rte_cpuflags.h
-│   │   │   │   ├── rte_cycles_32.h
-│   │   │   │   ├── rte_cycles_64.h
-│   │   │   │   ├── rte_cycles.h
-│   │   │   │   ├── rte_io_64.h
-│   │   │   │   ├── rte_io.h
-│   │   │   │   ├── rte_mcslock.h
-│   │   │   │   ├── rte_memcpy_32.h
-│   │   │   │   ├── rte_memcpy_64.h
-│   │   │   │   ├── rte_memcpy.h
-│   │   │   │   ├── rte_pause_32.h
-│   │   │   │   ├── rte_pause_64.h
-│   │   │   │   ├── rte_pause.h
-│   │   │   │   ├── rte_pflock.h
-│   │   │   │   ├── rte_power_intrinsics.h
-│   │   │   │   ├── rte_prefetch_32.h
-│   │   │   │   ├── rte_prefetch_64.h
-│   │   │   │   ├── rte_prefetch.h
-│   │   │   │   ├── rte_rwlock.h
-│   │   │   │   ├── rte_spinlock.h
-│   │   │   │   ├── rte_ticketlock.h
-│   │   │   │   └── rte_vect.h
-│   │   │   ├── meson.build
-│   │   │   ├── rte_cpuflags.c
-│   │   │   ├── rte_cycles.c
-│   │   │   ├── rte_hypervisor.c
-│   │   │   └── rte_power_intrinsics.c
-│   │   ├── common
-│   │   │   ├── eal_common_bus.c
-│   │   │   ├── eal_common_class.c
-│   │   │   ├── eal_common_config.c
-│   │   │   ├── eal_common_cpuflags.c
-│   │   │   ├── eal_common_debug.c
-│   │   │   ├── eal_common_devargs.c
-│   │   │   ├── eal_common_dev.c
-│   │   │   ├── eal_common_dynmem.c
-│   │   │   ├── eal_common_errno.c
-│   │   │   ├── eal_common_fbarray.c
-│   │   │   ├── eal_common_hexdump.c
-│   │   │   ├── eal_common_hypervisor.c
-│   │   │   ├── eal_common_interrupts.c
-│   │   │   ├── eal_common_launch.c
-│   │   │   ├── eal_common_lcore.c
-│   │   │   ├── eal_common_log.c
-│   │   │   ├── eal_common_mcfg.c
-│   │   │   ├── eal_common_memalloc.c
-│   │   │   ├── eal_common_memory.c
-│   │   │   ├── eal_common_memzone.c
-│   │   │   ├── eal_common_options.c
-│   │   │   ├── eal_common_proc.c
-│   │   │   ├── eal_common_string_fns.c
-│   │   │   ├── eal_common_tailqs.c
-│   │   │   ├── eal_common_thread.c
-│   │   │   ├── eal_common_timer.c
-│   │   │   ├── eal_common_trace.c
-│   │   │   ├── eal_common_trace_ctf.c
-│   │   │   ├── eal_common_trace_points.c
-│   │   │   ├── eal_common_trace_utils.c
-│   │   │   ├── eal_common_uuid.c
-│   │   │   ├── eal_filesystem.h
-│   │   │   ├── eal_firmware.h
-│   │   │   ├── eal_hugepages.h
-│   │   │   ├── eal_internal_cfg.h
-│   │   │   ├── eal_interrupts.h
-│   │   │   ├── eal_log.h
-│   │   │   ├── eal_memalloc.h
-│   │   │   ├── eal_memcfg.h
-│   │   │   ├── eal_options.h
-│   │   │   ├── eal_private.h
-│   │   │   ├── eal_thread.h
-│   │   │   ├── eal_trace.h
-│   │   │   ├── hotplug_mp.c
-│   │   │   ├── hotplug_mp.h
-│   │   │   ├── malloc_elem.c
-│   │   │   ├── malloc_elem.h
-│   │   │   ├── malloc_heap.c
-│   │   │   ├── malloc_heap.h
-│   │   │   ├── malloc_mp.c
-│   │   │   ├── malloc_mp.h
-│   │   │   ├── meson.build
-│   │   │   ├── rte_keepalive.c
-│   │   │   ├── rte_malloc.c
-│   │   │   ├── rte_random.c
-│   │   │   ├── rte_reciprocal.c
-│   │   │   ├── rte_service.c
-│   │   │   └── rte_version.c
-│   │   ├── freebsd
-│   │   │   ├── eal_alarm.c
-│   │   │   ├── eal_alarm_private.h
-│   │   │   ├── eal.c
-│   │   │   ├── eal_cpuflags.c
-│   │   │   ├── eal_debug.c
-│   │   │   ├── eal_dev.c
-│   │   │   ├── eal_hugepage_info.c
-│   │   │   ├── eal_interrupts.c
-│   │   │   ├── eal_lcore.c
-│   │   │   ├── eal_memalloc.c
-│   │   │   ├── eal_memory.c
-│   │   │   ├── eal_thread.c
-│   │   │   ├── eal_timer.c
-│   │   │   ├── include
-│   │   │   │   ├── meson.build
-│   │   │   │   ├── rte_os.h
-│   │   │   │   └── rte_os_shim.h
-│   │   │   └── meson.build
-│   │   ├── include
-│   │   │   ├── generic
-│   │   │   │   ├── rte_atomic.h
-│   │   │   │   ├── rte_byteorder.h
-│   │   │   │   ├── rte_cpuflags.h
-│   │   │   │   ├── rte_cycles.h
-│   │   │   │   ├── rte_io.h
-│   │   │   │   ├── rte_mcslock.h
-│   │   │   │   ├── rte_memcpy.h
-│   │   │   │   ├── rte_pause.h
-│   │   │   │   ├── rte_pflock.h
-│   │   │   │   ├── rte_power_intrinsics.h
-│   │   │   │   ├── rte_prefetch.h
-│   │   │   │   ├── rte_rwlock.h
-│   │   │   │   ├── rte_spinlock.h
-│   │   │   │   ├── rte_ticketlock.h
-│   │   │   │   └── rte_vect.h
-│   │   │   ├── meson.build
-│   │   │   ├── rte_alarm.h
-│   │   │   ├── rte_bitmap.h
-│   │   │   ├── rte_bitops.h
-│   │   │   ├── rte_branch_prediction.h
-│   │   │   ├── rte_bus.h
-│   │   │   ├── rte_class.h
-│   │   │   ├── rte_common.h
-│   │   │   ├── rte_compat.h
-│   │   │   ├── rte_debug.h
-│   │   │   ├── rte_devargs.h
-│   │   │   ├── rte_dev.h
-│   │   │   ├── rte_eal.h
-│   │   │   ├── rte_eal_memconfig.h
-│   │   │   ├── rte_eal_paging.h
-│   │   │   ├── rte_eal_trace.h
-│   │   │   ├── rte_epoll.h
-│   │   │   ├── rte_errno.h
-│   │   │   ├── rte_fbarray.h
-│   │   │   ├── rte_function_versioning.h
-│   │   │   ├── rte_hexdump.h
-│   │   │   ├── rte_hypervisor.h
-│   │   │   ├── rte_interrupts.h
-│   │   │   ├── rte_keepalive.h
-│   │   │   ├── rte_launch.h
-│   │   │   ├── rte_lcore.h
-│   │   │   ├── rte_log.h
-│   │   │   ├── rte_malloc.h
-│   │   │   ├── rte_memory.h
-│   │   │   ├── rte_memzone.h
-│   │   │   ├── rte_pci_dev_feature_defs.h
-│   │   │   ├── rte_pci_dev_features.h
-│   │   │   ├── rte_per_lcore.h
-│   │   │   ├── rte_random.h
-│   │   │   ├── rte_reciprocal.h
-│   │   │   ├── rte_service_component.h
-│   │   │   ├── rte_service.h
-│   │   │   ├── rte_string_fns.h
-│   │   │   ├── rte_tailq.h
-│   │   │   ├── rte_test.h
-│   │   │   ├── rte_thread.h
-│   │   │   ├── rte_time.h
-│   │   │   ├── rte_trace.h
-│   │   │   ├── rte_trace_point.h
-│   │   │   ├── rte_trace_point_register.h
-│   │   │   ├── rte_uuid.h
-│   │   │   ├── rte_version.h
-│   │   │   └── rte_vfio.h
-│   │   ├── linux
-│   │   │   ├── eal_alarm.c
-│   │   │   ├── eal.c
-│   │   │   ├── eal_cpuflags.c
-│   │   │   ├── eal_debug.c
-│   │   │   ├── eal_dev.c
-│   │   │   ├── eal_hugepage_info.c
-│   │   │   ├── eal_interrupts.c
-│   │   │   ├── eal_lcore.c
-│   │   │   ├── eal_log.c
-│   │   │   ├── eal_memalloc.c
-│   │   │   ├── eal_memory.c
-│   │   │   ├── eal_thread.c
-│   │   │   ├── eal_timer.c
-│   │   │   ├── eal_vfio.c
-│   │   │   ├── eal_vfio.h
-│   │   │   ├── eal_vfio_mp_sync.c
-│   │   │   ├── include
-│   │   │   │   ├── meson.build
-│   │   │   │   ├── rte_os.h
-│   │   │   │   └── rte_os_shim.h
-│   │   │   └── meson.build
-│   │   ├── meson.build
-│   │   ├── ppc
-│   │   │   ├── include
-│   │   │   │   ├── meson.build
-│   │   │   │   ├── rte_altivec.h
-│   │   │   │   ├── rte_atomic.h
-│   │   │   │   ├── rte_byteorder.h
-│   │   │   │   ├── rte_cpuflags.h
-│   │   │   │   ├── rte_cycles.h
-│   │   │   │   ├── rte_io.h
-│   │   │   │   ├── rte_mcslock.h
-│   │   │   │   ├── rte_memcpy.h
-│   │   │   │   ├── rte_pause.h
-│   │   │   │   ├── rte_pflock.h
-│   │   │   │   ├── rte_power_intrinsics.h
-│   │   │   │   ├── rte_prefetch.h
-│   │   │   │   ├── rte_rwlock.h
-│   │   │   │   ├── rte_spinlock.h
-│   │   │   │   ├── rte_ticketlock.h
-│   │   │   │   └── rte_vect.h
-│   │   │   ├── meson.build
-│   │   │   ├── rte_cpuflags.c
-│   │   │   ├── rte_cycles.c
-│   │   │   ├── rte_hypervisor.c
-│   │   │   └── rte_power_intrinsics.c
-│   │   ├── unix
-│   │   │   ├── eal_file.c
-│   │   │   ├── eal_filesystem.c
-│   │   │   ├── eal_firmware.c
-│   │   │   ├── eal_unix_memory.c
-│   │   │   ├── eal_unix_timer.c
-│   │   │   ├── meson.build
-│   │   │   └── rte_thread.c
-│   │   ├── version.map
-│   │   ├── windows
-│   │   │   ├── eal_alarm.c
-│   │   │   ├── eal.c
-│   │   │   ├── eal_debug.c
-│   │   │   ├── eal_dev.c
-│   │   │   ├── eal_file.c
-│   │   │   ├── eal_hugepages.c
-│   │   │   ├── eal_interrupts.c
-│   │   │   ├── eal_lcore.c
-│   │   │   ├── eal_log.c
-│   │   │   ├── eal_memalloc.c
-│   │   │   ├── eal_memory.c
-│   │   │   ├── eal_mp.c
-│   │   │   ├── eal_thread.c
-│   │   │   ├── eal_timer.c
-│   │   │   ├── eal_windows.h
-│   │   │   ├── fnmatch.c
-│   │   │   ├── getopt.c
-│   │   │   ├── include
-│   │   │   │   ├── dirent.h
-│   │   │   │   ├── fnmatch.h
-│   │   │   │   ├── getopt.h
-│   │   │   │   ├── meson.build
-│   │   │   │   ├── pthread.h
-│   │   │   │   ├── regex.h
-│   │   │   │   ├── rte_os.h
-│   │   │   │   ├── rte_os_shim.h
-│   │   │   │   ├── rte_virt2phys.h
-│   │   │   │   ├── rte_windows.h
-│   │   │   │   ├── sched.h
-│   │   │   │   ├── sys
-│   │   │   │   │   └── queue.h
-│   │   │   │   └── unistd.h
-│   │   │   ├── meson.build
-│   │   │   └── rte_thread.c
-│   │   └── x86
-│   │       ├── include
-│   │       │   ├── meson.build
-│   │       │   ├── rte_atomic_32.h
-│   │       │   ├── rte_atomic_64.h
-│   │       │   ├── rte_atomic.h
-│   │       │   ├── rte_byteorder_32.h
-│   │       │   ├── rte_byteorder_64.h
-│   │       │   ├── rte_byteorder.h
-│   │       │   ├── rte_cpuflags.h
-│   │       │   ├── rte_cycles.h
-│   │       │   ├── rte_io.h
-│   │       │   ├── rte_mcslock.h
-│   │       │   ├── rte_memcpy.h
-│   │       │   ├── rte_pause.h
-│   │       │   ├── rte_pflock.h
-│   │       │   ├── rte_power_intrinsics.h
-│   │       │   ├── rte_prefetch.h
-│   │       │   ├── rte_rtm.h
-│   │       │   ├── rte_rwlock.h
-│   │       │   ├── rte_spinlock.h
-│   │       │   ├── rte_ticketlock.h
-│   │       │   └── rte_vect.h
-│   │       ├── meson.build
-│   │       ├── rte_cpuflags.c
-│   │       ├── rte_cpuid.h
-│   │       ├── rte_cycles.c
-│   │       ├── rte_hypervisor.c
-│   │       ├── rte_power_intrinsics.c
-│   │       └── rte_spinlock.c
-│   ├── efd
-│   │   ├── meson.build
-│   │   ├── rte_efd_arm64.h
-│   │   ├── rte_efd.c
-│   │   ├── rte_efd.h
-│   │   ├── rte_efd_x86.h
-│   │   └── version.map
-│   ├── ethdev
-│   │   ├── ethdev_driver.c
-│   │   ├── ethdev_driver.h
-│   │   ├── ethdev_pci.h
-│   │   ├── ethdev_private.c
-│   │   ├── ethdev_private.h
-│   │   ├── ethdev_profile.c
-│   │   ├── ethdev_profile.h
-│   │   ├── ethdev_trace_points.c
-│   │   ├── ethdev_vdev.h
-│   │   ├── meson.build
-│   │   ├── rte_class_eth.c
-│   │   ├── rte_dev_info.h
-│   │   ├── rte_eth_ctrl.h
-│   │   ├── rte_ethdev.c
-│   │   ├── rte_ethdev_core.h
-│   │   ├── rte_ethdev.h
-│   │   ├── rte_ethdev_trace_fp.h
-│   │   ├── rte_ethdev_trace.h
-│   │   ├── rte_flow.c
-│   │   ├── rte_flow_driver.h
-│   │   ├── rte_flow.h
-│   │   ├── rte_mtr.c
-│   │   ├── rte_mtr_driver.h
-│   │   ├── rte_mtr.h
-│   │   ├── rte_tm.c
-│   │   ├── rte_tm_driver.h
-│   │   ├── rte_tm.h
-│   │   └── version.map
-│   ├── eventdev
-│   │   ├── eventdev_pmd.h
-│   │   ├── eventdev_pmd_pci.h
-│   │   ├── eventdev_pmd_vdev.h
-│   │   ├── eventdev_private.c
-│   │   ├── eventdev_trace.h
-│   │   ├── eventdev_trace_points.c
-│   │   ├── event_timer_adapter_pmd.h
-│   │   ├── meson.build
-│   │   ├── rte_event_crypto_adapter.c
-│   │   ├── rte_event_crypto_adapter.h
-│   │   ├── rte_eventdev.c
-│   │   ├── rte_eventdev_core.h
-│   │   ├── rte_eventdev.h
-│   │   ├── rte_eventdev_trace_fp.h
-│   │   ├── rte_event_eth_rx_adapter.c
-│   │   ├── rte_event_eth_rx_adapter.h
-│   │   ├── rte_event_eth_tx_adapter.c
-│   │   ├── rte_event_eth_tx_adapter.h
-│   │   ├── rte_event_ring.c
-│   │   ├── rte_event_ring.h
-│   │   ├── rte_event_timer_adapter.c
-│   │   ├── rte_event_timer_adapter.h
-│   │   └── version.map
-│   ├── fib
-│   │   ├── dir24_8_avx512.c
-│   │   ├── dir24_8_avx512.h
-│   │   ├── dir24_8.c
-│   │   ├── dir24_8.h
-│   │   ├── meson.build
-│   │   ├── rte_fib6.c
-│   │   ├── rte_fib6.h
-│   │   ├── rte_fib.c
-│   │   ├── rte_fib.h
-│   │   ├── trie_avx512.c
-│   │   ├── trie_avx512.h
-│   │   ├── trie.c
-│   │   ├── trie.h
-│   │   └── version.map
-│   ├── flow_classify
-│   │   ├── meson.build
-│   │   ├── rte_flow_classify.c
-│   │   ├── rte_flow_classify.h
-│   │   ├── rte_flow_classify_parse.c
-│   │   ├── rte_flow_classify_parse.h
-│   │   └── version.map
-│   ├── gpudev
-│   │   ├── gpudev.c
-│   │   ├── gpudev_driver.h
-│   │   ├── meson.build
-│   │   ├── rte_gpudev.h
-│   │   └── version.map
-│   ├── graph
-│   │   ├── graph.c
-│   │   ├── graph_debug.c
-│   │   ├── graph_ops.c
-│   │   ├── graph_populate.c
-│   │   ├── graph_private.h
-│   │   ├── graph_stats.c
-│   │   ├── meson.build
-│   │   ├── node.c
-│   │   ├── rte_graph.h
-│   │   ├── rte_graph_worker.h
-│   │   └── version.map
-│   ├── gro
-│   │   ├── gro_tcp4.c
-│   │   ├── gro_tcp4.h
-│   │   ├── gro_udp4.c
-│   │   ├── gro_udp4.h
-│   │   ├── gro_vxlan_tcp4.c
-│   │   ├── gro_vxlan_tcp4.h
-│   │   ├── gro_vxlan_udp4.c
-│   │   ├── gro_vxlan_udp4.h
-│   │   ├── meson.build
-│   │   ├── rte_gro.c
-│   │   ├── rte_gro.h
-│   │   └── version.map
-│   ├── gso
-│   │   ├── gso_common.c
-│   │   ├── gso_common.h
-│   │   ├── gso_tcp4.c
-│   │   ├── gso_tcp4.h
-│   │   ├── gso_tunnel_tcp4.c
-│   │   ├── gso_tunnel_tcp4.h
-│   │   ├── gso_tunnel_udp4.c
-│   │   ├── gso_tunnel_udp4.h
-│   │   ├── gso_udp4.c
-│   │   ├── gso_udp4.h
-│   │   ├── meson.build
-│   │   ├── rte_gso.c
-│   │   ├── rte_gso.h
-│   │   └── version.map
-│   ├── hash
-│   │   ├── meson.build
-│   │   ├── rte_cmp_arm64.h
-│   │   ├── rte_cmp_x86.h
-│   │   ├── rte_crc_arm64.h
-│   │   ├── rte_cuckoo_hash.c
-│   │   ├── rte_cuckoo_hash.h
-│   │   ├── rte_fbk_hash.c
-│   │   ├── rte_fbk_hash.h
-│   │   ├── rte_hash_crc.h
-│   │   ├── rte_hash.h
-│   │   ├── rte_jhash.h
-│   │   ├── rte_thash.c
-│   │   ├── rte_thash_gfni.h
-│   │   ├── rte_thash.h
-│   │   ├── rte_thash_x86_gfni.h
-│   │   └── version.map
-│   ├── ip_frag
-│   │   ├── ip_frag_common.h
-│   │   ├── ip_frag_internal.c
-│   │   ├── ip_reassembly.h
-│   │   ├── meson.build
-│   │   ├── rte_ip_frag_common.c
-│   │   ├── rte_ip_frag.h
-│   │   ├── rte_ipv4_fragmentation.c
-│   │   ├── rte_ipv4_reassembly.c
-│   │   ├── rte_ipv6_fragmentation.c
-│   │   ├── rte_ipv6_reassembly.c
-│   │   └── version.map
-│   ├── ipsec
-│   │   ├── crypto.h
-│   │   ├── esp_inb.c
-│   │   ├── esp_outb.c
-│   │   ├── iph.h
-│   │   ├── ipsec_sad.c
-│   │   ├── ipsec_sqn.h
-│   │   ├── ipsec_telemetry.c
-│   │   ├── meson.build
-│   │   ├── misc.h
-│   │   ├── pad.h
-│   │   ├── rte_ipsec_group.h
-│   │   ├── rte_ipsec.h
-│   │   ├── rte_ipsec_sad.h
-│   │   ├── rte_ipsec_sa.h
-│   │   ├── sa.c
-│   │   ├── sa.h
-│   │   ├── ses.c
-│   │   └── version.map
-│   ├── jobstats
-│   │   ├── meson.build
-│   │   ├── rte_jobstats.c
-│   │   ├── rte_jobstats.h
-│   │   └── version.map
-│   ├── kni
-│   │   ├── meson.build
-│   │   ├── rte_kni.c
-│   │   ├── rte_kni_common.h
-│   │   ├── rte_kni_fifo.h
-│   │   ├── rte_kni.h
-│   │   └── version.map
-│   ├── kvargs
-│   │   ├── meson.build
-│   │   ├── rte_kvargs.c
-│   │   ├── rte_kvargs.h
-│   │   └── version.map
-│   ├── latencystats
-│   │   ├── meson.build
-│   │   ├── rte_latencystats.c
-│   │   ├── rte_latencystats.h
-│   │   └── version.map
-│   ├── lpm
-│   │   ├── meson.build
-│   │   ├── rte_lpm6.c
-│   │   ├── rte_lpm6.h
-│   │   ├── rte_lpm_altivec.h
-│   │   ├── rte_lpm.c
-│   │   ├── rte_lpm.h
-│   │   ├── rte_lpm_neon.h
-│   │   ├── rte_lpm_sse.h
-│   │   ├── rte_lpm_sve.h
-│   │   └── version.map
-│   ├── mbuf
-│   │   ├── meson.build
-│   │   ├── rte_mbuf.c
-│   │   ├── rte_mbuf_core.h
-│   │   ├── rte_mbuf_dyn.c
-│   │   ├── rte_mbuf_dyn.h
-│   │   ├── rte_mbuf.h
-│   │   ├── rte_mbuf_pool_ops.c
-│   │   ├── rte_mbuf_pool_ops.h
-│   │   ├── rte_mbuf_ptype.c
-│   │   ├── rte_mbuf_ptype.h
-│   │   └── version.map
-│   ├── member
-│   │   ├── meson.build
-│   │   ├── rte_member.c
-│   │   ├── rte_member.h
-│   │   ├── rte_member_ht.c
-│   │   ├── rte_member_ht.h
-│   │   ├── rte_member_vbf.c
-│   │   ├── rte_member_vbf.h
-│   │   ├── rte_member_x86.h
-│   │   └── version.map
-│   ├── mempool
-│   │   ├── mempool_trace_points.c
-│   │   ├── meson.build
-│   │   ├── rte_mempool.c
-│   │   ├── rte_mempool.h
-│   │   ├── rte_mempool_ops.c
-│   │   ├── rte_mempool_ops_default.c
-│   │   ├── rte_mempool_trace_fp.h
-│   │   ├── rte_mempool_trace.h
-│   │   └── version.map
-│   ├── meson.build
-│   ├── meter
-│   │   ├── meson.build
-│   │   ├── rte_meter.c
-│   │   ├── rte_meter.h
-│   │   └── version.map
-│   ├── metrics
-│   │   ├── meson.build
-│   │   ├── rte_metrics.c
-│   │   ├── rte_metrics.h
-│   │   ├── rte_metrics_telemetry.c
-│   │   ├── rte_metrics_telemetry.h
-│   │   └── version.map
-│   ├── net
-│   │   ├── meson.build
-│   │   ├── net_crc_avx512.c
-│   │   ├── net_crc.h
-│   │   ├── net_crc_neon.c
-│   │   ├── net_crc_sse.c
-│   │   ├── rte_arp.c
-│   │   ├── rte_arp.h
-│   │   ├── rte_ecpri.h
-│   │   ├── rte_esp.h
-│   │   ├── rte_ether.c
-│   │   ├── rte_ether.h
-│   │   ├── rte_geneve.h
-│   │   ├── rte_gre.h
-│   │   ├── rte_gtp.h
-│   │   ├── rte_higig.h
-│   │   ├── rte_icmp.h
-│   │   ├── rte_ip.h
-│   │   ├── rte_l2tpv2.h
-│   │   ├── rte_mpls.h
-│   │   ├── rte_net.c
-│   │   ├── rte_net_crc.c
-│   │   ├── rte_net_crc.h
-│   │   ├── rte_net.h
-│   │   ├── rte_ppp.h
-│   │   ├── rte_sctp.h
-│   │   ├── rte_tcp.h
-│   │   ├── rte_udp.h
-│   │   ├── rte_vxlan.h
-│   │   └── version.map
-│   ├── node
-│   │   ├── ethdev_ctrl.c
-│   │   ├── ethdev_rx.c
-│   │   ├── ethdev_rx_priv.h
-│   │   ├── ethdev_tx.c
-│   │   ├── ethdev_tx_priv.h
-│   │   ├── ip4_lookup.c
-│   │   ├── ip4_lookup_neon.h
-│   │   ├── ip4_lookup_sse.h
-│   │   ├── ip4_rewrite.c
-│   │   ├── ip4_rewrite_priv.h
-│   │   ├── log.c
-│   │   ├── meson.build
-│   │   ├── node_private.h
-│   │   ├── null.c
-│   │   ├── pkt_cls.c
-│   │   ├── pkt_cls_priv.h
-│   │   ├── pkt_drop.c
-│   │   ├── rte_node_eth_api.h
-│   │   ├── rte_node_ip4_api.h
-│   │   └── version.map
-│   ├── pcapng
-│   │   ├── meson.build
-│   │   ├── pcapng_proto.h
-│   │   ├── rte_pcapng.c
-│   │   ├── rte_pcapng.h
-│   │   └── version.map
-│   ├── pci
-│   │   ├── meson.build
-│   │   ├── rte_pci.c
-│   │   ├── rte_pci.h
-│   │   └── version.map
-│   ├── pdump
-│   │   ├── meson.build
-│   │   ├── rte_pdump.c
-│   │   ├── rte_pdump.h
-│   │   └── version.map
-│   ├── pipeline
-│   │   ├── meson.build
-│   │   ├── rte_pipeline.c
-│   │   ├── rte_pipeline.h
-│   │   ├── rte_port_in_action.c
-│   │   ├── rte_port_in_action.h
-│   │   ├── rte_swx_ctl.c
-│   │   ├── rte_swx_ctl.h
-│   │   ├── rte_swx_extern.h
-│   │   ├── rte_swx_pipeline.c
-│   │   ├── rte_swx_pipeline.h
-│   │   ├── rte_swx_pipeline_internal.h
-│   │   ├── rte_swx_pipeline_spec.c
-│   │   ├── rte_table_action.c
-│   │   ├── rte_table_action.h
-│   │   └── version.map
-│   ├── port
-│   │   ├── meson.build
-│   │   ├── rte_port_ethdev.c
-│   │   ├── rte_port_ethdev.h
-│   │   ├── rte_port_eventdev.c
-│   │   ├── rte_port_eventdev.h
-│   │   ├── rte_port_fd.c
-│   │   ├── rte_port_fd.h
-│   │   ├── rte_port_frag.c
-│   │   ├── rte_port_frag.h
-│   │   ├── rte_port.h
-│   │   ├── rte_port_kni.c
-│   │   ├── rte_port_kni.h
-│   │   ├── rte_port_ras.c
-│   │   ├── rte_port_ras.h
-│   │   ├── rte_port_ring.c
-│   │   ├── rte_port_ring.h
-│   │   ├── rte_port_sched.c
-│   │   ├── rte_port_sched.h
-│   │   ├── rte_port_source_sink.c
-│   │   ├── rte_port_source_sink.h
-│   │   ├── rte_port_sym_crypto.c
-│   │   ├── rte_port_sym_crypto.h
-│   │   ├── rte_swx_port_ethdev.c
-│   │   ├── rte_swx_port_ethdev.h
-│   │   ├── rte_swx_port_fd.c
-│   │   ├── rte_swx_port_fd.h
-│   │   ├── rte_swx_port.h
-│   │   ├── rte_swx_port_ring.c
-│   │   ├── rte_swx_port_ring.h
-│   │   ├── rte_swx_port_source_sink.c
-│   │   ├── rte_swx_port_source_sink.h
-│   │   └── version.map
-│   ├── power
-│   │   ├── guest_channel.c
-│   │   ├── guest_channel.h
-│   │   ├── meson.build
-│   │   ├── power_acpi_cpufreq.c
-│   │   ├── power_acpi_cpufreq.h
-│   │   ├── power_common.c
-│   │   ├── power_common.h
-│   │   ├── power_cppc_cpufreq.c
-│   │   ├── power_cppc_cpufreq.h
-│   │   ├── power_kvm_vm.c
-│   │   ├── power_kvm_vm.h
-│   │   ├── power_pstate_cpufreq.c
-│   │   ├── power_pstate_cpufreq.h
-│   │   ├── rte_power.c
-│   │   ├── rte_power_empty_poll.c
-│   │   ├── rte_power_empty_poll.h
-│   │   ├── rte_power_guest_channel.h
-│   │   ├── rte_power.h
-│   │   ├── rte_power_pmd_mgmt.c
-│   │   ├── rte_power_pmd_mgmt.h
-│   │   └── version.map
-│   ├── rawdev
-│   │   ├── meson.build
-│   │   ├── rte_rawdev.c
-│   │   ├── rte_rawdev.h
-│   │   ├── rte_rawdev_pmd.h
-│   │   └── version.map
-│   ├── rcu
-│   │   ├── meson.build
-│   │   ├── rcu_qsbr_pvt.h
-│   │   ├── rte_rcu_qsbr.c
-│   │   ├── rte_rcu_qsbr.h
-│   │   └── version.map
-│   ├── regexdev
-│   │   ├── meson.build
-│   │   ├── rte_regexdev.c
-│   │   ├── rte_regexdev_core.h
-│   │   ├── rte_regexdev_driver.h
-│   │   ├── rte_regexdev.h
-│   │   └── version.map
-│   ├── reorder
-│   │   ├── meson.build
-│   │   ├── rte_reorder.c
-│   │   ├── rte_reorder.h
-│   │   └── version.map
-│   ├── rib
-│   │   ├── meson.build
-│   │   ├── rte_rib6.c
-│   │   ├── rte_rib6.h
-│   │   ├── rte_rib.c
-│   │   ├── rte_rib.h
-│   │   └── version.map
-│   ├── ring
-│   │   ├── meson.build
-│   │   ├── rte_ring.c
-│   │   ├── rte_ring_c11_pvt.h
-│   │   ├── rte_ring_core.h
-│   │   ├── rte_ring_elem.h
-│   │   ├── rte_ring_elem_pvt.h
-│   │   ├── rte_ring_generic_pvt.h
-│   │   ├── rte_ring.h
-│   │   ├── rte_ring_hts_elem_pvt.h
-│   │   ├── rte_ring_hts.h
-│   │   ├── rte_ring_peek_elem_pvt.h
-│   │   ├── rte_ring_peek.h
-│   │   ├── rte_ring_peek_zc.h
-│   │   ├── rte_ring_rts_elem_pvt.h
-│   │   ├── rte_ring_rts.h
-│   │   └── version.map
-│   ├── sched
-│   │   ├── meson.build
-│   │   ├── rte_approx.c
-│   │   ├── rte_approx.h
-│   │   ├── rte_pie.c
-│   │   ├── rte_pie.h
-│   │   ├── rte_red.c
-│   │   ├── rte_red.h
-│   │   ├── rte_sched.c
-│   │   ├── rte_sched_common.h
-│   │   ├── rte_sched.h
-│   │   └── version.map
-│   ├── security
-│   │   ├── meson.build
-│   │   ├── rte_security.c
-│   │   ├── rte_security_driver.h
-│   │   ├── rte_security.h
-│   │   └── version.map
-│   ├── stack
-│   │   ├── meson.build
-│   │   ├── rte_stack.c
-│   │   ├── rte_stack.h
-│   │   ├── rte_stack_lf.c
-│   │   ├── rte_stack_lf_c11.h
-│   │   ├── rte_stack_lf_generic.h
-│   │   ├── rte_stack_lf.h
-│   │   ├── rte_stack_lf_stubs.h
-│   │   ├── rte_stack_std.c
-│   │   ├── rte_stack_std.h
-│   │   ├── stack_pvt.h
-│   │   └── version.map
-│   ├── table
-│   │   ├── meson.build
-│   │   ├── rte_lru_arm64.h
-│   │   ├── rte_lru.h
-│   │   ├── rte_lru_x86.h
-│   │   ├── rte_swx_table_em.c
-│   │   ├── rte_swx_table_em.h
-│   │   ├── rte_swx_table.h
-│   │   ├── rte_swx_table_learner.c
-│   │   ├── rte_swx_table_learner.h
-│   │   ├── rte_swx_table_selector.c
-│   │   ├── rte_swx_table_selector.h
-│   │   ├── rte_swx_table_wm.c
-│   │   ├── rte_swx_table_wm.h
-│   │   ├── rte_table_acl.c
-│   │   ├── rte_table_acl.h
-│   │   ├── rte_table_array.c
-│   │   ├── rte_table_array.h
-│   │   ├── rte_table.h
-│   │   ├── rte_table_hash_cuckoo.c
-│   │   ├── rte_table_hash_cuckoo.h
-│   │   ├── rte_table_hash_ext.c
-│   │   ├── rte_table_hash_func_arm64.h
-│   │   ├── rte_table_hash_func.h
-│   │   ├── rte_table_hash.h
-│   │   ├── rte_table_hash_key16.c
-│   │   ├── rte_table_hash_key32.c
-│   │   ├── rte_table_hash_key8.c
-│   │   ├── rte_table_hash_lru.c
-│   │   ├── rte_table_lpm.c
-│   │   ├── rte_table_lpm.h
-│   │   ├── rte_table_lpm_ipv6.c
-│   │   ├── rte_table_lpm_ipv6.h
-│   │   ├── rte_table_stub.c
-│   │   ├── rte_table_stub.h
-│   │   └── version.map
-│   ├── telemetry
-│   │   ├── meson.build
-│   │   ├── rte_telemetry.h
-│   │   ├── telemetry.c
-│   │   ├── telemetry_data.c
-│   │   ├── telemetry_data.h
-│   │   ├── telemetry_internal.h
-│   │   ├── telemetry_json.h
-│   │   ├── telemetry_legacy.c
-│   │   └── version.map
-│   ├── timer
-│   │   ├── meson.build
-│   │   ├── rte_timer.c
-│   │   ├── rte_timer.h
-│   │   └── version.map
-│   └── vhost
-│       ├── fd_man.c
-│       ├── fd_man.h
-│       ├── iotlb.c
-│       ├── iotlb.h
-│       ├── meson.build
-│       ├── rte_vdpa.h
-│       ├── rte_vhost_async.h
-│       ├── rte_vhost_crypto.h
-│       ├── rte_vhost.h
-│       ├── socket.c
-│       ├── vdpa.c
-│       ├── vdpa_driver.h
-│       ├── version.map
-│       ├── vhost.c
-│       ├── vhost_crypto.c
-│       ├── vhost.h
-│       ├── vhost_user.c
-│       ├── vhost_user.h
-│       ├── virtio_crypto.h
-│       └── virtio_net.c
-├── license
-│   ├── bsd-2-clause.txt
-│   ├── bsd-3-clause.txt
-│   ├── exceptions.txt
-│   ├── gpl-2.0.txt
-│   ├── isc.txt
-│   ├── lgpl-2.1.txt
-│   ├── mit.txt
-│   └── README
-├── MAINTAINERS
-├── Makefile
-├── meson.build
-├── meson_options.txt
-├── README
-├── usertools
-│   ├── cpu_layout.py
-│   ├── dpdk-devbind.py
-│   ├── dpdk-hugepages.py
-│   ├── dpdk-pmdinfo.py
-│   ├── dpdk-telemetry-client.py
-│   ├── dpdk-telemetry.py
-│   └── meson.build
-└── VERSION
+├── ABI_VERSION<br>
+├── app<br>
+│   ├── dumpcap<br>
+│   │   ├── main.c<br>
+│   │   └── meson.build<br>
+│   ├── meson.build<br>
+│   ├── pdump<br>
+│   │   ├── main.c<br>
+│   │   └── meson.build<br>
+│   ├── proc-info<br>
+│   │   ├── main.c<br>
+│   │   └── meson.build<br>
+│   ├── test<br>
+│   │   ├── commands.c<br>
+│   │   ├── has_hugepage.py<br>
+│   │   ├── meson.build<br>
+│   │   ├── packet_burst_generator.c<br>
+│   │   ├── packet_burst_generator.h<br>
+│   │   ├── process.h<br>
+│   │   ├── resource.c<br>
+│   │   ├── resource.h<br>
+│   │   ├── sample_packet_forward.c<br>
+│   │   ├── sample_packet_forward.h<br>
+│   │   ├── test_acl.c<br>
+│   │   ├── test_acl.h<br>
+│   │   ├── test_alarm.c<br>
+│   │   ├── test_atomic.c<br>
+│   │   ├── test_barrier.c<br>
+│   │   ├── test_bitmap.c<br>
+│   │   ├── test_bitops.c<br>
+│   │   ├── test_bitratestats.c<br>
+│   │   ├── test_bpf.c<br>
+│   │   ├── test_byteorder.c<br>
+│   │   ├── test.c<br>
+│   │   ├── test_cfgfile.c<br>
+│   │   ├── test_cfgfiles<br>
+│   │   │   └── etc<br>
+│   │   │       ├── empty.ini<br>
+│   │   │       ├── empty_key_value.ini<br>
+│   │   │       ├── invalid_section.ini<br>
+│   │   │       ├── line_too_long.ini<br>
+│   │   │       ├── missing_section.ini<br>
+│   │   │       ├── realloc_sections.ini<br>
+│   │   │       ├── sample1.ini<br>
+│   │   │       └── sample2.ini<br>
+│   │   ├── test_cksum.c<br>
+│   │   ├── test_cmdline.c<br>
+│   │   ├── test_cmdline_cirbuf.c<br>
+│   │   ├── test_cmdline_etheraddr.c<br>
+│   │   ├── test_cmdline.h<br>
+│   │   ├── test_cmdline_ipaddr.c<br>
+│   │   ├── test_cmdline_lib.c<br>
+│   │   ├── test_cmdline_num.c<br>
+│   │   ├── test_cmdline_portlist.c<br>
+│   │   ├── test_cmdline_string.c<br>
+│   │   ├── test_common.c<br>
+│   │   ├── test_compressdev.c<br>
+│   │   ├── test_compressdev_test_buffer.h<br>
+│   │   ├── test_cpuflags.c<br>
+│   │   ├── test_crc.c<br>
+│   │   ├── test_cryptodev_aead_test_vectors.h<br>
+│   │   ├── test_cryptodev_aes_test_vectors.h<br>
+│   │   ├── test_cryptodev_asym.c<br>
+│   │   ├── test_cryptodev_asym_util.h<br>
+│   │   ├── test_cryptodev_blockcipher.c<br>
+│   │   ├── test_cryptodev_blockcipher.h<br>
+│   │   ├── test_cryptodev.c<br>
+│   │   ├── test_cryptodev_des_test_vectors.h<br>
+│   │   ├── test_cryptodev_dh_test_vectors.h<br>
+│   │   ├── test_cryptodev_dsa_test_vectors.h<br>
+│   │   ├── test_cryptodev_ecdsa_test_vectors.h<br>
+│   │   ├── test_cryptodev_ecpm_test_vectors.h<br>
+│   │   ├── test_cryptodev.h<br>
+│   │   ├── test_cryptodev_hash_test_vectors.h<br>
+│   │   ├── test_cryptodev_hmac_test_vectors.h<br>
+│   │   ├── test_cryptodev_kasumi_hash_test_vectors.h<br>
+│   │   ├── test_cryptodev_kasumi_test_vectors.h<br>
+│   │   ├── test_cryptodev_mixed_test_vectors.h<br>
+│   │   ├── test_cryptodev_mod_test_vectors.h<br>
+│   │   ├── test_cryptodev_rsa_test_vectors.h<br>
+│   │   ├── test_cryptodev_security_docsis_test_vectors.h<br>
+│   │   ├── test_cryptodev_security_ipsec.c<br>
+│   │   ├── test_cryptodev_security_ipsec.h<br>
+│   │   ├── test_cryptodev_security_ipsec_test_vectors.h<br>
+│   │   ├── test_cryptodev_security_pdcp.c<br>
+│   │   ├── test_cryptodev_security_pdcp_sdap_test_vectors.h<br>
+│   │   ├── test_cryptodev_security_pdcp_test_func.h<br>
+│   │   ├── test_cryptodev_security_pdcp_test_vectors.h<br>
+│   │   ├── test_cryptodev_snow3g_hash_test_vectors.h<br>
+│   │   ├── test_cryptodev_snow3g_test_vectors.h<br>
+│   │   ├── test_cryptodev_zuc_test_vectors.h<br>
+│   │   ├── test_cycles.c<br>
+│   │   ├── test_debug.c<br>
+│   │   ├── test_devargs.c<br>
+│   │   ├── test_distributor.c<br>
+│   │   ├── test_distributor_perf.c<br>
+│   │   ├── test_dmadev_api.c<br>
+│   │   ├── test_dmadev_api.h<br>
+│   │   ├── test_dmadev.c<br>
+│   │   ├── test_eal_flags.c<br>
+│   │   ├── test_eal_fs.c<br>
+│   │   ├── test_efd.c<br>
+│   │   ├── test_efd_perf.c<br>
+│   │   ├── test_errno.c<br>
+│   │   ├── test_ethdev_link.c<br>
+│   │   ├── test_event_crypto_adapter.c<br>
+│   │   ├── test_eventdev.c<br>
+│   │   ├── test_event_eth_rx_adapter.c<br>
+│   │   ├── test_event_eth_tx_adapter.c<br>
+│   │   ├── test_event_ring.c<br>
+│   │   ├── test_event_timer_adapter.c<br>
+│   │   ├── test_external_mem.c<br>
+│   │   ├── test_fbarray.c<br>
+│   │   ├── test_fib6.c<br>
+│   │   ├── test_fib6_perf.c<br>
+│   │   ├── test_fib.c<br>
+│   │   ├── test_fib_perf.c<br>
+│   │   ├── test_flow_classify.c<br>
+│   │   ├── test_flow_classify.h<br>
+│   │   ├── test_func_reentrancy.c<br>
+│   │   ├── test_graph.c<br>
+│   │   ├── test_graph_perf.c<br>
+│   │   ├── test.h<br>
+│   │   ├── test_hash.c<br>
+│   │   ├── test_hash_functions.c<br>
+│   │   ├── test_hash_multiwriter.c<br>
+│   │   ├── test_hash_perf.c<br>
+│   │   ├── test_hash_readwrite.c<br>
+│   │   ├── test_hash_readwrite_lf_perf.c<br>
+│   │   ├── test_interrupts.c<br>
+│   │   ├── test_ipfrag.c<br>
+│   │   ├── test_ipsec.c<br>
+│   │   ├── test_ipsec_perf.c<br>
+│   │   ├── test_ipsec_sad.c<br>
+│   │   ├── test_kni.c<br>
+│   │   ├── test_kvargs.c<br>
+│   │   ├── test_latencystats.c<br>
+│   │   ├── test_lcores.c<br>
+│   │   ├── test_link_bonding.c<br>
+│   │   ├── test_link_bonding_mode4.c<br>
+│   │   ├── test_link_bonding_rssconf.c<br>
+│   │   ├── test_logs.c<br>
+│   │   ├── test_lpm6.c<br>
+│   │   ├── test_lpm6_data.h<br>
+│   │   ├── test_lpm6_perf.c<br>
+│   │   ├── test_lpm.c<br>
+│   │   ├── test_lpm_perf.c<br>
+│   │   ├── test_malloc.c<br>
+│   │   ├── test_malloc_perf.c<br>
+│   │   ├── test_mbuf.c<br>
+│   │   ├── test_mcslock.c<br>
+│   │   ├── test_member.c<br>
+│   │   ├── test_member_perf.c<br>
+│   │   ├── test_memcpy.c<br>
+│   │   ├── test_memcpy_perf.c<br>
+│   │   ├── test_memory.c<br>
+│   │   ├── test_mempool.c<br>
+│   │   ├── test_mempool_perf.c<br>
+│   │   ├── test_memzone.c<br>
+│   │   ├── test_meter.c<br>
+│   │   ├── test_metrics.c<br>
+│   │   ├── test_mp_secondary.c<br>
+│   │   ├── test_pcapng.c<br>
+│   │   ├── test_pdump.c<br>
+│   │   ├── test_pdump.h<br>
+│   │   ├── test_per_lcore.c<br>
+│   │   ├── test_pflock.c<br>
+│   │   ├── test_pie.c<br>
+│   │   ├── test_pmd_perf.c<br>
+│   │   ├── test_pmd_ring.c<br>
+│   │   ├── test_pmd_ring_perf.c<br>
+│   │   ├── test_power.c<br>
+│   │   ├── test_power_cpufreq.c<br>
+│   │   ├── test_power_kvm_vm.c<br>
+│   │   ├── test_prefetch.c<br>
+│   │   ├── test_rand_perf.c<br>
+│   │   ├── test_rawdev.c<br>
+│   │   ├── test_rcu_qsbr.c<br>
+│   │   ├── test_rcu_qsbr_perf.c<br>
+│   │   ├── test_reciprocal_division.c<br>
+│   │   ├── test_reciprocal_division_perf.c<br>
+│   │   ├── test_red.c<br>
+│   │   ├── test_reorder.c<br>
+│   │   ├── test_resource.c<br>
+│   │   ├── test_rib6.c<br>
+│   │   ├── test_rib.c<br>
+│   │   ├── test_ring.c<br>
+│   │   ├── test_ring.h<br>
+│   │   ├── test_ring_hts_stress.c<br>
+│   │   ├── test_ring_mpmc_stress.c<br>
+│   │   ├── test_ring_mt_peek_stress.c<br>
+│   │   ├── test_ring_mt_peek_stress_zc.c<br>
+│   │   ├── test_ring_perf.c<br>
+│   │   ├── test_ring_rts_stress.c<br>
+│   │   ├── test_ring_st_peek_stress.c<br>
+│   │   ├── test_ring_st_peek_stress_zc.c<br>
+│   │   ├── test_ring_stress.c<br>
+│   │   ├── test_ring_stress.h<br>
+│   │   ├── test_ring_stress_impl.h<br>
+│   │   ├── test_rwlock.c<br>
+│   │   ├── test_sched.c<br>
+│   │   ├── test_security.c<br>
+│   │   ├── test_service_cores.c<br>
+│   │   ├── test_spinlock.c<br>
+│   │   ├── test_stack.c<br>
+│   │   ├── test_stack_perf.c<br>
+│   │   ├── test_string_fns.c<br>
+│   │   ├── test_table_acl.c<br>
+│   │   ├── test_table_acl.h<br>
+│   │   ├── test_table.c<br>
+│   │   ├── test_table_combined.c<br>
+│   │   ├── test_table_combined.h<br>
+│   │   ├── test_table.h<br>
+│   │   ├── test_table_pipeline.c<br>
+│   │   ├── test_table_pipeline.h<br>
+│   │   ├── test_table_ports.c<br>
+│   │   ├── test_table_ports.h<br>
+│   │   ├── test_table_tables.c<br>
+│   │   ├── test_table_tables.h<br>
+│   │   ├── test_tailq.c<br>
+│   │   ├── test_telemetry_data.c<br>
+│   │   ├── test_telemetry_json.c<br>
+│   │   ├── test_thash.c<br>
+│   │   ├── test_thash_perf.c<br>
+│   │   ├── test_ticketlock.c<br>
+│   │   ├── test_timer.c<br>
+│   │   ├── test_timer_perf.c<br>
+│   │   ├── test_timer_racecond.c<br>
+│   │   ├── test_timer_secondary.c<br>
+│   │   ├── test_trace.c<br>
+│   │   ├── test_trace.h<br>
+│   │   ├── test_trace_perf.c<br>
+│   │   ├── test_trace_register.c<br>
+│   │   ├── test_vdev.c<br>
+│   │   ├── test_version.c<br>
+│   │   ├── test_xmmt_ops.h<br>
+│   │   ├── virtual_pmd.c<br>
+│   │   └── virtual_pmd.h<br>
+│   ├── test-acl<br>
+│   │   ├── input<br>
+│   │   │   ├── acl1v4_5_rule<br>
+│   │   │   ├── acl1v4_5_trace<br>
+│   │   │   ├── acl1v6_1_rule<br>
+│   │   │   └── acl1v6_1_trace<br>
+│   │   ├── main.c<br>
+│   │   ├── meson.build<br>
+│   │   └── test-acl.sh<br>
+│   ├── test-bbdev<br>
+│   │   ├── ldpc_dec_default.data -> test_vectors/ldpc_dec_v2342_drop.data<br>
+│   │   ├── ldpc_enc_default.data -> test_vectors/ldpc_enc_v2342.data<br>
+│   │   ├── main.c<br>
+│   │   ├── main.h<br>
+│   │   ├── meson.build<br>
+│   │   ├── test_bbdev.c<br>
+│   │   ├── test_bbdev_perf.c<br>
+│   │   ├── test-bbdev.py<br>
+│   │   ├── test_bbdev_vector.c<br>
+│   │   ├── test_bbdev_vector.h<br>
+│   │   ├── test_vectors<br>
+│   │   │   ├── bbdev_null.data<br>
+│   │   │   ├── ldpc_dec_HARQ_1_0.data<br>
+│   │   │   ├── ldpc_dec_HARQ_1_1.data<br>
+│   │   │   ├── ldpc_dec_HARQ_1_2.data<br>
+│   │   │   ├── ldpc_dec_v11835.data<br>
+│   │   │   ├── ldpc_dec_v2342_drop.data<br>
+│   │   │   ├── ldpc_dec_v7813.data<br>
+│   │   │   ├── ldpc_dec_v8480.data<br>
+│   │   │   ├── ldpc_dec_v8568.data<br>
+│   │   │   ├── ldpc_dec_v9503.data<br>
+│   │   │   ├── ldpc_enc_v11835.data<br>
+│   │   │   ├── ldpc_enc_v2342.data<br>
+│   │   │   ├── ldpc_enc_v7813.data<br>
+│   │   │   ├── ldpc_enc_v8568.data<br>
+│   │   │   ├── ldpc_enc_v9503.data<br>
+│   │   │   ├── turbo_dec_c1_k40_r0_e17280_sbd_negllr.data<br>
+│   │   │   ├── turbo_dec_c1_k6144_r0_e10376_crc24b_sbd_negllr_high_snr.data<br>
+│   │   │   ├── turbo_dec_c1_k6144_r0_e10376_crc24b_sbd_negllr_low_snr.data<br>
+│   │   │   ├── turbo_dec_c1_k6144_r0_e34560_posllr.data<br>
+│   │   │   ├── turbo_dec_c1_k6144_r0_e34560_sbd_negllr.data<br>
+│   │   │   ├── turbo_dec_c1_k6144_r0_e34560_sbd_posllr.data<br>
+│   │   │   ├── turbo_dec_c2_k3136_r0_e4920_sbd_negllr_crc24b.data<br>
+│   │   │   ├── turbo_enc_c1_k40_r0_e1190_rm.data<br>
+│   │   │   ├── turbo_enc_c1_k40_r0_e1194_rm.data<br>
+│   │   │   ├── turbo_enc_c1_k40_r0_e1196_rm.data<br>
+│   │   │   ├── turbo_enc_c1_k40_r0_e272_rm.data<br>
+│   │   │   ├── turbo_enc_c1_k6144_r0_e120_rm_rvidx.data<br>
+│   │   │   ├── turbo_enc_c1_k6144_r0_e18444.data<br>
+│   │   │   ├── turbo_enc_c1_k6144_r0_e18448_crc24a.data<br>
+│   │   │   ├── turbo_enc_c1_k6144_r0_e32256_crc24b_rm.data<br>
+│   │   │   └── turbo_enc_c3_k4800_r2_e14412_crc24b.data<br>
+│   │   ├── turbo_dec_default.data -> test_vectors/turbo_dec_c1_k6144_r0_e10376_crc24b_sbd_negllr_high_snr.data<br>
+│   │   └── turbo_enc_default.data -> test_vectors/turbo_enc_c1_k6144_r0_e18444.data<br>
+│   ├── test-cmdline<br>
+│   │   ├── cmdline_test.c<br>
+│   │   ├── cmdline_test_data.py<br>
+│   │   ├── cmdline_test.h<br>
+│   │   ├── cmdline_test.py<br>
+│   │   ├── commands.c<br>
+│   │   └── meson.build<br>
+│   ├── test-compress-perf<br>
+│   │   ├── comp_perf.h<br>
+│   │   ├── comp_perf_options.h<br>
+│   │   ├── comp_perf_options_parse.c<br>
+│   │   ├── comp_perf_test_common.c<br>
+│   │   ├── comp_perf_test_common.h<br>
+│   │   ├── comp_perf_test_cyclecount.c<br>
+│   │   ├── comp_perf_test_cyclecount.h<br>
+│   │   ├── comp_perf_test_throughput.c<br>
+│   │   ├── comp_perf_test_throughput.h<br>
+│   │   ├── comp_perf_test_verify.c<br>
+│   │   ├── comp_perf_test_verify.h<br>
+│   │   ├── main.c<br>
+│   │   └── meson.build<br>
+│   ├── test-crypto-perf<br>
+│   │   ├── configs<br>
+│   │   │   ├── crypto-perf-aesni-gcm.json<br>
+│   │   │   ├── crypto-perf-aesni-mb.json<br>
+│   │   │   └── crypto-perf-qat.json<br>
+│   │   ├── cperf.h<br>
+│   │   ├── cperf_ops.c<br>
+│   │   ├── cperf_ops.h<br>
+│   │   ├── cperf_options.h<br>
+│   │   ├── cperf_options_parsing.c<br>
+│   │   ├── cperf_test_common.c<br>
+│   │   ├── cperf_test_common.h<br>
+│   │   ├── cperf_test_latency.c<br>
+│   │   ├── cperf_test_latency.h<br>
+│   │   ├── cperf_test_pmd_cyclecount.c<br>
+│   │   ├── cperf_test_pmd_cyclecount.h<br>
+│   │   ├── cperf_test_throughput.c<br>
+│   │   ├── cperf_test_throughput.h<br>
+│   │   ├── cperf_test_vector_parsing.c<br>
+│   │   ├── cperf_test_vector_parsing.h<br>
+│   │   ├── cperf_test_vectors.c<br>
+│   │   ├── cperf_test_vectors.h<br>
+│   │   ├── cperf_test_verify.c<br>
+│   │   ├── cperf_test_verify.h<br>
+│   │   ├── data<br>
+│   │   │   ├── aes_cbc_128_sha.data<br>
+│   │   │   ├── aes_cbc_192_sha.data<br>
+│   │   │   └── aes_cbc_256_sha.data<br>
+│   │   ├── dpdk-graph-crypto-perf.py<br>
+│   │   ├── main.c<br>
+│   │   └── meson.build<br>
+│   ├── test-eventdev<br>
+│   │   ├── evt_common.h<br>
+│   │   ├── evt_main.c<br>
+│   │   ├── evt_options.c<br>
+│   │   ├── evt_options.h<br>
+│   │   ├── evt_test.c<br>
+│   │   ├── evt_test.h<br>
+│   │   ├── meson.build<br>
+│   │   ├── parser.c<br>
+│   │   ├── parser.h<br>
+│   │   ├── test_order_atq.c<br>
+│   │   ├── test_order_common.c<br>
+│   │   ├── test_order_common.h<br>
+│   │   ├── test_order_queue.c<br>
+│   │   ├── test_perf_atq.c<br>
+│   │   ├── test_perf_common.c<br>
+│   │   ├── test_perf_common.h<br>
+│   │   ├── test_perf_queue.c<br>
+│   │   ├── test_pipeline_atq.c<br>
+│   │   ├── test_pipeline_common.c<br>
+│   │   ├── test_pipeline_common.h<br>
+│   │   └── test_pipeline_queue.c<br>
+│   ├── test-fib<br>
+│   │   ├── main.c<br>
+│   │   └── meson.build<br>
+│   ├── test-flow-perf<br>
+│   │   ├── actions_gen.c<br>
+│   │   ├── actions_gen.h<br>
+│   │   ├── config.h<br>
+│   │   ├── flow_gen.c<br>
+│   │   ├── flow_gen.h<br>
+│   │   ├── items_gen.c<br>
+│   │   ├── items_gen.h<br>
+│   │   ├── main.c<br>
+│   │   └── meson.build<br>
+│   ├── test-gpudev<br>
+│   │   ├── main.c<br>
+│   │   └── meson.build<br>
+│   ├── test-pipeline<br>
+│   │   ├── config.c<br>
+│   │   ├── init.c<br>
+│   │   ├── main.c<br>
+│   │   ├── main.h<br>
+│   │   ├── meson.build<br>
+│   │   ├── pipeline_acl.c<br>
+│   │   ├── pipeline_hash.c<br>
+│   │   ├── pipeline_lpm.c<br>
+│   │   ├── pipeline_lpm_ipv6.c<br>
+│   │   ├── pipeline_stub.c<br>
+│   │   └── runtime.c<br>
+│   ├── test-pmd<br>
+│   │   ├── 5tswap.c<br>
+│   │   ├── bpf_cmd.c<br>
+│   │   ├── bpf_cmd.h<br>
+│   │   ├── cmd_flex_item.c<br>
+│   │   ├── cmdline.c<br>
+│   │   ├── cmdline_flow.c<br>
+│   │   ├── cmdline_mtr.c<br>
+│   │   ├── cmdline_mtr.h<br>
+│   │   ├── cmdline_tm.c<br>
+│   │   ├── cmdline_tm.h<br>
+│   │   ├── config.c<br>
+│   │   ├── csumonly.c<br>
+│   │   ├── flowgen.c<br>
+│   │   ├── icmpecho.c<br>
+│   │   ├── ieee1588fwd.c<br>
+│   │   ├── iofwd.c<br>
+│   │   ├── macfwd.c<br>
+│   │   ├── macswap.c<br>
+│   │   ├── macswap_common.h<br>
+│   │   ├── macswap.h<br>
+│   │   ├── macswap_neon.h<br>
+│   │   ├── macswap_sse.h<br>
+│   │   ├── meson.build<br>
+│   │   ├── noisy_vnf.c<br>
+│   │   ├── parameters.c<br>
+│   │   ├── rxonly.c<br>
+│   │   ├── shared_rxq_fwd.c<br>
+│   │   ├── testpmd.c<br>
+│   │   ├── testpmd.h<br>
+│   │   ├── txonly.c<br>
+│   │   └── util.c<br>
+│   ├── test-regex<br>
+│   │   ├── main.c<br>
+│   │   └── meson.build<br>
+│   └── test-sad<br>
+│       ├── main.c<br>
+│       └── meson.build<br>
+├── buildtools<br>
+│   ├── binutils-avx512-check.py<br>
+│   ├── call-sphinx-build.py<br>
+│   ├── check-symbols.sh<br>
+│   ├── chkincs<br>
+│   │   ├── gen_c_file_for_header.py<br>
+│   │   ├── main.c<br>
+│   │   ├── main.cpp<br>
+│   │   └── meson.build<br>
+│   ├── coff.py<br>
+│   ├── gen-pmdinfo-cfile.py<br>
+│   ├── get-cpu-count.py<br>
+│   ├── get-numa-count.py<br>
+│   ├── list-dir-globs.py<br>
+│   ├── map-list-symbol.sh<br>
+│   ├── map_to_win.py<br>
+│   ├── meson.build<br>
+│   ├── options-ibverbs-static.sh<br>
+│   ├── pkg-config<br>
+│   │   ├── meson.build<br>
+│   │   └── set-static-linker-flags.py<br>
+│   ├── pmdinfogen.py<br>
+│   ├── symlink-drivers-solibs.py<br>
+│   └── symlink-drivers-solibs.sh<br>
+├── config<br>
+│   ├── arm<br>
+│   │   ├── arm32_armv8_linux_gcc<br>
+│   │   ├── arm64_armada_linux_gcc<br>
+│   │   ├── arm64_armv8_linux_clang_ubuntu1804<br>
+│   │   ├── arm64_armv8_linux_gcc<br>
+│   │   ├── arm64_bluefield_linux_gcc<br>
+│   │   ├── arm64_centriq2400_linux_gcc<br>
+│   │   ├── arm64_cn10k_linux_gcc<br>
+│   │   ├── arm64_cn9k_linux_gcc<br>
+│   │   ├── arm64_dpaa_linux_gcc<br>
+│   │   ├── arm64_emag_linux_gcc<br>
+│   │   ├── arm64_graviton2_linux_gcc<br>
+│   │   ├── arm64_kunpeng920_linux_gcc<br>
+│   │   ├── arm64_kunpeng930_linux_gcc<br>
+│   │   ├── arm64_n1sdp_linux_gcc<br>
+│   │   ├── arm64_n2_linux_gcc<br>
+│   │   ├── arm64_stingray_linux_gcc<br>
+│   │   ├── arm64_thunderx2_linux_gcc<br>
+│   │   ├── arm64_thunderxt88_linux_gcc<br>
+│   │   ├── armv8_machine.py<br>
+│   │   └── meson.build<br>
+│   ├── meson.build<br>
+│   ├── ppc<br>
+│   │   ├── meson.build<br>
+│   │   ├── ppc64le-power8-linux-gcc<br>
+│   │   └── ppc64le-power8-linux-gcc-ubuntu1804<br>
+│   ├── rte_config.h<br>
+│   └── x86<br>
+│       ├── cross-mingw<br>
+│       └── meson.build<br>
+├── devtools<br>
+│   ├── build-dict.sh<br>
+│   ├── build-tags.sh<br>
+│   ├── check-abi.sh<br>
+│   ├── check-abi-version.sh<br>
+│   ├── check-doc-vs-code.sh<br>
+│   ├── check-dup-includes.sh<br>
+│   ├── check-forbidden-tokens.awk<br>
+│   ├── check-git-log.sh<br>
+│   ├── check-maintainers.sh<br>
+│   ├── check-meson.py<br>
+│   ├── checkpatches.sh<br>
+│   ├── check-spdx-tag.sh<br>
+│   ├── check-symbol-change.sh<br>
+│   ├── check-symbol-maps.sh<br>
+│   ├── cocci<br>
+│   │   ├── mtod-offset.cocci<br>
+│   │   ├── namespace_ethdev.cocci<br>
+│   │   ├── nullfree.cocci<br>
+│   │   ├── prefix_mbuf_offload_flags.cocci<br>
+│   │   ├── strlcpy.cocci<br>
+│   │   └── strlcpy-with-header.cocci<br>
+│   ├── cocci.sh<br>
+│   ├── gen-abi.sh<br>
+│   ├── get-maintainer.sh<br>
+│   ├── git-log-fixes.sh<br>
+│   ├── libabigail.abignore<br>
+│   ├── load-devel-config<br>
+│   ├── parse-flow-support.sh<br>
+│   ├── process-iwyu.py<br>
+│   ├── test-meson-builds.sh<br>
+│   ├── test-null.sh<br>
+│   ├── update-abi.sh<br>
+│   ├── update-patches.py<br>
+│   ├── update_version_map_abi.py<br>
+│   └── words-case.txt<br>
+├── doc<br>
+│   ├── api<br>
+│   │   ├── doxy-api.conf.in<br>
+│   │   ├── doxy-api-index.md<br>
+│   │   ├── doxy-html-custom.sh<br>
+│   │   ├── generate_doxygen.sh<br>
+│   │   ├── generate_examples.sh<br>
+│   │   └── meson.build<br>
+│   ├── guides<br>
+│   │   ├── bbdevs<br>
+│   │   │   ├── acc100.rst<br>
+│   │   │   ├── features<br>
+│   │   │   │   ├── acc100.ini<br>
+│   │   │   │   ├── default.ini<br>
+│   │   │   │   ├── fpga_5gnr_fec.ini<br>
+│   │   │   │   ├── fpga_lte_fec.ini<br>
+│   │   │   │   ├── la12xx.ini<br>
+│   │   │   │   ├── null.ini<br>
+│   │   │   │   └── turbo_sw.ini<br>
+│   │   │   ├── fpga_5gnr_fec.rst<br>
+│   │   │   ├── fpga_lte_fec.rst<br>
+│   │   │   ├── index.rst<br>
+│   │   │   ├── la12xx.rst<br>
+│   │   │   ├── null.rst<br>
+│   │   │   ├── overview.rst<br>
+│   │   │   └── turbo_sw.rst<br>
+│   │   ├── compressdevs<br>
+│   │   │   ├── features<br>
+│   │   │   │   ├── default.ini<br>
+│   │   │   │   ├── isal.ini<br>
+│   │   │   │   ├── mlx5.ini<br>
+│   │   │   │   ├── octeontx.ini<br>
+│   │   │   │   ├── qat.ini<br>
+│   │   │   │   └── zlib.ini<br>
+│   │   │   ├── index.rst<br>
+│   │   │   ├── isal.rst<br>
+│   │   │   ├── mlx5.rst<br>
+│   │   │   ├── octeontx.rst<br>
+│   │   │   ├── overview.rst<br>
+│   │   │   ├── qat_comp.rst<br>
+│   │   │   └── zlib.rst<br>
+│   │   ├── conf.py<br>
+│   │   ├── contributing<br>
+│   │   │   ├── abi_policy.rst<br>
+│   │   │   ├── abi_versioning.rst<br>
+│   │   │   ├── cheatsheet.rst<br>
+│   │   │   ├── coding_style.rst<br>
+│   │   │   ├── design.rst<br>
+│   │   │   ├── documentation.rst<br>
+│   │   │   ├── img<br>
+│   │   │   │   ├── abi_stability_policy.svg<br>
+│   │   │   │   ├── patch_cheatsheet.svg<br>
+│   │   │   │   └── what_is_an_abi.svg<br>
+│   │   │   ├── index.rst<br>
+│   │   │   ├── patches.rst<br>
+│   │   │   ├── stable.rst<br>
+│   │   │   ├── unit_test.rst<br>
+│   │   │   └── vulnerability.rst<br>
+│   │   ├── cryptodevs<br>
+│   │   │   ├── aesni_gcm.rst<br>
+│   │   │   ├── aesni_mb.rst<br>
+│   │   │   ├── armv8.rst<br>
+│   │   │   ├── bcmfs.rst<br>
+│   │   │   ├── caam_jr.rst<br>
+│   │   │   ├── ccp.rst<br>
+│   │   │   ├── chacha20_poly1305.rst<br>
+│   │   │   ├── cnxk.rst<br>
+│   │   │   ├── dpaa2_sec.rst<br>
+│   │   │   ├── dpaa_sec.rst<br>
+│   │   │   ├── features<br>
+│   │   │   │   ├── aesni_gcm.ini<br>
+│   │   │   │   ├── aesni_mb.ini<br>
+│   │   │   │   ├── armv8.ini<br>
+│   │   │   │   ├── bcmfs.ini<br>
+│   │   │   │   ├── caam_jr.ini<br>
+│   │   │   │   ├── ccp.ini<br>
+│   │   │   │   ├── chacha20_poly1305.ini<br>
+│   │   │   │   ├── cn10k.ini<br>
+│   │   │   │   ├── cn9k.ini<br>
+│   │   │   │   ├── default.ini<br>
+│   │   │   │   ├── dpaa2_sec.ini<br>
+│   │   │   │   ├── dpaa_sec.ini<br>
+│   │   │   │   ├── kasumi.ini<br>
+│   │   │   │   ├── mlx5.ini<br>
+│   │   │   │   ├── mvsam.ini<br>
+│   │   │   │   ├── nitrox.ini<br>
+│   │   │   │   ├── null.ini<br>
+│   │   │   │   ├── octeontx.ini<br>
+│   │   │   │   ├── openssl.ini<br>
+│   │   │   │   ├── qat.ini<br>
+│   │   │   │   ├── snow3g.ini<br>
+│   │   │   │   ├── virtio.ini<br>
+│   │   │   │   └── zuc.ini<br>
+│   │   │   ├── img<br>
+│   │   │   │   └── scheduler-overview.svg<br>
+│   │   │   ├── index.rst<br>
+│   │   │   ├── kasumi.rst<br>
+│   │   │   ├── mlx5.rst<br>
+│   │   │   ├── mvsam.rst<br>
+│   │   │   ├── nitrox.rst<br>
+│   │   │   ├── null.rst<br>
+│   │   │   ├── octeontx.rst<br>
+│   │   │   ├── openssl.rst<br>
+│   │   │   ├── overview.rst<br>
+│   │   │   ├── qat.rst<br>
+│   │   │   ├── scheduler.rst<br>
+│   │   │   ├── snow3g.rst<br>
+│   │   │   ├── virtio.rst<br>
+│   │   │   └── zuc.rst<br>
+│   │   ├── custom.css<br>
+│   │   ├── dmadevs<br>
+│   │   │   ├── cnxk.rst<br>
+│   │   │   ├── dpaa.rst<br>
+│   │   │   ├── hisilicon.rst<br>
+│   │   │   ├── idxd.rst<br>
+│   │   │   ├── index.rst<br>
+│   │   │   └── ioat.rst<br>
+│   │   ├── eventdevs<br>
+│   │   │   ├── cnxk.rst<br>
+│   │   │   ├── dlb2.rst<br>
+│   │   │   ├── dpaa2.rst<br>
+│   │   │   ├── dpaa.rst<br>
+│   │   │   ├── dsw.rst<br>
+│   │   │   ├── features<br>
+│   │   │   │   ├── cnxk.ini<br>
+│   │   │   │   ├── default.ini<br>
+│   │   │   │   ├── dlb2.ini<br>
+│   │   │   │   ├── dpaa2.ini<br>
+│   │   │   │   ├── dpaa.ini<br>
+│   │   │   │   ├── dsw.ini<br>
+│   │   │   │   ├── octeontx.ini<br>
+│   │   │   │   ├── opdl.ini<br>
+│   │   │   │   └── sw.ini<br>
+│   │   │   ├── index.rst<br>
+│   │   │   ├── octeontx.rst<br>
+│   │   │   ├── opdl.rst<br>
+│   │   │   ├── overview.rst<br>
+│   │   │   └── sw.rst<br>
+│   │   ├── faq<br>
+│   │   │   ├── faq.rst<br>
+│   │   │   └── index.rst<br>
+│   │   ├── freebsd_gsg<br>
+│   │   │   ├── build_dpdk.rst<br>
+│   │   │   ├── build_sample_apps.rst<br>
+│   │   │   ├── freebsd_eal_parameters.rst<br>
+│   │   │   ├── index.rst<br>
+│   │   │   ├── install_from_ports.rst<br>
+│   │   │   └── intro.rst<br>
+│   │   ├── gpus<br>
+│   │   │   ├── cuda.rst<br>
+│   │   │   ├── features<br>
+│   │   │   │   ├── cuda.ini<br>
+│   │   │   │   └── default.ini<br>
+│   │   │   ├── index.rst<br>
+│   │   │   └── overview.rst<br>
+│   │   ├── howto<br>
+│   │   │   ├── avx512.rst<br>
+│   │   │   ├── debug_troubleshoot.rst<br>
+│   │   │   ├── flow_bifurcation.rst<br>
+│   │   │   ├── img<br>
+│   │   │   │   ├── dtg_consumer_ring.svg<br>
+│   │   │   │   ├── dtg_crypto.svg<br>
+│   │   │   │   ├── dtg_distributor_worker.svg<br>
+│   │   │   │   ├── dtg_mempool.svg<br>
+│   │   │   │   ├── dtg_pdump.svg<br>
+│   │   │   │   ├── dtg_producer_ring.svg<br>
+│   │   │   │   ├── dtg_qos_tx.svg<br>
+│   │   │   │   ├── dtg_rx_rate.svg<br>
+│   │   │   │   ├── dtg_rx_tx_drop.svg<br>
+│   │   │   │   ├── dtg_sample_app_model.svg<br>
+│   │   │   │   ├── dtg_service.svg<br>
+│   │   │   │   ├── flow_bifurcation_overview.svg<br>
+│   │   │   │   ├── lm_bond_virtio_sriov.svg<br>
+│   │   │   │   ├── lm_vhost_user.svg<br>
+│   │   │   │   ├── packet_capture_framework.svg<br>
+│   │   │   │   ├── pvp_2nics.svg<br>
+│   │   │   │   ├── use_models_for_running_dpdk_in_containers.svg<br>
+│   │   │   │   ├── vf_daemon_overview.svg<br>
+│   │   │   │   ├── virtio_user_as_exceptional_path.svg<br>
+│   │   │   │   └── virtio_user_for_container_networking.svg<br>
+│   │   │   ├── index.rst<br>
+│   │   │   ├── lm_bond_virtio_sriov.rst<br>
+│   │   │   ├── lm_virtio_vhost_user.rst<br>
+│   │   │   ├── openwrt.rst<br>
+│   │   │   ├── packet_capture_framework.rst<br>
+│   │   │   ├── pvp_reference_benchmark.rst<br>
+│   │   │   ├── rte_flow.rst<br>
+│   │   │   ├── telemetry.rst<br>
+│   │   │   ├── vfd.rst<br>
+│   │   │   ├── virtio_user_as_exceptional_path.rst<br>
+│   │   │   └── virtio_user_for_container_networking.rst<br>
+│   │   ├── index.rst<br>
+│   │   ├── linux_gsg<br>
+│   │   │   ├── build_dpdk.rst<br>
+│   │   │   ├── build_sample_apps.rst<br>
+│   │   │   ├── cross_build_dpdk_for_arm64.rst<br>
+│   │   │   ├── eal_args.include.rst<br>
+│   │   │   ├── enable_func.rst<br>
+│   │   │   ├── index.rst<br>
+│   │   │   ├── intro.rst<br>
+│   │   │   ├── linux_drivers.rst<br>
+│   │   │   ├── linux_eal_parameters.rst<br>
+│   │   │   ├── nic_perf_intel_platform.rst<br>
+│   │   │   └── sys_reqs.rst<br>
+│   │   ├── mempool<br>
+│   │   │   ├── cnxk.rst<br>
+│   │   │   ├── index.rst<br>
+│   │   │   ├── octeontx.rst<br>
+│   │   │   ├── ring.rst<br>
+│   │   │   └── stack.rst<br>
+│   │   ├── meson.build<br>
+│   │   ├── nics<br>
+│   │   │   ├── af_packet.rst<br>
+│   │   │   ├── af_xdp.rst<br>
+│   │   │   ├── ark.rst<br>
+│   │   │   ├── atlantic.rst<br>
+│   │   │   ├── avp.rst<br>
+│   │   │   ├── axgbe.rst<br>
+│   │   │   ├── bnx2x.rst<br>
+│   │   │   ├── bnxt.rst<br>
+│   │   │   ├── build_and_test.rst<br>
+│   │   │   ├── cnxk.rst<br>
+│   │   │   ├── cxgbe.rst<br>
+│   │   │   ├── dpaa2.rst<br>
+│   │   │   ├── dpaa.rst<br>
+│   │   │   ├── e1000em.rst<br>
+│   │   │   ├── ena.rst<br>
+│   │   │   ├── enetc.rst<br>
+│   │   │   ├── enetfec.rst<br>
+│   │   │   ├── enic.rst<br>
+│   │   │   ├── fail_safe.rst<br>
+│   │   │   ├── features<br>
+│   │   │   │   ├── afpacket.ini<br>
+│   │   │   │   ├── af_xdp.ini<br>
+│   │   │   │   ├── ark.ini<br>
+│   │   │   │   ├── atlantic.ini<br>
+│   │   │   │   ├── avp.ini<br>
+│   │   │   │   ├── axgbe.ini<br>
+│   │   │   │   ├── bnx2x.ini<br>
+│   │   │   │   ├── bnxt.ini<br>
+│   │   │   │   ├── cnxk.ini<br>
+│   │   │   │   ├── cnxk_vec.ini<br>
+│   │   │   │   ├── cnxk_vf.ini<br>
+│   │   │   │   ├── cxgbe.ini<br>
+│   │   │   │   ├── cxgbevf.ini<br>
+│   │   │   │   ├── default.ini<br>
+│   │   │   │   ├── dpaa2.ini<br>
+│   │   │   │   ├── dpaa.ini<br>
+│   │   │   │   ├── e1000.ini<br>
+│   │   │   │   ├── ena.ini<br>
+│   │   │   │   ├── enetc.ini<br>
+│   │   │   │   ├── enetfec.ini<br>
+│   │   │   │   ├── enic.ini<br>
+│   │   │   │   ├── failsafe.ini<br>
+│   │   │   │   ├── fm10k.ini<br>
+│   │   │   │   ├── fm10k_vf.ini<br>
+│   │   │   │   ├── hinic.ini<br>
+│   │   │   │   ├── hns3.ini<br>
+│   │   │   │   ├── hns3_vf.ini<br>
+│   │   │   │   ├── i40e.ini<br>
+│   │   │   │   ├── iavf.ini<br>
+│   │   │   │   ├── ice_dcf.ini<br>
+│   │   │   │   ├── ice.ini<br>
+│   │   │   │   ├── igb.ini<br>
+│   │   │   │   ├── igb_vf.ini<br>
+│   │   │   │   ├── igc.ini<br>
+│   │   │   │   ├── ionic.ini<br>
+│   │   │   │   ├── ipn3ke.ini<br>
+│   │   │   │   ├── ixgbe.ini<br>
+│   │   │   │   ├── ixgbe_vf.ini<br>
+│   │   │   │   ├── liquidio.ini<br>
+│   │   │   │   ├── memif.ini<br>
+│   │   │   │   ├── mlx4.ini<br>
+│   │   │   │   ├── mlx5.ini<br>
+│   │   │   │   ├── mvneta.ini<br>
+│   │   │   │   ├── mvpp2.ini<br>
+│   │   │   │   ├── netvsc.ini<br>
+│   │   │   │   ├── nfb.ini<br>
+│   │   │   │   ├── nfp.ini<br>
+│   │   │   │   ├── ngbe.ini<br>
+│   │   │   │   ├── octeontx_ep.ini<br>
+│   │   │   │   ├── octeontx.ini<br>
+│   │   │   │   ├── pcap.ini<br>
+│   │   │   │   ├── pfe.ini<br>
+│   │   │   │   ├── qede.ini<br>
+│   │   │   │   ├── qede_vf.ini<br>
+│   │   │   │   ├── sfc.ini<br>
+│   │   │   │   ├── tap.ini<br>
+│   │   │   │   ├── thunderx.ini<br>
+│   │   │   │   ├── txgbe.ini<br>
+│   │   │   │   ├── txgbe_vf.ini<br>
+│   │   │   │   ├── vhost.ini<br>
+│   │   │   │   ├── virtio.ini<br>
+│   │   │   │   └── vmxnet3.ini<br>
+│   │   │   ├── features.rst<br>
+│   │   │   ├── fm10k.rst<br>
+│   │   │   ├── hinic.rst<br>
+│   │   │   ├── hns3.rst<br>
+│   │   │   ├── i40e.rst<br>
+│   │   │   ├── ice.rst<br>
+│   │   │   ├── igb.rst<br>
+│   │   │   ├── igc.rst<br>
+│   │   │   ├── img<br>
+│   │   │   │   ├── console.png<br>
+│   │   │   │   ├── fast_pkt_proc.png<br>
+│   │   │   │   ├── forward_stats.png<br>
+│   │   │   │   ├── host_vm_comms.png<br>
+│   │   │   │   ├── host_vm_comms_qemu.png<br>
+│   │   │   │   ├── ice_dcf.svg<br>
+│   │   │   │   ├── intel_perf_test_setup.svg<br>
+│   │   │   │   ├── inter_vm_comms.png<br>
+│   │   │   │   ├── mvpp2_tm.svg<br>
+│   │   │   │   ├── perf_benchmark.png<br>
+│   │   │   │   ├── single_port_nic.png<br>
+│   │   │   │   ├── vm_vm_comms.png<br>
+│   │   │   │   ├── vmxnet3_int.png<br>
+│   │   │   │   └── vswitch_vm.png<br>
+│   │   │   ├── index.rst<br>
+│   │   │   ├── intel_vf.rst<br>
+│   │   │   ├── ionic.rst<br>
+│   │   │   ├── ipn3ke.rst<br>
+│   │   │   ├── ixgbe.rst<br>
+│   │   │   ├── kni.rst<br>
+│   │   │   ├── liquidio.rst<br>
+│   │   │   ├── memif.rst<br>
+│   │   │   ├── mlx4.rst<br>
+│   │   │   ├── mlx5.rst<br>
+│   │   │   ├── mvneta.rst<br>
+│   │   │   ├── mvpp2.rst<br>
+│   │   │   ├── netvsc.rst<br>
+│   │   │   ├── nfb.rst<br>
+│   │   │   ├── nfp.rst<br>
+│   │   │   ├── ngbe.rst<br>
+│   │   │   ├── null.rst<br>
+│   │   │   ├── octeontx_ep.rst<br>
+│   │   │   ├── octeontx.rst<br>
+│   │   │   ├── overview.rst<br>
+│   │   │   ├── pcap_ring.rst<br>
+│   │   │   ├── pfe.rst<br>
+│   │   │   ├── qede.rst<br>
+│   │   │   ├── sfc_efx.rst<br>
+│   │   │   ├── softnic.rst<br>
+│   │   │   ├── tap.rst<br>
+│   │   │   ├── thunderx.rst<br>
+│   │   │   ├── txgbe.rst<br>
+│   │   │   ├── vdev_netvsc.rst<br>
+│   │   │   ├── vhost.rst<br>
+│   │   │   ├── virtio.rst<br>
+│   │   │   └── vmxnet3.rst<br>
+│   │   ├── platform<br>
+│   │   │   ├── bluefield.rst<br>
+│   │   │   ├── cnxk.rst<br>
+│   │   │   ├── dpaa2.rst<br>
+│   │   │   ├── dpaa.rst<br>
+│   │   │   ├── img<br>
+│   │   │   │   ├── cnxk_packet_flow_hw_accelerators.svg<br>
+│   │   │   │   └── cnxk_resource_virtualization.svg<br>
+│   │   │   ├── index.rst<br>
+│   │   │   ├── mlx5.rst<br>
+│   │   │   └── octeontx.rst<br>
+│   │   ├── prog_guide<br>
+│   │   │   ├── asan.rst<br>
+│   │   │   ├── bbdev.rst<br>
+│   │   │   ├── bpf_lib.rst<br>
+│   │   │   ├── build_app.rst<br>
+│   │   │   ├── build-sdk-meson.rst<br>
+│   │   │   ├── compressdev.rst<br>
+│   │   │   ├── cryptodev_lib.rst<br>
+│   │   │   ├── dmadev.rst<br>
+│   │   │   ├── efd_lib.rst<br>
+│   │   │   ├── env_abstraction_layer.rst<br>
+│   │   │   ├── event_crypto_adapter.rst<br>
+│   │   │   ├── eventdev.rst<br>
+│   │   │   ├── event_ethernet_rx_adapter.rst<br>
+│   │   │   ├── event_ethernet_tx_adapter.rst<br>
+│   │   │   ├── event_timer_adapter.rst<br>
+│   │   │   ├── fib_lib.rst<br>
+│   │   │   ├── flow_classify_lib.rst<br>
+│   │   │   ├── generic_receive_offload_lib.rst<br>
+│   │   │   ├── generic_segmentation_offload_lib.rst<br>
+│   │   │   ├── glossary.rst<br>
+│   │   │   ├── gpudev.rst<br>
+│   │   │   ├── graph_lib.rst<br>
+│   │   │   ├── hash_lib.rst<br>
+│   │   │   ├── img<br>
+│   │   │   │   ├── anatomy_of_a_node.svg<br>
+│   │   │   │   ├── architecture-overview.svg<br>
+│   │   │   │   ├── blk_diag_dropper.png<br>
+│   │   │   │   ├── bond-mode-0.svg<br>
+│   │   │   │   ├── bond-mode-1.svg<br>
+│   │   │   │   ├── bond-mode-2.svg<br>
+│   │   │   │   ├── bond-mode-3.svg<br>
+│   │   │   │   ├── bond-mode-4.svg<br>
+│   │   │   │   ├── bond-mode-5.svg<br>
+│   │   │   │   ├── bond-overview.svg<br>
+│   │   │   │   ├── cryptodev_sym_sess.svg<br>
+│   │   │   │   ├── crypto_op.svg<br>
+│   │   │   │   ├── crypto_xform_chain.svg<br>
+│   │   │   │   ├── data_struct_per_port.png<br>
+│   │   │   │   ├── dir_24_8_alg.svg<br>
+│   │   │   │   ├── dmadev.svg<br>
+│   │   │   │   ├── drop_probability_eq3.png<br>
+│   │   │   │   ├── drop_probability_eq4.png<br>
+│   │   │   │   ├── drop_probability_graph.png<br>
+│   │   │   │   ├── efd_i10.svg<br>
+│   │   │   │   ├── efd_i11.svg<br>
+│   │   │   │   ├── efd_i12.svg<br>
+│   │   │   │   ├── efd_i1.svg<br>
+│   │   │   │   ├── efd_i2.svg<br>
+│   │   │   │   ├── efd_i3.svg<br>
+│   │   │   │   ├── efd_i4.svg<br>
+│   │   │   │   ├── efd_i5.svg<br>
+│   │   │   │   ├── efd_i6.svg<br>
+│   │   │   │   ├── efd_i7.svg<br>
+│   │   │   │   ├── efd_i8.svg<br>
+│   │   │   │   ├── efd_i9.svg<br>
+│   │   │   │   ├── eq2_expression.png<br>
+│   │   │   │   ├── eq2_factor.png<br>
+│   │   │   │   ├── event_crypto_adapter_op_forward.svg<br>
+│   │   │   │   ├── event_crypto_adapter_op_new.svg<br>
+│   │   │   │   ├── eventdev_usage.svg<br>
+│   │   │   │   ├── ewma_filter_eq_1.png<br>
+│   │   │   │   ├── ewma_filter_eq_2.png<br>
+│   │   │   │   ├── ex_data_flow_tru_dropper.png<br>
+│   │   │   │   ├── figure32.png<br>
+│   │   │   │   ├── figure33.png<br>
+│   │   │   │   ├── figure34.png<br>
+│   │   │   │   ├── figure35.png<br>
+│   │   │   │   ├── figure37.png<br>
+│   │   │   │   ├── figure38.png<br>
+│   │   │   │   ├── figure39.png<br>
+│   │   │   │   ├── flow_tru_dropper.png<br>
+│   │   │   │   ├── graph_mem_layout.svg<br>
+│   │   │   │   ├── gro-key-algorithm.svg<br>
+│   │   │   │   ├── gso-output-segment-format.svg<br>
+│   │   │   │   ├── gso-three-seg-mbuf.svg<br>
+│   │   │   │   ├── hier_sched_blk.png<br>
+│   │   │   │   ├── kernel_nic_intf.png<br>
+│   │   │   │   ├── kni_traffic_flow.png<br>
+│   │   │   │   ├── link_the_nodes.svg<br>
+│   │   │   │   ├── linuxapp_launch.svg<br>
+│   │   │   │   ├── malloc_heap.svg<br>
+│   │   │   │   ├── mbuf1.svg<br>
+│   │   │   │   ├── mbuf2.svg<br>
+│   │   │   │   ├── m_definition.png<br>
+│   │   │   │   ├── member_i1.svg<br>
+│   │   │   │   ├── member_i2.svg<br>
+│   │   │   │   ├── member_i3.svg<br>
+│   │   │   │   ├── member_i4.svg<br>
+│   │   │   │   ├── member_i5.svg<br>
+│   │   │   │   ├── member_i6.svg<br>
+│   │   │   │   ├── member_i7.svg<br>
+│   │   │   │   ├── memory-management2.svg<br>
+│   │   │   │   ├── memory-management.svg<br>
+│   │   │   │   ├── mempool.svg<br>
+│   │   │   │   ├── multi_process_memory.svg<br>
+│   │   │   │   ├── packet_distributor1.png<br>
+│   │   │   │   ├── packet_distributor2.png<br>
+│   │   │   │   ├── pipe_prefetch_sm.png<br>
+│   │   │   │   ├── pkt_drop_probability.png<br>
+│   │   │   │   ├── pkt_flow_kni.png<br>
+│   │   │   │   ├── pkt_proc_pipeline_qos.png<br>
+│   │   │   │   ├── predictable_snat_1.svg<br>
+│   │   │   │   ├── predictable_snat_2.svg<br>
+│   │   │   │   ├── prefetch_pipeline.png<br>
+│   │   │   │   ├── rcu_general_info.svg<br>
+│   │   │   │   ├── rib_internals.svg<br>
+│   │   │   │   ├── rib_pic.svg<br>
+│   │   │   │   ├── ring1.svg<br>
+│   │   │   │   ├── ring-dequeue1.svg<br>
+│   │   │   │   ├── ring-dequeue2.svg<br>
+│   │   │   │   ├── ring-dequeue3.svg<br>
+│   │   │   │   ├── ring-enqueue1.svg<br>
+│   │   │   │   ├── ring-enqueue2.svg<br>
+│   │   │   │   ├── ring-enqueue3.svg<br>
+│   │   │   │   ├── ring-modulo1.svg<br>
+│   │   │   │   ├── ring-modulo2.svg<br>
+│   │   │   │   ├── ring-mp-enqueue1.svg<br>
+│   │   │   │   ├── ring-mp-enqueue2.svg<br>
+│   │   │   │   ├── ring-mp-enqueue3.svg<br>
+│   │   │   │   ├── ring-mp-enqueue4.svg<br>
+│   │   │   │   ├── ring-mp-enqueue5.svg<br>
+│   │   │   │   ├── rss_queue_assign.svg<br>
+│   │   │   │   ├── rte_flow_async_init.svg<br>
+│   │   │   │   ├── rte_flow_async_usage.svg<br>
+│   │   │   │   ├── rte_mtr_meter_chaining.svg<br>
+│   │   │   │   ├── sched_hier_per_port.svg<br>
+│   │   │   │   ├── stateful-op.svg<br>
+│   │   │   │   ├── stateless-op-shared.svg<br>
+│   │   │   │   ├── stateless-op.svg<br>
+│   │   │   │   ├── tbl24_tbl8.png<br>
+│   │   │   │   ├── tbl24_tbl8_tbl8.png<br>
+│   │   │   │   ├── turbo_tb_decode.svg<br>
+│   │   │   │   ├── turbo_tb_encode.svg<br>
+│   │   │   │   └── vhost_net_arch.png<br>
+│   │   │   ├── index.rst<br>
+│   │   │   ├── intro.rst<br>
+│   │   │   ├── ip_fragment_reassembly_lib.rst<br>
+│   │   │   ├── ipsec_lib.rst<br>
+│   │   │   ├── kernel_nic_interface.rst<br>
+│   │   │   ├── link_bonding_poll_mode_drv_lib.rst<br>
+│   │   │   ├── lpm6_lib.rst<br>
+│   │   │   ├── lpm_lib.rst<br>
+│   │   │   ├── lto.rst<br>
+│   │   │   ├── mbuf_lib.rst<br>
+│   │   │   ├── member_lib.rst<br>
+│   │   │   ├── mempool_lib.rst<br>
+│   │   │   ├── meson_ut.rst<br>
+│   │   │   ├── metrics_lib.rst<br>
+│   │   │   ├── multi_proc_support.rst<br>
+│   │   │   ├── overview.rst<br>
+│   │   │   ├── packet_classif_access_ctrl.rst<br>
+│   │   │   ├── packet_distrib_lib.rst<br>
+│   │   │   ├── packet_framework.rst<br>
+│   │   │   ├── pcapng_lib.rst<br>
+│   │   │   ├── pdump_lib.rst<br>
+│   │   │   ├── perf_opt_guidelines.rst<br>
+│   │   │   ├── poll_mode_drv.rst<br>
+│   │   │   ├── power_man.rst<br>
+│   │   │   ├── profile_app.rst<br>
+│   │   │   ├── qos_framework.rst<br>
+│   │   │   ├── rawdev.rst<br>
+│   │   │   ├── rcu_lib.rst<br>
+│   │   │   ├── regexdev.rst<br>
+│   │   │   ├── reorder_lib.rst<br>
+│   │   │   ├── rib_lib.rst<br>
+│   │   │   ├── ring_lib.rst<br>
+│   │   │   ├── rte_flow.rst<br>
+│   │   │   ├── rte_security.rst<br>
+│   │   │   ├── service_cores.rst<br>
+│   │   │   ├── source_org.rst<br>
+│   │   │   ├── stack_lib.rst<br>
+│   │   │   ├── switch_representation.rst<br>
+│   │   │   ├── telemetry_lib.rst<br>
+│   │   │   ├── thread_safety_dpdk_functions.rst<br>
+│   │   │   ├── timer_lib.rst<br>
+│   │   │   ├── toeplitz_hash_lib.rst<br>
+│   │   │   ├── trace_lib.rst<br>
+│   │   │   ├── traffic_management.rst<br>
+│   │   │   ├── traffic_metering_and_policing.rst<br>
+│   │   │   ├── vhost_lib.rst<br>
+│   │   │   └── writing_efficient_code.rst<br>
+│   │   ├── rawdevs<br>
+│   │   │   ├── cnxk_bphy.rst<br>
+│   │   │   ├── cnxk_gpio.rst<br>
+│   │   │   ├── dpaa2_cmdif.rst<br>
+│   │   │   ├── dpaa2_qdma.rst<br>
+│   │   │   ├── ifpga.rst<br>
+│   │   │   ├── index.rst<br>
+│   │   │   ├── ioat.rst<br>
+│   │   │   └── ntb.rst<br>
+│   │   ├── regexdevs<br>
+│   │   │   ├── cn9k.rst<br>
+│   │   │   ├── features<br>
+│   │   │   │   ├── cn9k.ini<br>
+│   │   │   │   ├── default.ini<br>
+│   │   │   │   └── mlx5.ini<br>
+│   │   │   ├── features_overview.rst<br>
+│   │   │   ├── index.rst<br>
+│   │   │   └── mlx5.rst<br>
+│   │   ├── rel_notes<br>
+│   │   │   ├── deprecation.rst<br>
+│   │   │   ├── index.rst<br>
+│   │   │   ├── known_issues.rst<br>
+│   │   │   ├── release_16_04.rst<br>
+│   │   │   ├── release_16_07.rst<br>
+│   │   │   ├── release_16_11.rst<br>
+│   │   │   ├── release_17_02.rst<br>
+│   │   │   ├── release_17_05.rst<br>
+│   │   │   ├── release_17_08.rst<br>
+│   │   │   ├── release_17_11.rst<br>
+│   │   │   ├── release_18_02.rst<br>
+│   │   │   ├── release_18_05.rst<br>
+│   │   │   ├── release_18_08.rst<br>
+│   │   │   ├── release_18_11.rst<br>
+│   │   │   ├── release_1_8.rst<br>
+│   │   │   ├── release_19_02.rst<br>
+│   │   │   ├── release_19_05.rst<br>
+│   │   │   ├── release_19_08.rst<br>
+│   │   │   ├── release_19_11.rst<br>
+│   │   │   ├── release_20_02.rst<br>
+│   │   │   ├── release_20_05.rst<br>
+│   │   │   ├── release_20_08.rst<br>
+│   │   │   ├── release_20_11.rst<br>
+│   │   │   ├── release_2_0.rst<br>
+│   │   │   ├── release_21_02.rst<br>
+│   │   │   ├── release_21_05.rst<br>
+│   │   │   ├── release_21_08.rst<br>
+│   │   │   ├── release_21_11.rst<br>
+│   │   │   ├── release_2_1.rst<br>
+│   │   │   ├── release_22_03.rst<br>
+│   │   │   └── release_2_2.rst<br>
+│   │   ├── sample_app_ug<br>
+│   │   │   ├── bbdev_app.rst<br>
+│   │   │   ├── cmd_line.rst<br>
+│   │   │   ├── compiling.rst<br>
+│   │   │   ├── dist_app.rst<br>
+│   │   │   ├── dma.rst<br>
+│   │   │   ├── ethtool.rst<br>
+│   │   │   ├── eventdev_pipeline.rst<br>
+│   │   │   ├── fips_validation.rst<br>
+│   │   │   ├── flow_classify.rst<br>
+│   │   │   ├── flow_filtering.rst<br>
+│   │   │   ├── hello_world.rst<br>
+│   │   │   ├── img<br>
+│   │   │   │   ├── client_svr_sym_multi_proc_app.png<br>
+│   │   │   │   ├── dist_app.svg<br>
+│   │   │   │   ├── dist_perf.svg<br>
+│   │   │   │   ├── example_rules.png<br>
+│   │   │   │   ├── exception_path_example.svg<br>
+│   │   │   │   ├── ipsec_endpoints.svg<br>
+│   │   │   │   ├── ipv4_acl_rule.png<br>
+│   │   │   │   ├── kernel_nic.png<br>
+│   │   │   │   ├── l2_fwd_benchmark_setup.svg<br>
+│   │   │   │   ├── l2_fwd_encrypt_flow.svg<br>
+│   │   │   │   ├── l2_fwd_virtenv_benchmark_setup.png<br>
+│   │   │   │   ├── l2_fwd_vm2vm.svg<br>
+│   │   │   │   ├── load_bal_app_arch.png<br>
+│   │   │   │   ├── overlay_networking.svg<br>
+│   │   │   │   ├── pipeline_overview.png<br>
+│   │   │   │   ├── ptpclient.svg<br>
+│   │   │   │   ├── qos_sched_app_arch.png<br>
+│   │   │   │   ├── quickassist_block_diagram.png<br>
+│   │   │   │   ├── ring_pipeline_perf_setup.png<br>
+│   │   │   │   ├── server_node_efd.svg<br>
+│   │   │   │   ├── sym_multi_proc_app.png<br>
+│   │   │   │   ├── test_pipeline_app.png<br>
+│   │   │   │   ├── threads_pipelines.png<br>
+│   │   │   │   ├── vmdq_dcb_example.svg<br>
+│   │   │   │   ├── vm_power_mgr_highlevel.svg<br>
+│   │   │   │   └── vm_power_mgr_vm_request_seq.svg<br>
+│   │   │   ├── index.rst<br>
+│   │   │   ├── intro.rst<br>
+│   │   │   ├── ip_frag.rst<br>
+│   │   │   ├── ip_pipeline.rst<br>
+│   │   │   ├── ip_reassembly.rst<br>
+│   │   │   ├── ipsec_secgw.rst<br>
+│   │   │   ├── ipv4_multicast.rst<br>
+│   │   │   ├── keep_alive.rst<br>
+│   │   │   ├── kernel_nic_interface.rst<br>
+│   │   │   ├── l2_forward_cat.rst<br>
+│   │   │   ├── l2_forward_crypto.rst<br>
+│   │   │   ├── l2_forward_event.rst<br>
+│   │   │   ├── l2_forward_job_stats.rst<br>
+│   │   │   ├── l2_forward_real_virtual.rst<br>
+│   │   │   ├── l3_forward_access_ctrl.rst<br>
+│   │   │   ├── l3_forward_graph.rst<br>
+│   │   │   ├── l3_forward_power_man.rst<br>
+│   │   │   ├── l3_forward.rst<br>
+│   │   │   ├── link_status_intr.rst<br>
+│   │   │   ├── multi_process.rst<br>
+│   │   │   ├── ntb.rst<br>
+│   │   │   ├── packet_ordering.rst<br>
+│   │   │   ├── pipeline.rst<br>
+│   │   │   ├── ptpclient.rst<br>
+│   │   │   ├── qos_metering.rst<br>
+│   │   │   ├── qos_scheduler.rst<br>
+│   │   │   ├── rxtx_callbacks.rst<br>
+│   │   │   ├── server_node_efd.rst<br>
+│   │   │   ├── service_cores.rst<br>
+│   │   │   ├── skeleton.rst<br>
+│   │   │   ├── test_pipeline.rst<br>
+│   │   │   ├── timer.rst<br>
+│   │   │   ├── vdpa.rst<br>
+│   │   │   ├── vhost_blk.rst<br>
+│   │   │   ├── vhost_crypto.rst<br>
+│   │   │   ├── vhost.rst<br>
+│   │   │   ├── vmdq_dcb_forwarding.rst<br>
+│   │   │   ├── vmdq_forwarding.rst<br>
+│   │   │   └── vm_power_management.rst<br>
+│   │   ├── testpmd_app_ug<br>
+│   │   │   ├── build_app.rst<br>
+│   │   │   ├── index.rst<br>
+│   │   │   ├── intro.rst<br>
+│   │   │   ├── run_app.rst<br>
+│   │   │   └── testpmd_funcs.rst<br>
+│   │   ├── tools<br>
+│   │   │   ├── comp_perf.rst<br>
+│   │   │   ├── cryptoperf.rst<br>
+│   │   │   ├── devbind.rst<br>
+│   │   │   ├── dumpcap.rst<br>
+│   │   │   ├── flow-perf.rst<br>
+│   │   │   ├── hugepages.rst<br>
+│   │   │   ├── img<br>
+│   │   │   │   ├── eventdev_order_atq_test.svg<br>
+│   │   │   │   ├── eventdev_order_queue_test.svg<br>
+│   │   │   │   ├── eventdev_perf_atq_test.svg<br>
+│   │   │   │   ├── eventdev_perf_queue_test.svg<br>
+│   │   │   │   ├── eventdev_pipeline_atq_test_generic.svg<br>
+│   │   │   │   ├── eventdev_pipeline_atq_test_internal_port.svg<br>
+│   │   │   │   ├── eventdev_pipeline_queue_test_generic.svg<br>
+│   │   │   │   └── eventdev_pipeline_queue_test_internal_port.svg<br>
+│   │   │   ├── index.rst<br>
+│   │   │   ├── pdump.rst<br>
+│   │   │   ├── pmdinfo.rst<br>
+│   │   │   ├── proc_info.rst<br>
+│   │   │   ├── testbbdev.rst<br>
+│   │   │   ├── testeventdev.rst<br>
+│   │   │   └── testregex.rst<br>
+│   │   ├── vdpadevs<br>
+│   │   │   ├── features<br>
+│   │   │   │   ├── default.ini<br>
+│   │   │   │   ├── ifcvf.ini<br>
+│   │   │   │   ├── mlx5.ini<br>
+│   │   │   │   └── sfc.ini<br>
+│   │   │   ├── features_overview.rst<br>
+│   │   │   ├── ifc.rst<br>
+│   │   │   ├── index.rst<br>
+│   │   │   ├── mlx5.rst<br>
+│   │   │   └── sfc.rst<br>
+│   │   └── windows_gsg<br>
+│   │       ├── build_dpdk.rst<br>
+│   │       ├── index.rst<br>
+│   │       ├── intro.rst<br>
+│   │       └── run_apps.rst<br>
+│   ├── logo<br>
+│   │   ├── DPDK_logo_horizontal_tag.png<br>
+│   │   └── DPDK_logo_vertical_rev_small.png<br>
+│   └── meson.build<br>
+├── drivers<br>
+│   ├── baseband<br>
+│   │   ├── acc100<br>
+│   │   │   ├── acc100_pf_enum.h<br>
+│   │   │   ├── acc100_vf_enum.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_acc100_cfg.h<br>
+│   │   │   ├── rte_acc100_pmd.c<br>
+│   │   │   ├── rte_acc100_pmd.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── fpga_5gnr_fec<br>
+│   │   │   ├── fpga_5gnr_fec.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_fpga_5gnr_fec.c<br>
+│   │   │   ├── rte_pmd_fpga_5gnr_fec.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── fpga_lte_fec<br>
+│   │   │   ├── fpga_lte_fec.c<br>
+│   │   │   ├── fpga_lte_fec.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── la12xx<br>
+│   │   │   ├── bbdev_la12xx.c<br>
+│   │   │   ├── bbdev_la12xx.h<br>
+│   │   │   ├── bbdev_la12xx_ipc.h<br>
+│   │   │   ├── bbdev_la12xx_pmd_logs.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── meson.build<br>
+│   │   ├── null<br>
+│   │   │   ├── bbdev_null.c<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   └── turbo_sw<br>
+│   │       ├── bbdev_turbo_software.c<br>
+│   │       ├── meson.build<br>
+│   │       └── version.map<br>
+│   ├── bus<br>
+│   │   ├── auxiliary<br>
+│   │   │   ├── auxiliary_common.c<br>
+│   │   │   ├── auxiliary_params.c<br>
+│   │   │   ├── linux<br>
+│   │   │   │   └── auxiliary.c<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── private.h<br>
+│   │   │   ├── rte_bus_auxiliary.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── dpaa<br>
+│   │   │   ├── base<br>
+│   │   │   │   ├── fman<br>
+│   │   │   │   │   ├── fman.c<br>
+│   │   │   │   │   ├── fman_hw.c<br>
+│   │   │   │   │   └── netcfg_layer.c<br>
+│   │   │   │   └── qbman<br>
+│   │   │   │       ├── bman.c<br>
+│   │   │   │       ├── bman_driver.c<br>
+│   │   │   │       ├── bman.h<br>
+│   │   │   │       ├── bman_priv.h<br>
+│   │   │   │       ├── dpaa_alloc.c<br>
+│   │   │   │       ├── dpaa_sys.c<br>
+│   │   │   │       ├── dpaa_sys.h<br>
+│   │   │   │       ├── process.c<br>
+│   │   │   │       ├── qman.c<br>
+│   │   │   │       ├── qman_driver.c<br>
+│   │   │   │       ├── qman.h<br>
+│   │   │   │       └── qman_priv.h<br>
+│   │   │   ├── dpaa_bus.c<br>
+│   │   │   ├── include<br>
+│   │   │   │   ├── dpaa_bits.h<br>
+│   │   │   │   ├── dpaa_rbtree.h<br>
+│   │   │   │   ├── fman.h<br>
+│   │   │   │   ├── fsl_bman.h<br>
+│   │   │   │   ├── fsl_fman_crc64.h<br>
+│   │   │   │   ├── fsl_fman.h<br>
+│   │   │   │   ├── fsl_qman.h<br>
+│   │   │   │   ├── fsl_usd.h<br>
+│   │   │   │   ├── netcfg.h<br>
+│   │   │   │   └── process.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_dpaa_bus.h<br>
+│   │   │   ├── rte_dpaa_logs.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── fslmc<br>
+│   │   │   ├── fslmc_bus.c<br>
+│   │   │   ├── fslmc_logs.h<br>
+│   │   │   ├── fslmc_vfio.c<br>
+│   │   │   ├── fslmc_vfio.h<br>
+│   │   │   ├── mc<br>
+│   │   │   │   ├── dpbp.c<br>
+│   │   │   │   ├── dpci.c<br>
+│   │   │   │   ├── dpcon.c<br>
+│   │   │   │   ├── dpdmai.c<br>
+│   │   │   │   ├── dpio.c<br>
+│   │   │   │   ├── dpmng.c<br>
+│   │   │   │   ├── dprc.c<br>
+│   │   │   │   ├── fsl_dpbp_cmd.h<br>
+│   │   │   │   ├── fsl_dpbp.h<br>
+│   │   │   │   ├── fsl_dpci_cmd.h<br>
+│   │   │   │   ├── fsl_dpci.h<br>
+│   │   │   │   ├── fsl_dpcon_cmd.h<br>
+│   │   │   │   ├── fsl_dpcon.h<br>
+│   │   │   │   ├── fsl_dpdmai_cmd.h<br>
+│   │   │   │   ├── fsl_dpdmai.h<br>
+│   │   │   │   ├── fsl_dpio_cmd.h<br>
+│   │   │   │   ├── fsl_dpio.h<br>
+│   │   │   │   ├── fsl_dpmng_cmd.h<br>
+│   │   │   │   ├── fsl_dpmng.h<br>
+│   │   │   │   ├── fsl_dpopr.h<br>
+│   │   │   │   ├── fsl_dprc_cmd.h<br>
+│   │   │   │   ├── fsl_dprc.h<br>
+│   │   │   │   ├── fsl_mc_cmd.h<br>
+│   │   │   │   ├── fsl_mc_sys.h<br>
+│   │   │   │   └── mc_sys.c<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── portal<br>
+│   │   │   │   ├── dpaa2_hw_dpbp.c<br>
+│   │   │   │   ├── dpaa2_hw_dpci.c<br>
+│   │   │   │   ├── dpaa2_hw_dpio.c<br>
+│   │   │   │   ├── dpaa2_hw_dpio.h<br>
+│   │   │   │   ├── dpaa2_hw_dprc.c<br>
+│   │   │   │   └── dpaa2_hw_pvt.h<br>
+│   │   │   ├── qbman<br>
+│   │   │   │   ├── include<br>
+│   │   │   │   │   ├── compat.h<br>
+│   │   │   │   │   ├── fsl_qbman_base.h<br>
+│   │   │   │   │   ├── fsl_qbman_debug.h<br>
+│   │   │   │   │   └── fsl_qbman_portal.h<br>
+│   │   │   │   ├── qbman_debug.c<br>
+│   │   │   │   ├── qbman_portal.c<br>
+│   │   │   │   ├── qbman_portal.h<br>
+│   │   │   │   ├── qbman_sys_decl.h<br>
+│   │   │   │   └── qbman_sys.h<br>
+│   │   │   ├── rte_fslmc.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── ifpga<br>
+│   │   │   ├── ifpga_bus.c<br>
+│   │   │   ├── ifpga_common.c<br>
+│   │   │   ├── ifpga_common.h<br>
+│   │   │   ├── ifpga_logs.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_bus_ifpga.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── meson.build<br>
+│   │   ├── pci<br>
+│   │   │   ├── bsd<br>
+│   │   │   │   └── pci.c<br>
+│   │   │   ├── linux<br>
+│   │   │   │   ├── pci.c<br>
+│   │   │   │   ├── pci_init.h<br>
+│   │   │   │   ├── pci_uio.c<br>
+│   │   │   │   └── pci_vfio.c<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── pci_common.c<br>
+│   │   │   ├── pci_common_uio.c<br>
+│   │   │   ├── pci_params.c<br>
+│   │   │   ├── private.h<br>
+│   │   │   ├── rte_bus_pci.h<br>
+│   │   │   ├── version.map<br>
+│   │   │   └── windows<br>
+│   │   │       ├── pci.c<br>
+│   │   │       ├── pci_netuio.c<br>
+│   │   │       └── pci_netuio.h<br>
+│   │   ├── vdev<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_bus_vdev.h<br>
+│   │   │   ├── vdev.c<br>
+│   │   │   ├── vdev_logs.h<br>
+│   │   │   ├── vdev_params.c<br>
+│   │   │   ├── vdev_private.h<br>
+│   │   │   └── version.map<br>
+│   │   └── vmbus<br>
+│   │       ├── linux<br>
+│   │       │   ├── vmbus_bus.c<br>
+│   │       │   └── vmbus_uio.c<br>
+│   │       ├── meson.build<br>
+│   │       ├── private.h<br>
+│   │       ├── rte_bus_vmbus.h<br>
+│   │       ├── rte_vmbus_reg.h<br>
+│   │       ├── version.map<br>
+│   │       ├── vmbus_bufring.c<br>
+│   │       ├── vmbus_channel.c<br>
+│   │       ├── vmbus_common.c<br>
+│   │       └── vmbus_common_uio.c<br>
+│   ├── common<br>
+│   │   ├── cnxk<br>
+│   │   │   ├── cnxk_security_ar.h<br>
+│   │   │   ├── cnxk_security.c<br>
+│   │   │   ├── cnxk_security.h<br>
+│   │   │   ├── cnxk_telemetry_bphy.c<br>
+│   │   │   ├── cnxk_telemetry.h<br>
+│   │   │   ├── cnxk_telemetry_nix.c<br>
+│   │   │   ├── cnxk_telemetry_npa.c<br>
+│   │   │   ├── cnxk_telemetry_sso.c<br>
+│   │   │   ├── cnxk_utils.c<br>
+│   │   │   ├── cnxk_utils.h<br>
+│   │   │   ├── hw<br>
+│   │   │   │   ├── cpt.h<br>
+│   │   │   │   ├── dpi.h<br>
+│   │   │   │   ├── nix.h<br>
+│   │   │   │   ├── npa.h<br>
+│   │   │   │   ├── npc.h<br>
+│   │   │   │   ├── ree.h<br>
+│   │   │   │   ├── rvu.h<br>
+│   │   │   │   ├── sdp.h<br>
+│   │   │   │   ├── sso.h<br>
+│   │   │   │   ├── ssow.h<br>
+│   │   │   │   └── tim.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── roc_ae.c<br>
+│   │   │   ├── roc_ae_fpm_tables.c<br>
+│   │   │   ├── roc_ae_fpm_tables.h<br>
+│   │   │   ├── roc_ae.h<br>
+│   │   │   ├── roc_aes.c<br>
+│   │   │   ├── roc_aes.h<br>
+│   │   │   ├── roc_api.h<br>
+│   │   │   ├── roc_bitfield.h<br>
+│   │   │   ├── roc_bits.h<br>
+│   │   │   ├── roc_bphy.c<br>
+│   │   │   ├── roc_bphy_cgx.c<br>
+│   │   │   ├── roc_bphy_cgx.h<br>
+│   │   │   ├── roc_bphy_cgx_priv.h<br>
+│   │   │   ├── roc_bphy.h<br>
+│   │   │   ├── roc_bphy_irq.c<br>
+│   │   │   ├── roc_bphy_irq.h<br>
+│   │   │   ├── roc_constants.h<br>
+│   │   │   ├── roc_cpt.c<br>
+│   │   │   ├── roc_cpt_debug.c<br>
+│   │   │   ├── roc_cpt.h<br>
+│   │   │   ├── roc_cpt_priv.h<br>
+│   │   │   ├── roc_dev.c<br>
+│   │   │   ├── roc_dev_priv.h<br>
+│   │   │   ├── roc_dpi.c<br>
+│   │   │   ├── roc_dpi.h<br>
+│   │   │   ├── roc_dpi_priv.h<br>
+│   │   │   ├── roc_hash.c<br>
+│   │   │   ├── roc_hash.h<br>
+│   │   │   ├── roc_idev.c<br>
+│   │   │   ├── roc_idev.h<br>
+│   │   │   ├── roc_idev_priv.h<br>
+│   │   │   ├── roc_ie.h<br>
+│   │   │   ├── roc_ie_on.h<br>
+│   │   │   ├── roc_ie_ot.c<br>
+│   │   │   ├── roc_ie_ot.h<br>
+│   │   │   ├── roc_io_generic.h<br>
+│   │   │   ├── roc_io.h<br>
+│   │   │   ├── roc_irq.c<br>
+│   │   │   ├── roc_mbox.c<br>
+│   │   │   ├── roc_mbox.h<br>
+│   │   │   ├── roc_mbox_priv.h<br>
+│   │   │   ├── roc_model.c<br>
+│   │   │   ├── roc_model.h<br>
+│   │   │   ├── roc_nix_bpf.c<br>
+│   │   │   ├── roc_nix.c<br>
+│   │   │   ├── roc_nix_debug.c<br>
+│   │   │   ├── roc_nix_fc.c<br>
+│   │   │   ├── roc_nix.h<br>
+│   │   │   ├── roc_nix_inl.c<br>
+│   │   │   ├── roc_nix_inl_dev.c<br>
+│   │   │   ├── roc_nix_inl_dev_irq.c<br>
+│   │   │   ├── roc_nix_inl.h<br>
+│   │   │   ├── roc_nix_inl_priv.h<br>
+│   │   │   ├── roc_nix_irq.c<br>
+│   │   │   ├── roc_nix_mac.c<br>
+│   │   │   ├── roc_nix_mcast.c<br>
+│   │   │   ├── roc_nix_npc.c<br>
+│   │   │   ├── roc_nix_ops.c<br>
+│   │   │   ├── roc_nix_priv.h<br>
+│   │   │   ├── roc_nix_ptp.c<br>
+│   │   │   ├── roc_nix_queue.c<br>
+│   │   │   ├── roc_nix_rss.c<br>
+│   │   │   ├── roc_nix_stats.c<br>
+│   │   │   ├── roc_nix_tm.c<br>
+│   │   │   ├── roc_nix_tm_mark.c<br>
+│   │   │   ├── roc_nix_tm_ops.c<br>
+│   │   │   ├── roc_nix_tm_utils.c<br>
+│   │   │   ├── roc_nix_vlan.c<br>
+│   │   │   ├── roc_nix_xstats.h<br>
+│   │   │   ├── roc_npa.c<br>
+│   │   │   ├── roc_npa_debug.c<br>
+│   │   │   ├── roc_npa.h<br>
+│   │   │   ├── roc_npa_irq.c<br>
+│   │   │   ├── roc_npa_priv.h<br>
+│   │   │   ├── roc_npc.c<br>
+│   │   │   ├── roc_npc.h<br>
+│   │   │   ├── roc_npc_mcam.c<br>
+│   │   │   ├── roc_npc_mcam_dump.c<br>
+│   │   │   ├── roc_npc_parse.c<br>
+│   │   │   ├── roc_npc_priv.h<br>
+│   │   │   ├── roc_npc_utils.c<br>
+│   │   │   ├── roc_platform.c<br>
+│   │   │   ├── roc_platform.h<br>
+│   │   │   ├── roc_priv.h<br>
+│   │   │   ├── roc_ree.c<br>
+│   │   │   ├── roc_ree.h<br>
+│   │   │   ├── roc_ree_priv.h<br>
+│   │   │   ├── roc_se.c<br>
+│   │   │   ├── roc_se.h<br>
+│   │   │   ├── roc_sso.c<br>
+│   │   │   ├── roc_sso_debug.c<br>
+│   │   │   ├── roc_sso.h<br>
+│   │   │   ├── roc_sso_irq.c<br>
+│   │   │   ├── roc_sso_priv.h<br>
+│   │   │   ├── roc_tim.c<br>
+│   │   │   ├── roc_tim.h<br>
+│   │   │   ├── roc_tim_irq.c<br>
+│   │   │   ├── roc_tim_priv.h<br>
+│   │   │   ├── roc_util_priv.h<br>
+│   │   │   ├── roc_utils.c<br>
+│   │   │   ├── roc_utils.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── cpt<br>
+│   │   │   ├── cpt_common.h<br>
+│   │   │   ├── cpt_fpm_tables.c<br>
+│   │   │   ├── cpt_hw_types.h<br>
+│   │   │   ├── cpt_mcode_defines.h<br>
+│   │   │   ├── cpt_pmd_logs.h<br>
+│   │   │   ├── cpt_pmd_ops_helper.c<br>
+│   │   │   ├── cpt_pmd_ops_helper.h<br>
+│   │   │   ├── cpt_ucode_asym.h<br>
+│   │   │   ├── cpt_ucode.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── dpaax<br>
+│   │   │   ├── caamflib<br>
+│   │   │   │   ├── compat.h<br>
+│   │   │   │   ├── desc<br>
+│   │   │   │   │   ├── algo.h<br>
+│   │   │   │   │   ├── common.h<br>
+│   │   │   │   │   ├── ipsec.h<br>
+│   │   │   │   │   ├── pdcp.h<br>
+│   │   │   │   │   └── sdap.h<br>
+│   │   │   │   ├── desc.h<br>
+│   │   │   │   ├── rta<br>
+│   │   │   │   │   ├── fifo_load_store_cmd.h<br>
+│   │   │   │   │   ├── header_cmd.h<br>
+│   │   │   │   │   ├── jump_cmd.h<br>
+│   │   │   │   │   ├── key_cmd.h<br>
+│   │   │   │   │   ├── load_cmd.h<br>
+│   │   │   │   │   ├── math_cmd.h<br>
+│   │   │   │   │   ├── move_cmd.h<br>
+│   │   │   │   │   ├── nfifo_cmd.h<br>
+│   │   │   │   │   ├── operation_cmd.h<br>
+│   │   │   │   │   ├── protocol_cmd.h<br>
+│   │   │   │   │   ├── sec_run_time_asm.h<br>
+│   │   │   │   │   ├── seq_in_out_ptr_cmd.h<br>
+│   │   │   │   │   ├── signature_cmd.h<br>
+│   │   │   │   │   └── store_cmd.h<br>
+│   │   │   │   └── rta.h<br>
+│   │   │   ├── caamflib.c<br>
+│   │   │   ├── compat.h<br>
+│   │   │   ├── dpaa_list.h<br>
+│   │   │   ├── dpaa_of.c<br>
+│   │   │   ├── dpaa_of.h<br>
+│   │   │   ├── dpaax_iova_table.c<br>
+│   │   │   ├── dpaax_iova_table.h<br>
+│   │   │   ├── dpaax_logs.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── iavf<br>
+│   │   │   ├── iavf_adminq.c<br>
+│   │   │   ├── iavf_adminq_cmd.h<br>
+│   │   │   ├── iavf_adminq.h<br>
+│   │   │   ├── iavf_alloc.h<br>
+│   │   │   ├── iavf_common.c<br>
+│   │   │   ├── iavf_devids.h<br>
+│   │   │   ├── iavf_impl.c<br>
+│   │   │   ├── iavf_osdep.h<br>
+│   │   │   ├── iavf_prototype.h<br>
+│   │   │   ├── iavf_register.h<br>
+│   │   │   ├── iavf_status.h<br>
+│   │   │   ├── iavf_type.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── README<br>
+│   │   │   ├── version.map<br>
+│   │   │   ├── virtchnl.h<br>
+│   │   │   └── virtchnl_inline_ipsec.h<br>
+│   │   ├── meson.build<br>
+│   │   ├── mlx5<br>
+│   │   │   ├── linux<br>
+│   │   │   │   ├── meson.build<br>
+│   │   │   │   ├── mlx5_common_auxiliary.c<br>
+│   │   │   │   ├── mlx5_common_os.c<br>
+│   │   │   │   ├── mlx5_common_os.h<br>
+│   │   │   │   ├── mlx5_common_verbs.c<br>
+│   │   │   │   ├── mlx5_glue.c<br>
+│   │   │   │   ├── mlx5_glue.h<br>
+│   │   │   │   ├── mlx5_nl.c<br>
+│   │   │   │   └── mlx5_nl.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── mlx5_common.c<br>
+│   │   │   ├── mlx5_common_defs.h<br>
+│   │   │   ├── mlx5_common_devx.c<br>
+│   │   │   ├── mlx5_common_devx.h<br>
+│   │   │   ├── mlx5_common.h<br>
+│   │   │   ├── mlx5_common_log.h<br>
+│   │   │   ├── mlx5_common_mp.c<br>
+│   │   │   ├── mlx5_common_mp.h<br>
+│   │   │   ├── mlx5_common_mr.c<br>
+│   │   │   ├── mlx5_common_mr.h<br>
+│   │   │   ├── mlx5_common_pci.c<br>
+│   │   │   ├── mlx5_common_private.h<br>
+│   │   │   ├── mlx5_common_utils.c<br>
+│   │   │   ├── mlx5_common_utils.h<br>
+│   │   │   ├── mlx5_devx_cmds.c<br>
+│   │   │   ├── mlx5_devx_cmds.h<br>
+│   │   │   ├── mlx5_malloc.c<br>
+│   │   │   ├── mlx5_malloc.h<br>
+│   │   │   ├── mlx5_prm.h<br>
+│   │   │   ├── version.map<br>
+│   │   │   └── windows<br>
+│   │   │       ├── meson.build<br>
+│   │   │       ├── mlx5_common_os.c<br>
+│   │   │       ├── mlx5_common_os.h<br>
+│   │   │       ├── mlx5_glue.c<br>
+│   │   │       ├── mlx5_glue.h<br>
+│   │   │       ├── mlx5_win_defs.h<br>
+│   │   │       └── mlx5_win_ext.h<br>
+│   │   ├── mvep<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── mvep_common.c<br>
+│   │   │   ├── rte_mvep_common.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── octeontx<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── octeontx_mbox.c<br>
+│   │   │   ├── octeontx_mbox.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── qat<br>
+│   │   │   ├── dev<br>
+│   │   │   │   ├── qat_dev_gen1.c<br>
+│   │   │   │   ├── qat_dev_gen2.c<br>
+│   │   │   │   ├── qat_dev_gen3.c<br>
+│   │   │   │   ├── qat_dev_gen4.c<br>
+│   │   │   │   └── qat_dev_gens.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── qat_adf<br>
+│   │   │   │   ├── adf_pf2vf_msg.h<br>
+│   │   │   │   ├── adf_transport_access_macros_gen4.h<br>
+│   │   │   │   ├── adf_transport_access_macros_gen4vf.h<br>
+│   │   │   │   ├── adf_transport_access_macros.h<br>
+│   │   │   │   ├── icp_qat_fw_comp.h<br>
+│   │   │   │   ├── icp_qat_fw.h<br>
+│   │   │   │   ├── icp_qat_fw_la.h<br>
+│   │   │   │   ├── icp_qat_fw_mmp_ids.h<br>
+│   │   │   │   ├── icp_qat_fw_pke.h<br>
+│   │   │   │   ├── icp_qat_hw_gen4_comp_defs.h<br>
+│   │   │   │   ├── icp_qat_hw_gen4_comp.h<br>
+│   │   │   │   ├── icp_qat_hw.h<br>
+│   │   │   │   └── qat_pke.h<br>
+│   │   │   ├── qat_common.c<br>
+│   │   │   ├── qat_common.h<br>
+│   │   │   ├── qat_device.c<br>
+│   │   │   ├── qat_device.h<br>
+│   │   │   ├── qat_logs.c<br>
+│   │   │   ├── qat_logs.h<br>
+│   │   │   ├── qat_pf2vf.c<br>
+│   │   │   ├── qat_pf2vf.h<br>
+│   │   │   ├── qat_qp.c<br>
+│   │   │   ├── qat_qp.h<br>
+│   │   │   └── version.map<br>
+│   │   └── sfc_efx<br>
+│   │       ├── base<br>
+│   │       │   ├── ef10_evb.c<br>
+│   │       │   ├── ef10_ev.c<br>
+│   │       │   ├── ef10_filter.c<br>
+│   │       │   ├── ef10_firmware_ids.h<br>
+│   │       │   ├── ef10_image.c<br>
+│   │       │   ├── ef10_impl.h<br>
+│   │       │   ├── ef10_intr.c<br>
+│   │       │   ├── ef10_mac.c<br>
+│   │       │   ├── ef10_mcdi.c<br>
+│   │       │   ├── ef10_nic.c<br>
+│   │       │   ├── ef10_nvram.c<br>
+│   │       │   ├── ef10_phy.c<br>
+│   │       │   ├── ef10_proxy.c<br>
+│   │       │   ├── ef10_rx.c<br>
+│   │       │   ├── ef10_signed_image_layout.h<br>
+│   │       │   ├── ef10_tlv_layout.h<br>
+│   │       │   ├── ef10_tx.c<br>
+│   │       │   ├── ef10_vpd.c<br>
+│   │       │   ├── efx_annote.h<br>
+│   │       │   ├── efx_bootcfg.c<br>
+│   │       │   ├── efx_check.h<br>
+│   │       │   ├── efx_crc32.c<br>
+│   │       │   ├── efx_evb.c<br>
+│   │       │   ├── efx_ev.c<br>
+│   │       │   ├── efx_filter.c<br>
+│   │       │   ├── efx.h<br>
+│   │       │   ├── efx_hash.c<br>
+│   │       │   ├── efx_impl.h<br>
+│   │       │   ├── efx_intr.c<br>
+│   │       │   ├── efx_lic.c<br>
+│   │       │   ├── efx_mac.c<br>
+│   │       │   ├── efx_mae.c<br>
+│   │       │   ├── efx_mcdi.c<br>
+│   │       │   ├── efx_mcdi.h<br>
+│   │       │   ├── efx_mon.c<br>
+│   │       │   ├── efx_nic.c<br>
+│   │       │   ├── efx_nvram.c<br>
+│   │       │   ├── efx_pci.c<br>
+│   │       │   ├── efx_phy.c<br>
+│   │       │   ├── efx_phy_ids.h<br>
+│   │       │   ├── efx_port.c<br>
+│   │       │   ├── efx_proxy.c<br>
+│   │       │   ├── efx_regs_counters_pkt_format.h<br>
+│   │       │   ├── efx_regs_ef100.h<br>
+│   │       │   ├── efx_regs_ef10.h<br>
+│   │       │   ├── efx_regs.h<br>
+│   │       │   ├── efx_regs_mcdi_aoe.h<br>
+│   │       │   ├── efx_regs_mcdi.h<br>
+│   │       │   ├── efx_regs_mcdi_strs.h<br>
+│   │       │   ├── efx_regs_pci.h<br>
+│   │       │   ├── efx_rx.c<br>
+│   │       │   ├── efx_sram.c<br>
+│   │       │   ├── efx_tunnel.c<br>
+│   │       │   ├── efx_tx.c<br>
+│   │       │   ├── efx_types.h<br>
+│   │       │   ├── efx_virtio.c<br>
+│   │       │   ├── efx_vpd.c<br>
+│   │       │   ├── hunt_impl.h<br>
+│   │       │   ├── hunt_nic.c<br>
+│   │       │   ├── mcdi_mon.c<br>
+│   │       │   ├── mcdi_mon.h<br>
+│   │       │   ├── medford2_impl.h<br>
+│   │       │   ├── medford2_nic.c<br>
+│   │       │   ├── medford_impl.h<br>
+│   │       │   ├── medford_nic.c<br>
+│   │       │   ├── meson.build<br>
+│   │       │   ├── README<br>
+│   │       │   ├── rhead_ev.c<br>
+│   │       │   ├── rhead_impl.h<br>
+│   │       │   ├── rhead_intr.c<br>
+│   │       │   ├── rhead_nic.c<br>
+│   │       │   ├── rhead_pci.c<br>
+│   │       │   ├── rhead_rx.c<br>
+│   │       │   ├── rhead_tunnel.c<br>
+│   │       │   ├── rhead_tx.c<br>
+│   │       │   ├── rhead_virtio.c<br>
+│   │       │   ├── siena_flash.h<br>
+│   │       │   ├── siena_impl.h<br>
+│   │       │   ├── siena_mac.c<br>
+│   │       │   ├── siena_mcdi.c<br>
+│   │       │   ├── siena_nic.c<br>
+│   │       │   ├── siena_nvram.c<br>
+│   │       │   ├── siena_phy.c<br>
+│   │       │   ├── siena_sram.c<br>
+│   │       │   └── siena_vpd.c<br>
+│   │       ├── efsys.h<br>
+│   │       ├── meson.build<br>
+│   │       ├── sfc_efx.c<br>
+│   │       ├── sfc_efx_debug.h<br>
+│   │       ├── sfc_efx.h<br>
+│   │       ├── sfc_efx_log.h<br>
+│   │       ├── sfc_efx_mcdi.c<br>
+│   │       ├── sfc_efx_mcdi.h<br>
+│   │       └── version.map<br>
+│   ├── compress<br>
+│   │   ├── isal<br>
+│   │   │   ├── isal_compress_pmd.c<br>
+│   │   │   ├── isal_compress_pmd_ops.c<br>
+│   │   │   ├── isal_compress_pmd_private.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── meson.build<br>
+│   │   ├── mlx5<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── mlx5_compress.c<br>
+│   │   │   ├── mlx5_compress_utils.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── octeontx<br>
+│   │   │   ├── include<br>
+│   │   │   │   └── zip_regs.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── otx_zip.c<br>
+│   │   │   ├── otx_zip.h<br>
+│   │   │   ├── otx_zip_pmd.c<br>
+│   │   │   └── version.map<br>
+│   │   ├── qat<br>
+│   │   │   ├── dev<br>
+│   │   │   │   ├── qat_comp_pmd_gen1.c<br>
+│   │   │   │   ├── qat_comp_pmd_gen2.c<br>
+│   │   │   │   ├── qat_comp_pmd_gen3.c<br>
+│   │   │   │   ├── qat_comp_pmd_gen4.c<br>
+│   │   │   │   └── qat_comp_pmd_gens.h<br>
+│   │   │   ├── qat_comp.c<br>
+│   │   │   ├── qat_comp.h<br>
+│   │   │   ├── qat_comp_pmd.c<br>
+│   │   │   └── qat_comp_pmd.h<br>
+│   │   └── zlib<br>
+│   │       ├── meson.build<br>
+│   │       ├── version.map<br>
+│   │       ├── zlib_pmd.c<br>
+│   │       ├── zlib_pmd_ops.c<br>
+│   │       └── zlib_pmd_private.h<br>
+│   ├── crypto<br>
+│   │   ├── armv8<br>
+│   │   │   ├── armv8_pmd_private.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_armv8_pmd.c<br>
+│   │   │   ├── rte_armv8_pmd_ops.c<br>
+│   │   │   └── version.map<br>
+│   │   ├── bcmfs<br>
+│   │   │   ├── bcmfs_device.c<br>
+│   │   │   ├── bcmfs_device.h<br>
+│   │   │   ├── bcmfs_dev_msg.h<br>
+│   │   │   ├── bcmfs_hw_defs.h<br>
+│   │   │   ├── bcmfs_logs.c<br>
+│   │   │   ├── bcmfs_logs.h<br>
+│   │   │   ├── bcmfs_qp.c<br>
+│   │   │   ├── bcmfs_qp.h<br>
+│   │   │   ├── bcmfs_sym.c<br>
+│   │   │   ├── bcmfs_sym_capabilities.c<br>
+│   │   │   ├── bcmfs_sym_capabilities.h<br>
+│   │   │   ├── bcmfs_sym_defs.h<br>
+│   │   │   ├── bcmfs_sym_engine.c<br>
+│   │   │   ├── bcmfs_sym_engine.h<br>
+│   │   │   ├── bcmfs_sym_pmd.c<br>
+│   │   │   ├── bcmfs_sym_pmd.h<br>
+│   │   │   ├── bcmfs_sym_req.h<br>
+│   │   │   ├── bcmfs_sym_session.c<br>
+│   │   │   ├── bcmfs_sym_session.h<br>
+│   │   │   ├── bcmfs_vfio.c<br>
+│   │   │   ├── bcmfs_vfio.h<br>
+│   │   │   ├── hw<br>
+│   │   │   │   ├── bcmfs4_rm.c<br>
+│   │   │   │   ├── bcmfs5_rm.c<br>
+│   │   │   │   ├── bcmfs_rm_common.c<br>
+│   │   │   │   └── bcmfs_rm_common.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── caam_jr<br>
+│   │   │   ├── caam_jr.c<br>
+│   │   │   ├── caam_jr_capabilities.c<br>
+│   │   │   ├── caam_jr_capabilities.h<br>
+│   │   │   ├── caam_jr_config.h<br>
+│   │   │   ├── caam_jr_desc.h<br>
+│   │   │   ├── caam_jr_hw.c<br>
+│   │   │   ├── caam_jr_hw_specific.h<br>
+│   │   │   ├── caam_jr_log.h<br>
+│   │   │   ├── caam_jr_pvt.h<br>
+│   │   │   ├── caam_jr_uio.c<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── ccp<br>
+│   │   │   ├── ccp_crypto.c<br>
+│   │   │   ├── ccp_crypto.h<br>
+│   │   │   ├── ccp_dev.c<br>
+│   │   │   ├── ccp_dev.h<br>
+│   │   │   ├── ccp_pci.c<br>
+│   │   │   ├── ccp_pci.h<br>
+│   │   │   ├── ccp_pmd_ops.c<br>
+│   │   │   ├── ccp_pmd_private.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_ccp_pmd.c<br>
+│   │   │   └── version.map<br>
+│   │   ├── cnxk<br>
+│   │   │   ├── cn10k_cryptodev.c<br>
+│   │   │   ├── cn10k_cryptodev.h<br>
+│   │   │   ├── cn10k_cryptodev_ops.c<br>
+│   │   │   ├── cn10k_cryptodev_ops.h<br>
+│   │   │   ├── cn10k_ipsec.c<br>
+│   │   │   ├── cn10k_ipsec.h<br>
+│   │   │   ├── cn10k_ipsec_la_ops.h<br>
+│   │   │   ├── cn9k_cryptodev.c<br>
+│   │   │   ├── cn9k_cryptodev.h<br>
+│   │   │   ├── cn9k_cryptodev_ops.c<br>
+│   │   │   ├── cn9k_cryptodev_ops.h<br>
+│   │   │   ├── cn9k_ipsec.c<br>
+│   │   │   ├── cn9k_ipsec.h<br>
+│   │   │   ├── cn9k_ipsec_la_ops.h<br>
+│   │   │   ├── cnxk_ae.h<br>
+│   │   │   ├── cnxk_cryptodev.c<br>
+│   │   │   ├── cnxk_cryptodev_capabilities.c<br>
+│   │   │   ├── cnxk_cryptodev_capabilities.h<br>
+│   │   │   ├── cnxk_cryptodev_devargs.c<br>
+│   │   │   ├── cnxk_cryptodev.h<br>
+│   │   │   ├── cnxk_cryptodev_ops.c<br>
+│   │   │   ├── cnxk_cryptodev_ops.h<br>
+│   │   │   ├── cnxk_cryptodev_sec.c<br>
+│   │   │   ├── cnxk_cryptodev_sec.h<br>
+│   │   │   ├── cnxk_ipsec.h<br>
+│   │   │   ├── cnxk_se.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── dpaa2_sec<br>
+│   │   │   ├── dpaa2_sec_dpseci.c<br>
+│   │   │   ├── dpaa2_sec_event.h<br>
+│   │   │   ├── dpaa2_sec_logs.h<br>
+│   │   │   ├── dpaa2_sec_priv.h<br>
+│   │   │   ├── dpaa2_sec_raw_dp.c<br>
+│   │   │   ├── mc<br>
+│   │   │   │   ├── dpseci.c<br>
+│   │   │   │   ├── fsl_dpseci_cmd.h<br>
+│   │   │   │   └── fsl_dpseci.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── dpaa_sec<br>
+│   │   │   ├── dpaa_sec.c<br>
+│   │   │   ├── dpaa_sec_event.h<br>
+│   │   │   ├── dpaa_sec.h<br>
+│   │   │   ├── dpaa_sec_log.h<br>
+│   │   │   ├── dpaa_sec_raw_dp.c<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── ipsec_mb<br>
+│   │   │   ├── ipsec_mb_ops.c<br>
+│   │   │   ├── ipsec_mb_private.c<br>
+│   │   │   ├── ipsec_mb_private.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── pmd_aesni_gcm.c<br>
+│   │   │   ├── pmd_aesni_gcm_priv.h<br>
+│   │   │   ├── pmd_aesni_mb.c<br>
+│   │   │   ├── pmd_aesni_mb_priv.h<br>
+│   │   │   ├── pmd_chacha_poly.c<br>
+│   │   │   ├── pmd_chacha_poly_priv.h<br>
+│   │   │   ├── pmd_kasumi.c<br>
+│   │   │   ├── pmd_kasumi_priv.h<br>
+│   │   │   ├── pmd_snow3g.c<br>
+│   │   │   ├── pmd_snow3g_priv.h<br>
+│   │   │   ├── pmd_zuc.c<br>
+│   │   │   ├── pmd_zuc_priv.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── meson.build<br>
+│   │   ├── mlx5<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── mlx5_crypto.c<br>
+│   │   │   ├── mlx5_crypto_dek.c<br>
+│   │   │   ├── mlx5_crypto.h<br>
+│   │   │   ├── mlx5_crypto_utils.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── mvsam<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── mrvl_pmd_private.h<br>
+│   │   │   ├── rte_mrvl_compat.h<br>
+│   │   │   ├── rte_mrvl_pmd.c<br>
+│   │   │   ├── rte_mrvl_pmd_ops.c<br>
+│   │   │   └── version.map<br>
+│   │   ├── nitrox<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── nitrox_csr.h<br>
+│   │   │   ├── nitrox_device.c<br>
+│   │   │   ├── nitrox_device.h<br>
+│   │   │   ├── nitrox_hal.c<br>
+│   │   │   ├── nitrox_hal.h<br>
+│   │   │   ├── nitrox_logs.c<br>
+│   │   │   ├── nitrox_logs.h<br>
+│   │   │   ├── nitrox_qp.c<br>
+│   │   │   ├── nitrox_qp.h<br>
+│   │   │   ├── nitrox_sym.c<br>
+│   │   │   ├── nitrox_sym_capabilities.c<br>
+│   │   │   ├── nitrox_sym_capabilities.h<br>
+│   │   │   ├── nitrox_sym_ctx.h<br>
+│   │   │   ├── nitrox_sym.h<br>
+│   │   │   ├── nitrox_sym_reqmgr.c<br>
+│   │   │   ├── nitrox_sym_reqmgr.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── null<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── null_crypto_pmd.c<br>
+│   │   │   ├── null_crypto_pmd_ops.c<br>
+│   │   │   ├── null_crypto_pmd_private.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── octeontx<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── otx_cryptodev.c<br>
+│   │   │   ├── otx_cryptodev_capabilities.c<br>
+│   │   │   ├── otx_cryptodev_capabilities.h<br>
+│   │   │   ├── otx_cryptodev.h<br>
+│   │   │   ├── otx_cryptodev_hw_access.c<br>
+│   │   │   ├── otx_cryptodev_hw_access.h<br>
+│   │   │   ├── otx_cryptodev_mbox.c<br>
+│   │   │   ├── otx_cryptodev_mbox.h<br>
+│   │   │   ├── otx_cryptodev_ops.c<br>
+│   │   │   ├── otx_cryptodev_ops.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── openssl<br>
+│   │   │   ├── compat.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── openssl_pmd_private.h<br>
+│   │   │   ├── rte_openssl_pmd.c<br>
+│   │   │   ├── rte_openssl_pmd_ops.c<br>
+│   │   │   └── version.map<br>
+│   │   ├── qat<br>
+│   │   │   ├── dev<br>
+│   │   │   │   ├── qat_asym_pmd_gen1.c<br>
+│   │   │   │   ├── qat_crypto_pmd_gen2.c<br>
+│   │   │   │   ├── qat_crypto_pmd_gen3.c<br>
+│   │   │   │   ├── qat_crypto_pmd_gen4.c<br>
+│   │   │   │   ├── qat_crypto_pmd_gens.h<br>
+│   │   │   │   └── qat_sym_pmd_gen1.c<br>
+│   │   │   ├── qat_asym.c<br>
+│   │   │   ├── qat_asym.h<br>
+│   │   │   ├── qat_crypto.c<br>
+│   │   │   ├── qat_crypto.h<br>
+│   │   │   ├── qat_ec.h<br>
+│   │   │   ├── qat_sym.c<br>
+│   │   │   ├── qat_sym.h<br>
+│   │   │   ├── qat_sym_session.c<br>
+│   │   │   └── qat_sym_session.h<br>
+│   │   ├── scheduler<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_cryptodev_scheduler.c<br>
+│   │   │   ├── rte_cryptodev_scheduler.h<br>
+│   │   │   ├── rte_cryptodev_scheduler_operations.h<br>
+│   │   │   ├── scheduler_failover.c<br>
+│   │   │   ├── scheduler_multicore.c<br>
+│   │   │   ├── scheduler_pkt_size_distr.c<br>
+│   │   │   ├── scheduler_pmd.c<br>
+│   │   │   ├── scheduler_pmd_ops.c<br>
+│   │   │   ├── scheduler_pmd_private.h<br>
+│   │   │   ├── scheduler_roundrobin.c<br>
+│   │   │   └── version.map<br>
+│   │   └── virtio<br>
+│   │       ├── meson.build<br>
+│   │       ├── version.map<br>
+│   │       ├── virtio_crypto_algs.h<br>
+│   │       ├── virtio_crypto_capabilities.h<br>
+│   │       ├── virtio_cryptodev.c<br>
+│   │       ├── virtio_cryptodev.h<br>
+│   │       ├── virtio_logs.h<br>
+│   │       ├── virtio_pci.c<br>
+│   │       ├── virtio_pci.h<br>
+│   │       ├── virtio_ring.h<br>
+│   │       ├── virtio_rxtx.c<br>
+│   │       ├── virtqueue.c<br>
+│   │       └── virtqueue.h<br>
+│   ├── dma<br>
+│   │   ├── cnxk<br>
+│   │   │   ├── cnxk_dmadev.c<br>
+│   │   │   ├── cnxk_dmadev.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── dpaa<br>
+│   │   │   ├── dpaa_qdma.c<br>
+│   │   │   ├── dpaa_qdma.h<br>
+│   │   │   ├── dpaa_qdma_logs.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── hisilicon<br>
+│   │   │   ├── hisi_dmadev.c<br>
+│   │   │   ├── hisi_dmadev.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── idxd<br>
+│   │   │   ├── dpdk_idxd_cfg.py<br>
+│   │   │   ├── idxd_bus.c<br>
+│   │   │   ├── idxd_common.c<br>
+│   │   │   ├── idxd_hw_defs.h<br>
+│   │   │   ├── idxd_internal.h<br>
+│   │   │   ├── idxd_pci.c<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── ioat<br>
+│   │   │   ├── ioat_dmadev.c<br>
+│   │   │   ├── ioat_hw_defs.h<br>
+│   │   │   ├── ioat_internal.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── meson.build<br>
+│   │   └── skeleton<br>
+│   │       ├── meson.build<br>
+│   │       ├── skeleton_dmadev.c<br>
+│   │       ├── skeleton_dmadev.h<br>
+│   │       └── version.map<br>
+│   ├── event<br>
+│   │   ├── cnxk<br>
+│   │   │   ├── cn10k_eventdev.c<br>
+│   │   │   ├── cn10k_worker.c<br>
+│   │   │   ├── cn10k_worker.h<br>
+│   │   │   ├── cn9k_eventdev.c<br>
+│   │   │   ├── cn9k_worker.c<br>
+│   │   │   ├── cn9k_worker.h<br>
+│   │   │   ├── cnxk_eventdev_adptr.c<br>
+│   │   │   ├── cnxk_eventdev.c<br>
+│   │   │   ├── cnxk_eventdev.h<br>
+│   │   │   ├── cnxk_eventdev_selftest.c<br>
+│   │   │   ├── cnxk_eventdev_stats.c<br>
+│   │   │   ├── cnxk_tim_evdev.c<br>
+│   │   │   ├── cnxk_tim_evdev.h<br>
+│   │   │   ├── cnxk_tim_worker.c<br>
+│   │   │   ├── cnxk_tim_worker.h<br>
+│   │   │   ├── cnxk_worker.h<br>
+│   │   │   ├── deq<br>
+│   │   │   │   ├── cn10k<br>
+│   │   │   │   │   ├── deq_0_15_burst.c<br>
+│   │   │   │   │   ├── deq_0_15.c<br>
+│   │   │   │   │   ├── deq_0_15_ca_burst.c<br>
+│   │   │   │   │   ├── deq_0_15_ca.c<br>
+│   │   │   │   │   ├── deq_0_15_ca_seg_burst.c<br>
+│   │   │   │   │   ├── deq_0_15_ca_seg.c<br>
+│   │   │   │   │   ├── deq_0_15_ca_tmo_burst.c<br>
+│   │   │   │   │   ├── deq_0_15_ca_tmo.c<br>
+│   │   │   │   │   ├── deq_0_15_ca_tmo_seg_burst.c<br>
+│   │   │   │   │   ├── deq_0_15_ca_tmo_seg.c<br>
+│   │   │   │   │   ├── deq_0_15_dual.c<br>
+│   │   │   │   │   ├── deq_0_15_seg_burst.c<br>
+│   │   │   │   │   ├── deq_0_15_seg.c<br>
+│   │   │   │   │   ├── deq_0_15_tmo_burst.c<br>
+│   │   │   │   │   ├── deq_0_15_tmo.c<br>
+│   │   │   │   │   ├── deq_0_15_tmo_seg_burst.c<br>
+│   │   │   │   │   ├── deq_0_15_tmo_seg.c<br>
+│   │   │   │   │   ├── deq_112_127_burst.c<br>
+│   │   │   │   │   ├── deq_112_127.c<br>
+│   │   │   │   │   ├── deq_112_127_ca_burst.c<br>
+│   │   │   │   │   ├── deq_112_127_ca.c<br>
+│   │   │   │   │   ├── deq_112_127_ca_seg_burst.c<br>
+│   │   │   │   │   ├── deq_112_127_ca_seg.c<br>
+│   │   │   │   │   ├── deq_112_127_ca_tmo_burst.c<br>
+│   │   │   │   │   ├── deq_112_127_ca_tmo.c<br>
+│   │   │   │   │   ├── deq_112_127_ca_tmo_seg_burst.c<br>
+│   │   │   │   │   ├── deq_112_127_ca_tmo_seg.c<br>
+│   │   │   │   │   ├── deq_112_127_dual.c<br>
+│   │   │   │   │   ├── deq_112_127_seg_burst.c<br>
+│   │   │   │   │   ├── deq_112_127_seg.c<br>
+│   │   │   │   │   ├── deq_112_127_tmo_burst.c<br>
+│   │   │   │   │   ├── deq_112_127_tmo.c<br>
+│   │   │   │   │   ├── deq_112_127_tmo_seg_burst.c<br>
+│   │   │   │   │   ├── deq_112_127_tmo_seg.c<br>
+│   │   │   │   │   ├── deq_16_31_burst.c<br>
+│   │   │   │   │   ├── deq_16_31.c<br>
+│   │   │   │   │   ├── deq_16_31_ca_burst.c<br>
+│   │   │   │   │   ├── deq_16_31_ca.c<br>
+│   │   │   │   │   ├── deq_16_31_ca_seg_burst.c<br>
+│   │   │   │   │   ├── deq_16_31_ca_seg.c<br>
+│   │   │   │   │   ├── deq_16_31_ca_tmo_burst.c<br>
+│   │   │   │   │   ├── deq_16_31_ca_tmo.c<br>
+│   │   │   │   │   ├── deq_16_31_ca_tmo_seg_burst.c<br>
+│   │   │   │   │   ├── deq_16_31_ca_tmo_seg.c<br>
+│   │   │   │   │   ├── deq_16_31_dual.c<br>
+│   │   │   │   │   ├── deq_16_31_seg_burst.c<br>
+│   │   │   │   │   ├── deq_16_31_seg.c<br>
+│   │   │   │   │   ├── deq_16_31_tmo_burst.c<br>
+│   │   │   │   │   ├── deq_16_31_tmo.c<br>
+│   │   │   │   │   ├── deq_16_31_tmo_seg_burst.c<br>
+│   │   │   │   │   ├── deq_16_31_tmo_seg.c<br>
+│   │   │   │   │   ├── deq_32_47_burst.c<br>
+│   │   │   │   │   ├── deq_32_47.c<br>
+│   │   │   │   │   ├── deq_32_47_ca_burst.c<br>
+│   │   │   │   │   ├── deq_32_47_ca.c<br>
+│   │   │   │   │   ├── deq_32_47_ca_seg_burst.c<br>
+│   │   │   │   │   ├── deq_32_47_ca_seg.c<br>
+│   │   │   │   │   ├── deq_32_47_ca_tmo_burst.c<br>
+│   │   │   │   │   ├── deq_32_47_ca_tmo.c<br>
+│   │   │   │   │   ├── deq_32_47_ca_tmo_seg_burst.c<br>
+│   │   │   │   │   ├── deq_32_47_ca_tmo_seg.c<br>
+│   │   │   │   │   ├── deq_32_47_dual.c<br>
+│   │   │   │   │   ├── deq_32_47_seg_burst.c<br>
+│   │   │   │   │   ├── deq_32_47_seg.c<br>
+│   │   │   │   │   ├── deq_32_47_tmo_burst.c<br>
+│   │   │   │   │   ├── deq_32_47_tmo.c<br>
+│   │   │   │   │   ├── deq_32_47_tmo_seg_burst.c<br>
+│   │   │   │   │   ├── deq_32_47_tmo_seg.c<br>
+│   │   │   │   │   ├── deq_48_63_burst.c<br>
+│   │   │   │   │   ├── deq_48_63.c<br>
+│   │   │   │   │   ├── deq_48_63_ca_burst.c<br>
+│   │   │   │   │   ├── deq_48_63_ca.c<br>
+│   │   │   │   │   ├── deq_48_63_ca_seg_burst.c<br>
+│   │   │   │   │   ├── deq_48_63_ca_seg.c<br>
+│   │   │   │   │   ├── deq_48_63_ca_tmo_burst.c<br>
+│   │   │   │   │   ├── deq_48_63_ca_tmo.c<br>
+│   │   │   │   │   ├── deq_48_63_ca_tmo_seg_burst.c<br>
+│   │   │   │   │   ├── deq_48_63_ca_tmo_seg.c<br>
+│   │   │   │   │   ├── deq_48_63_dual.c<br>
+│   │   │   │   │   ├── deq_48_63_seg_burst.c<br>
+│   │   │   │   │   ├── deq_48_63_seg.c<br>
+│   │   │   │   │   ├── deq_48_63_tmo_burst.c<br>
+│   │   │   │   │   ├── deq_48_63_tmo.c<br>
+│   │   │   │   │   ├── deq_48_63_tmo_seg_burst.c<br>
+│   │   │   │   │   ├── deq_48_63_tmo_seg.c<br>
+│   │   │   │   │   ├── deq_64_79_burst.c<br>
+│   │   │   │   │   ├── deq_64_79.c<br>
+│   │   │   │   │   ├── deq_64_79_ca_burst.c<br>
+│   │   │   │   │   ├── deq_64_79_ca.c<br>
+│   │   │   │   │   ├── deq_64_79_ca_seg_burst.c<br>
+│   │   │   │   │   ├── deq_64_79_ca_seg.c<br>
+│   │   │   │   │   ├── deq_64_79_ca_tmo_burst.c<br>
+│   │   │   │   │   ├── deq_64_79_ca_tmo.c<br>
+│   │   │   │   │   ├── deq_64_79_ca_tmo_seg_burst.c<br>
+│   │   │   │   │   ├── deq_64_79_ca_tmo_seg.c<br>
+│   │   │   │   │   ├── deq_64_79_dual.c<br>
+│   │   │   │   │   ├── deq_64_79_seg_burst.c<br>
+│   │   │   │   │   ├── deq_64_79_seg.c<br>
+│   │   │   │   │   ├── deq_64_79_tmo_burst.c<br>
+│   │   │   │   │   ├── deq_64_79_tmo.c<br>
+│   │   │   │   │   ├── deq_64_79_tmo_seg_burst.c<br>
+│   │   │   │   │   ├── deq_64_79_tmo_seg.c<br>
+│   │   │   │   │   ├── deq_80_95_burst.c<br>
+│   │   │   │   │   ├── deq_80_95.c<br>
+│   │   │   │   │   ├── deq_80_95_ca_burst.c<br>
+│   │   │   │   │   ├── deq_80_95_ca.c<br>
+│   │   │   │   │   ├── deq_80_95_ca_seg_burst.c<br>
+│   │   │   │   │   ├── deq_80_95_ca_seg.c<br>
+│   │   │   │   │   ├── deq_80_95_ca_tmo_burst.c<br>
+│   │   │   │   │   ├── deq_80_95_ca_tmo.c<br>
+│   │   │   │   │   ├── deq_80_95_ca_tmo_seg_burst.c<br>
+│   │   │   │   │   ├── deq_80_95_ca_tmo_seg.c<br>
+│   │   │   │   │   ├── deq_80_95_dual.c<br>
+│   │   │   │   │   ├── deq_80_95_seg_burst.c<br>
+│   │   │   │   │   ├── deq_80_95_seg.c<br>
+│   │   │   │   │   ├── deq_80_95_tmo_burst.c<br>
+│   │   │   │   │   ├── deq_80_95_tmo.c<br>
+│   │   │   │   │   ├── deq_80_95_tmo_seg_burst.c<br>
+│   │   │   │   │   ├── deq_80_95_tmo_seg.c<br>
+│   │   │   │   │   ├── deq_96_111_burst.c<br>
+│   │   │   │   │   ├── deq_96_111.c<br>
+│   │   │   │   │   ├── deq_96_111_ca_burst.c<br>
+│   │   │   │   │   ├── deq_96_111_ca.c<br>
+│   │   │   │   │   ├── deq_96_111_ca_seg_burst.c<br>
+│   │   │   │   │   ├── deq_96_111_ca_seg.c<br>
+│   │   │   │   │   ├── deq_96_111_ca_tmo_burst.c<br>
+│   │   │   │   │   ├── deq_96_111_ca_tmo.c<br>
+│   │   │   │   │   ├── deq_96_111_ca_tmo_seg_burst.c<br>
+│   │   │   │   │   ├── deq_96_111_ca_tmo_seg.c<br>
+│   │   │   │   │   ├── deq_96_111_dual.c<br>
+│   │   │   │   │   ├── deq_96_111_seg_burst.c<br>
+│   │   │   │   │   ├── deq_96_111_seg.c<br>
+│   │   │   │   │   ├── deq_96_111_tmo_burst.c<br>
+│   │   │   │   │   ├── deq_96_111_tmo.c<br>
+│   │   │   │   │   ├── deq_96_111_tmo_seg_burst.c<br>
+│   │   │   │   │   └── deq_96_111_tmo_seg.c<br>
+│   │   │   │   └── cn9k<br>
+│   │   │   │       ├── deq_0_15_burst.c<br>
+│   │   │   │       ├── deq_0_15.c<br>
+│   │   │   │       ├── deq_0_15_ca_burst.c<br>
+│   │   │   │       ├── deq_0_15_ca.c<br>
+│   │   │   │       ├── deq_0_15_ca_seg_burst.c<br>
+│   │   │   │       ├── deq_0_15_ca_seg.c<br>
+│   │   │   │       ├── deq_0_15_ca_tmo_burst.c<br>
+│   │   │   │       ├── deq_0_15_ca_tmo.c<br>
+│   │   │   │       ├── deq_0_15_ca_tmo_seg_burst.c<br>
+│   │   │   │       ├── deq_0_15_ca_tmo_seg.c<br>
+│   │   │   │       ├── deq_0_15_dual_burst.c<br>
+│   │   │   │       ├── deq_0_15_dual.c<br>
+│   │   │   │       ├── deq_0_15_dual_ca_burst.c<br>
+│   │   │   │       ├── deq_0_15_dual_ca.c<br>
+│   │   │   │       ├── deq_0_15_dual_ca_seg_burst.c<br>
+│   │   │   │       ├── deq_0_15_dual_ca_seg.c<br>
+│   │   │   │       ├── deq_0_15_dual_ca_tmo_burst.c<br>
+│   │   │   │       ├── deq_0_15_dual_ca_tmo.c<br>
+│   │   │   │       ├── deq_0_15_dual_ca_tmo_seg_burst.c<br>
+│   │   │   │       ├── deq_0_15_dual_ca_tmo_seg.c<br>
+│   │   │   │       ├── deq_0_15_dual_seg_burst.c<br>
+│   │   │   │       ├── deq_0_15_dual_seg.c<br>
+│   │   │   │       ├── deq_0_15_dual_tmo_burst.c<br>
+│   │   │   │       ├── deq_0_15_dual_tmo.c<br>
+│   │   │   │       ├── deq_0_15_dual_tmo_seg_burst.c<br>
+│   │   │   │       ├── deq_0_15_dual_tmo_seg.c<br>
+│   │   │   │       ├── deq_0_15_seg_burst.c<br>
+│   │   │   │       ├── deq_0_15_seg.c<br>
+│   │   │   │       ├── deq_0_15_tmo_burst.c<br>
+│   │   │   │       ├── deq_0_15_tmo.c<br>
+│   │   │   │       ├── deq_0_15_tmo_seg_burst.c<br>
+│   │   │   │       ├── deq_0_15_tmo_seg.c<br>
+│   │   │   │       ├── deq_112_127_burst.c<br>
+│   │   │   │       ├── deq_112_127.c<br>
+│   │   │   │       ├── deq_112_127_ca_burst.c<br>
+│   │   │   │       ├── deq_112_127_ca.c<br>
+│   │   │   │       ├── deq_112_127_ca_seg_burst.c<br>
+│   │   │   │       ├── deq_112_127_ca_seg.c<br>
+│   │   │   │       ├── deq_112_127_ca_tmo_burst.c<br>
+│   │   │   │       ├── deq_112_127_ca_tmo.c<br>
+│   │   │   │       ├── deq_112_127_ca_tmo_seg_burst.c<br>
+│   │   │   │       ├── deq_112_127_ca_tmo_seg.c<br>
+│   │   │   │       ├── deq_112_127_dual_burst.c<br>
+│   │   │   │       ├── deq_112_127_dual.c<br>
+│   │   │   │       ├── deq_112_127_dual_ca_burst.c<br>
+│   │   │   │       ├── deq_112_127_dual_ca.c<br>
+│   │   │   │       ├── deq_112_127_dual_ca_seg_burst.c<br>
+│   │   │   │       ├── deq_112_127_dual_ca_seg.c<br>
+│   │   │   │       ├── deq_112_127_dual_ca_tmo_burst.c<br>
+│   │   │   │       ├── deq_112_127_dual_ca_tmo.c<br>
+│   │   │   │       ├── deq_112_127_dual_ca_tmo_seg_burst.c<br>
+│   │   │   │       ├── deq_112_127_dual_ca_tmo_seg.c<br>
+│   │   │   │       ├── deq_112_127_dual_seg_burst.c<br>
+│   │   │   │       ├── deq_112_127_dual_seg.c<br>
+│   │   │   │       ├── deq_112_127_dual_tmo_burst.c<br>
+│   │   │   │       ├── deq_112_127_dual_tmo.c<br>
+│   │   │   │       ├── deq_112_127_dual_tmo_seg_burst.c<br>
+│   │   │   │       ├── deq_112_127_dual_tmo_seg.c<br>
+│   │   │   │       ├── deq_112_127_seg_burst.c<br>
+│   │   │   │       ├── deq_112_127_seg.c<br>
+│   │   │   │       ├── deq_112_127_tmo_burst.c<br>
+│   │   │   │       ├── deq_112_127_tmo.c<br>
+│   │   │   │       ├── deq_112_127_tmo_seg_burst.c<br>
+│   │   │   │       ├── deq_112_127_tmo_seg.c<br>
+│   │   │   │       ├── deq_16_31_burst.c<br>
+│   │   │   │       ├── deq_16_31.c<br>
+│   │   │   │       ├── deq_16_31_ca_burst.c<br>
+│   │   │   │       ├── deq_16_31_ca.c<br>
+│   │   │   │       ├── deq_16_31_ca_seg_burst.c<br>
+│   │   │   │       ├── deq_16_31_ca_seg.c<br>
+│   │   │   │       ├── deq_16_31_ca_tmo_burst.c<br>
+│   │   │   │       ├── deq_16_31_ca_tmo.c<br>
+│   │   │   │       ├── deq_16_31_ca_tmo_seg_burst.c<br>
+│   │   │   │       ├── deq_16_31_ca_tmo_seg.c<br>
+│   │   │   │       ├── deq_16_31_dual_burst.c<br>
+│   │   │   │       ├── deq_16_31_dual.c<br>
+│   │   │   │       ├── deq_16_31_dual_ca_burst.c<br>
+│   │   │   │       ├── deq_16_31_dual_ca.c<br>
+│   │   │   │       ├── deq_16_31_dual_ca_seg_burst.c<br>
+│   │   │   │       ├── deq_16_31_dual_ca_seg.c<br>
+│   │   │   │       ├── deq_16_31_dual_ca_tmo_burst.c<br>
+│   │   │   │       ├── deq_16_31_dual_ca_tmo.c<br>
+│   │   │   │       ├── deq_16_31_dual_ca_tmo_seg_burst.c<br>
+│   │   │   │       ├── deq_16_31_dual_ca_tmo_seg.c<br>
+│   │   │   │       ├── deq_16_31_dual_seg_burst.c<br>
+│   │   │   │       ├── deq_16_31_dual_seg.c<br>
+│   │   │   │       ├── deq_16_31_dual_tmo_burst.c<br>
+│   │   │   │       ├── deq_16_31_dual_tmo.c<br>
+│   │   │   │       ├── deq_16_31_dual_tmo_seg_burst.c<br>
+│   │   │   │       ├── deq_16_31_dual_tmo_seg.c<br>
+│   │   │   │       ├── deq_16_31_seg_burst.c<br>
+│   │   │   │       ├── deq_16_31_seg.c<br>
+│   │   │   │       ├── deq_16_31_tmo_burst.c<br>
+│   │   │   │       ├── deq_16_31_tmo.c<br>
+│   │   │   │       ├── deq_16_31_tmo_seg_burst.c<br>
+│   │   │   │       ├── deq_16_31_tmo_seg.c<br>
+│   │   │   │       ├── deq_32_47_burst.c<br>
+│   │   │   │       ├── deq_32_47.c<br>
+│   │   │   │       ├── deq_32_47_ca_burst.c<br>
+│   │   │   │       ├── deq_32_47_ca.c<br>
+│   │   │   │       ├── deq_32_47_ca_seg_burst.c<br>
+│   │   │   │       ├── deq_32_47_ca_seg.c<br>
+│   │   │   │       ├── deq_32_47_ca_tmo_burst.c<br>
+│   │   │   │       ├── deq_32_47_ca_tmo.c<br>
+│   │   │   │       ├── deq_32_47_ca_tmo_seg_burst.c<br>
+│   │   │   │       ├── deq_32_47_ca_tmo_seg.c<br>
+│   │   │   │       ├── deq_32_47_dual_burst.c<br>
+│   │   │   │       ├── deq_32_47_dual.c<br>
+│   │   │   │       ├── deq_32_47_dual_ca_burst.c<br>
+│   │   │   │       ├── deq_32_47_dual_ca.c<br>
+│   │   │   │       ├── deq_32_47_dual_ca_seg_burst.c<br>
+│   │   │   │       ├── deq_32_47_dual_ca_seg.c<br>
+│   │   │   │       ├── deq_32_47_dual_ca_tmo_burst.c<br>
+│   │   │   │       ├── deq_32_47_dual_ca_tmo.c<br>
+│   │   │   │       ├── deq_32_47_dual_ca_tmo_seg_burst.c<br>
+│   │   │   │       ├── deq_32_47_dual_ca_tmo_seg.c<br>
+│   │   │   │       ├── deq_32_47_dual_seg_burst.c<br>
+│   │   │   │       ├── deq_32_47_dual_seg.c<br>
+│   │   │   │       ├── deq_32_47_dual_tmo_burst.c<br>
+│   │   │   │       ├── deq_32_47_dual_tmo.c<br>
+│   │   │   │       ├── deq_32_47_dual_tmo_seg_burst.c<br>
+│   │   │   │       ├── deq_32_47_dual_tmo_seg.c<br>
+│   │   │   │       ├── deq_32_47_seg_burst.c<br>
+│   │   │   │       ├── deq_32_47_seg.c<br>
+│   │   │   │       ├── deq_32_47_tmo_burst.c<br>
+│   │   │   │       ├── deq_32_47_tmo.c<br>
+│   │   │   │       ├── deq_32_47_tmo_seg_burst.c<br>
+│   │   │   │       ├── deq_32_47_tmo_seg.c<br>
+│   │   │   │       ├── deq_48_63_burst.c<br>
+│   │   │   │       ├── deq_48_63.c<br>
+│   │   │   │       ├── deq_48_63_ca_burst.c<br>
+│   │   │   │       ├── deq_48_63_ca.c<br>
+│   │   │   │       ├── deq_48_63_ca_seg_burst.c<br>
+│   │   │   │       ├── deq_48_63_ca_seg.c<br>
+│   │   │   │       ├── deq_48_63_ca_tmo_burst.c<br>
+│   │   │   │       ├── deq_48_63_ca_tmo.c<br>
+│   │   │   │       ├── deq_48_63_ca_tmo_seg_burst.c<br>
+│   │   │   │       ├── deq_48_63_ca_tmo_seg.c<br>
+│   │   │   │       ├── deq_48_63_dual_burst.c<br>
+│   │   │   │       ├── deq_48_63_dual.c<br>
+│   │   │   │       ├── deq_48_63_dual_ca_burst.c<br>
+│   │   │   │       ├── deq_48_63_dual_ca.c<br>
+│   │   │   │       ├── deq_48_63_dual_ca_seg_burst.c<br>
+│   │   │   │       ├── deq_48_63_dual_ca_seg.c<br>
+│   │   │   │       ├── deq_48_63_dual_ca_tmo_burst.c<br>
+│   │   │   │       ├── deq_48_63_dual_ca_tmo.c<br>
+│   │   │   │       ├── deq_48_63_dual_ca_tmo_seg_burst.c<br>
+│   │   │   │       ├── deq_48_63_dual_ca_tmo_seg.c<br>
+│   │   │   │       ├── deq_48_63_dual_seg_burst.c<br>
+│   │   │   │       ├── deq_48_63_dual_seg.c<br>
+│   │   │   │       ├── deq_48_63_dual_tmo_burst.c<br>
+│   │   │   │       ├── deq_48_63_dual_tmo.c<br>
+│   │   │   │       ├── deq_48_63_dual_tmo_seg_burst.c<br>
+│   │   │   │       ├── deq_48_63_dual_tmo_seg.c<br>
+│   │   │   │       ├── deq_48_63_seg_burst.c<br>
+│   │   │   │       ├── deq_48_63_seg.c<br>
+│   │   │   │       ├── deq_48_63_tmo_burst.c<br>
+│   │   │   │       ├── deq_48_63_tmo.c<br>
+│   │   │   │       ├── deq_48_63_tmo_seg_burst.c<br>
+│   │   │   │       ├── deq_48_63_tmo_seg.c<br>
+│   │   │   │       ├── deq_64_79_burst.c<br>
+│   │   │   │       ├── deq_64_79.c<br>
+│   │   │   │       ├── deq_64_79_ca_burst.c<br>
+│   │   │   │       ├── deq_64_79_ca.c<br>
+│   │   │   │       ├── deq_64_79_ca_seg_burst.c<br>
+│   │   │   │       ├── deq_64_79_ca_seg.c<br>
+│   │   │   │       ├── deq_64_79_ca_tmo_burst.c<br>
+│   │   │   │       ├── deq_64_79_ca_tmo.c<br>
+│   │   │   │       ├── deq_64_79_ca_tmo_seg_burst.c<br>
+│   │   │   │       ├── deq_64_79_ca_tmo_seg.c<br>
+│   │   │   │       ├── deq_64_79_dual_burst.c<br>
+│   │   │   │       ├── deq_64_79_dual.c<br>
+│   │   │   │       ├── deq_64_79_dual_ca_burst.c<br>
+│   │   │   │       ├── deq_64_79_dual_ca.c<br>
+│   │   │   │       ├── deq_64_79_dual_ca_seg_burst.c<br>
+│   │   │   │       ├── deq_64_79_dual_ca_seg.c<br>
+│   │   │   │       ├── deq_64_79_dual_ca_tmo_burst.c<br>
+│   │   │   │       ├── deq_64_79_dual_ca_tmo.c<br>
+│   │   │   │       ├── deq_64_79_dual_ca_tmo_seg_burst.c<br>
+│   │   │   │       ├── deq_64_79_dual_ca_tmo_seg.c<br>
+│   │   │   │       ├── deq_64_79_dual_seg_burst.c<br>
+│   │   │   │       ├── deq_64_79_dual_seg.c<br>
+│   │   │   │       ├── deq_64_79_dual_tmo_burst.c<br>
+│   │   │   │       ├── deq_64_79_dual_tmo.c<br>
+│   │   │   │       ├── deq_64_79_dual_tmo_seg_burst.c<br>
+│   │   │   │       ├── deq_64_79_dual_tmo_seg.c<br>
+│   │   │   │       ├── deq_64_79_seg_burst.c<br>
+│   │   │   │       ├── deq_64_79_seg.c<br>
+│   │   │   │       ├── deq_64_79_tmo_burst.c<br>
+│   │   │   │       ├── deq_64_79_tmo.c<br>
+│   │   │   │       ├── deq_64_79_tmo_seg_burst.c<br>
+│   │   │   │       ├── deq_64_79_tmo_seg.c<br>
+│   │   │   │       ├── deq_80_95_burst.c<br>
+│   │   │   │       ├── deq_80_95.c<br>
+│   │   │   │       ├── deq_80_95_ca_burst.c<br>
+│   │   │   │       ├── deq_80_95_ca.c<br>
+│   │   │   │       ├── deq_80_95_ca_seg_burst.c<br>
+│   │   │   │       ├── deq_80_95_ca_seg.c<br>
+│   │   │   │       ├── deq_80_95_ca_tmo_burst.c<br>
+│   │   │   │       ├── deq_80_95_ca_tmo.c<br>
+│   │   │   │       ├── deq_80_95_ca_tmo_seg_burst.c<br>
+│   │   │   │       ├── deq_80_95_ca_tmo_seg.c<br>
+│   │   │   │       ├── deq_80_95_dual_burst.c<br>
+│   │   │   │       ├── deq_80_95_dual.c<br>
+│   │   │   │       ├── deq_80_95_dual_ca_burst.c<br>
+│   │   │   │       ├── deq_80_95_dual_ca.c<br>
+│   │   │   │       ├── deq_80_95_dual_ca_seg_burst.c<br>
+│   │   │   │       ├── deq_80_95_dual_ca_seg.c<br>
+│   │   │   │       ├── deq_80_95_dual_ca_tmo_burst.c<br>
+│   │   │   │       ├── deq_80_95_dual_ca_tmo.c<br>
+│   │   │   │       ├── deq_80_95_dual_ca_tmo_seg_burst.c<br>
+│   │   │   │       ├── deq_80_95_dual_ca_tmo_seg.c<br>
+│   │   │   │       ├── deq_80_95_dual_seg_burst.c<br>
+│   │   │   │       ├── deq_80_95_dual_seg.c<br>
+│   │   │   │       ├── deq_80_95_dual_tmo_burst.c<br>
+│   │   │   │       ├── deq_80_95_dual_tmo.c<br>
+│   │   │   │       ├── deq_80_95_dual_tmo_seg_burst.c<br>
+│   │   │   │       ├── deq_80_95_dual_tmo_seg.c<br>
+│   │   │   │       ├── deq_80_95_seg_burst.c<br>
+│   │   │   │       ├── deq_80_95_seg.c<br>
+│   │   │   │       ├── deq_80_95_tmo_burst.c<br>
+│   │   │   │       ├── deq_80_95_tmo.c<br>
+│   │   │   │       ├── deq_80_95_tmo_seg_burst.c<br>
+│   │   │   │       ├── deq_80_95_tmo_seg.c<br>
+│   │   │   │       ├── deq_96_111_burst.c<br>
+│   │   │   │       ├── deq_96_111.c<br>
+│   │   │   │       ├── deq_96_111_ca_burst.c<br>
+│   │   │   │       ├── deq_96_111_ca.c<br>
+│   │   │   │       ├── deq_96_111_ca_seg_burst.c<br>
+│   │   │   │       ├── deq_96_111_ca_seg.c<br>
+│   │   │   │       ├── deq_96_111_ca_tmo_burst.c<br>
+│   │   │   │       ├── deq_96_111_ca_tmo.c<br>
+│   │   │   │       ├── deq_96_111_ca_tmo_seg_burst.c<br>
+│   │   │   │       ├── deq_96_111_ca_tmo_seg.c<br>
+│   │   │   │       ├── deq_96_111_dual_burst.c<br>
+│   │   │   │       ├── deq_96_111_dual.c<br>
+│   │   │   │       ├── deq_96_111_dual_ca_burst.c<br>
+│   │   │   │       ├── deq_96_111_dual_ca.c<br>
+│   │   │   │       ├── deq_96_111_dual_ca_seg_burst.c<br>
+│   │   │   │       ├── deq_96_111_dual_ca_seg.c<br>
+│   │   │   │       ├── deq_96_111_dual_ca_tmo_burst.c<br>
+│   │   │   │       ├── deq_96_111_dual_ca_tmo.c<br>
+│   │   │   │       ├── deq_96_111_dual_ca_tmo_seg_burst.c<br>
+│   │   │   │       ├── deq_96_111_dual_ca_tmo_seg.c<br>
+│   │   │   │       ├── deq_96_111_dual_seg_burst.c<br>
+│   │   │   │       ├── deq_96_111_dual_seg.c<br>
+│   │   │   │       ├── deq_96_111_dual_tmo_burst.c<br>
+│   │   │   │       ├── deq_96_111_dual_tmo.c<br>
+│   │   │   │       ├── deq_96_111_dual_tmo_seg_burst.c<br>
+│   │   │   │       ├── deq_96_111_dual_tmo_seg.c<br>
+│   │   │   │       ├── deq_96_111_seg_burst.c<br>
+│   │   │   │       ├── deq_96_111_seg.c<br>
+│   │   │   │       ├── deq_96_111_tmo_burst.c<br>
+│   │   │   │       ├── deq_96_111_tmo.c<br>
+│   │   │   │       ├── deq_96_111_tmo_seg_burst.c<br>
+│   │   │   │       └── deq_96_111_tmo_seg.c<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── tx<br>
+│   │   │   │   ├── cn10k<br>
+│   │   │   │   │   ├── tx_0_15.c<br>
+│   │   │   │   │   ├── tx_0_15_seg.c<br>
+│   │   │   │   │   ├── tx_112_127.c<br>
+│   │   │   │   │   ├── tx_112_127_seg.c<br>
+│   │   │   │   │   ├── tx_16_31.c<br>
+│   │   │   │   │   ├── tx_16_31_seg.c<br>
+│   │   │   │   │   ├── tx_32_47.c<br>
+│   │   │   │   │   ├── tx_32_47_seg.c<br>
+│   │   │   │   │   ├── tx_48_63.c<br>
+│   │   │   │   │   ├── tx_48_63_seg.c<br>
+│   │   │   │   │   ├── tx_64_79.c<br>
+│   │   │   │   │   ├── tx_64_79_seg.c<br>
+│   │   │   │   │   ├── tx_80_95.c<br>
+│   │   │   │   │   ├── tx_80_95_seg.c<br>
+│   │   │   │   │   ├── tx_96_111.c<br>
+│   │   │   │   │   └── tx_96_111_seg.c<br>
+│   │   │   │   └── cn9k<br>
+│   │   │   │       ├── tx_0_15.c<br>
+│   │   │   │       ├── tx_0_15_dual.c<br>
+│   │   │   │       ├── tx_0_15_dual_seg.c<br>
+│   │   │   │       ├── tx_0_15_seg.c<br>
+│   │   │   │       ├── tx_112_127.c<br>
+│   │   │   │       ├── tx_112_127_dual.c<br>
+│   │   │   │       ├── tx_112_127_dual_seg.c<br>
+│   │   │   │       ├── tx_112_127_seg.c<br>
+│   │   │   │       ├── tx_16_31.c<br>
+│   │   │   │       ├── tx_16_31_dual.c<br>
+│   │   │   │       ├── tx_16_31_dual_seg.c<br>
+│   │   │   │       ├── tx_16_31_seg.c<br>
+│   │   │   │       ├── tx_32_47.c<br>
+│   │   │   │       ├── tx_32_47_dual.c<br>
+│   │   │   │       ├── tx_32_47_dual_seg.c<br>
+│   │   │   │       ├── tx_32_47_seg.c<br>
+│   │   │   │       ├── tx_48_63.c<br>
+│   │   │   │       ├── tx_48_63_dual.c<br>
+│   │   │   │       ├── tx_48_63_dual_seg.c<br>
+│   │   │   │       ├── tx_48_63_seg.c<br>
+│   │   │   │       ├── tx_64_79.c<br>
+│   │   │   │       ├── tx_64_79_dual.c<br>
+│   │   │   │       ├── tx_64_79_dual_seg.c<br>
+│   │   │   │       ├── tx_64_79_seg.c<br>
+│   │   │   │       ├── tx_80_95.c<br>
+│   │   │   │       ├── tx_80_95_dual.c<br>
+│   │   │   │       ├── tx_80_95_dual_seg.c<br>
+│   │   │   │       ├── tx_80_95_seg.c<br>
+│   │   │   │       ├── tx_96_111.c<br>
+│   │   │   │       ├── tx_96_111_dual.c<br>
+│   │   │   │       ├── tx_96_111_dual_seg.c<br>
+│   │   │   │       └── tx_96_111_seg.c<br>
+│   │   │   └── version.map<br>
+│   │   ├── dlb2<br>
+│   │   │   ├── dlb2.c<br>
+│   │   │   ├── dlb2_iface.c<br>
+│   │   │   ├── dlb2_iface.h<br>
+│   │   │   ├── dlb2_inline_fns.h<br>
+│   │   │   ├── dlb2_log.h<br>
+│   │   │   ├── dlb2_priv.h<br>
+│   │   │   ├── dlb2_selftest.c<br>
+│   │   │   ├── dlb2_user.h<br>
+│   │   │   ├── dlb2_xstats.c<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── pf<br>
+│   │   │   │   ├── base<br>
+│   │   │   │   │   ├── dlb2_hw_types.h<br>
+│   │   │   │   │   ├── dlb2_osdep_bitmap.h<br>
+│   │   │   │   │   ├── dlb2_osdep.h<br>
+│   │   │   │   │   ├── dlb2_osdep_list.h<br>
+│   │   │   │   │   ├── dlb2_osdep_types.h<br>
+│   │   │   │   │   ├── dlb2_regs.h<br>
+│   │   │   │   │   ├── dlb2_resource.c<br>
+│   │   │   │   │   └── dlb2_resource.h<br>
+│   │   │   │   ├── dlb2_main.c<br>
+│   │   │   │   ├── dlb2_main.h<br>
+│   │   │   │   └── dlb2_pf.c<br>
+│   │   │   ├── rte_pmd_dlb2.c<br>
+│   │   │   ├── rte_pmd_dlb2.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── dpaa<br>
+│   │   │   ├── dpaa_eventdev.c<br>
+│   │   │   ├── dpaa_eventdev.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── dpaa2<br>
+│   │   │   ├── dpaa2_eventdev.c<br>
+│   │   │   ├── dpaa2_eventdev.h<br>
+│   │   │   ├── dpaa2_eventdev_logs.h<br>
+│   │   │   ├── dpaa2_eventdev_selftest.c<br>
+│   │   │   ├── dpaa2_hw_dpcon.c<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── dsw<br>
+│   │   │   ├── dsw_evdev.c<br>
+│   │   │   ├── dsw_evdev.h<br>
+│   │   │   ├── dsw_event.c<br>
+│   │   │   ├── dsw_sort.h<br>
+│   │   │   ├── dsw_xstats.c<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── meson.build<br>
+│   │   ├── octeontx<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── ssovf_evdev.c<br>
+│   │   │   ├── ssovf_evdev.h<br>
+│   │   │   ├── ssovf_evdev_selftest.c<br>
+│   │   │   ├── ssovf_probe.c<br>
+│   │   │   ├── ssovf_worker.c<br>
+│   │   │   ├── ssovf_worker.h<br>
+│   │   │   ├── timvf_evdev.c<br>
+│   │   │   ├── timvf_evdev.h<br>
+│   │   │   ├── timvf_probe.c<br>
+│   │   │   ├── timvf_worker.c<br>
+│   │   │   ├── timvf_worker.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── opdl<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── opdl_evdev.c<br>
+│   │   │   ├── opdl_evdev.h<br>
+│   │   │   ├── opdl_evdev_init.c<br>
+│   │   │   ├── opdl_evdev_xstats.c<br>
+│   │   │   ├── opdl_log.h<br>
+│   │   │   ├── opdl_ring.c<br>
+│   │   │   ├── opdl_ring.h<br>
+│   │   │   ├── opdl_test.c<br>
+│   │   │   └── version.map<br>
+│   │   ├── skeleton<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── skeleton_eventdev.c<br>
+│   │   │   ├── skeleton_eventdev.h<br>
+│   │   │   └── version.map<br>
+│   │   └── sw<br>
+│   │       ├── event_ring.h<br>
+│   │       ├── iq_chunk.h<br>
+│   │       ├── meson.build<br>
+│   │       ├── sw_evdev.c<br>
+│   │       ├── sw_evdev.h<br>
+│   │       ├── sw_evdev_log.h<br>
+│   │       ├── sw_evdev_scheduler.c<br>
+│   │       ├── sw_evdev_selftest.c<br>
+│   │       ├── sw_evdev_worker.c<br>
+│   │       ├── sw_evdev_xstats.c<br>
+│   │       └── version.map<br>
+│   ├── gpu<br>
+│   │   ├── cuda<br>
+│   │   │   ├── common.h<br>
+│   │   │   ├── cuda.c<br>
+│   │   │   ├── gdrcopy.c<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   └── meson.build<br>
+│   ├── mempool<br>
+│   │   ├── bucket<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_mempool_bucket.c<br>
+│   │   │   └── version.map<br>
+│   │   ├── cnxk<br>
+│   │   │   ├── cn10k_mempool_ops.c<br>
+│   │   │   ├── cn9k_mempool_ops.c<br>
+│   │   │   ├── cnxk_mempool.c<br>
+│   │   │   ├── cnxk_mempool.h<br>
+│   │   │   ├── cnxk_mempool_ops.c<br>
+│   │   │   ├── cnxk_mempool_telemetry.c<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── dpaa<br>
+│   │   │   ├── dpaa_mempool.c<br>
+│   │   │   ├── dpaa_mempool.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── dpaa2<br>
+│   │   │   ├── dpaa2_hw_mempool.c<br>
+│   │   │   ├── dpaa2_hw_mempool.h<br>
+│   │   │   ├── dpaa2_hw_mempool_logs.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_dpaa2_mempool.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── meson.build<br>
+│   │   ├── octeontx<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── octeontx_fpavf.c<br>
+│   │   │   ├── octeontx_fpavf.h<br>
+│   │   │   ├── octeontx_pool_logs.h<br>
+│   │   │   ├── rte_mempool_octeontx.c<br>
+│   │   │   └── version.map<br>
+│   │   ├── ring<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_mempool_ring.c<br>
+│   │   │   └── version.map<br>
+│   │   └── stack<br>
+│   │       ├── meson.build<br>
+│   │       ├── rte_mempool_stack.c<br>
+│   │       └── version.map<br>
+│   ├── meson.build<br>
+│   ├── net<br>
+│   │   ├── af_packet<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_eth_af_packet.c<br>
+│   │   │   └── version.map<br>
+│   │   ├── af_xdp<br>
+│   │   │   ├── af_xdp_deps.h<br>
+│   │   │   ├── compat.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_eth_af_xdp.c<br>
+│   │   │   └── version.map<br>
+│   │   ├── ark<br>
+│   │   │   ├── ark_ddm.c<br>
+│   │   │   ├── ark_ddm.h<br>
+│   │   │   ├── ark_ethdev.c<br>
+│   │   │   ├── ark_ethdev_rx.c<br>
+│   │   │   ├── ark_ethdev_rx.h<br>
+│   │   │   ├── ark_ethdev_tx.c<br>
+│   │   │   ├── ark_ethdev_tx.h<br>
+│   │   │   ├── ark_ext.h<br>
+│   │   │   ├── ark_global.h<br>
+│   │   │   ├── ark_logs.h<br>
+│   │   │   ├── ark_mpu.c<br>
+│   │   │   ├── ark_mpu.h<br>
+│   │   │   ├── ark_pktchkr.c<br>
+│   │   │   ├── ark_pktchkr.h<br>
+│   │   │   ├── ark_pktdir.c<br>
+│   │   │   ├── ark_pktdir.h<br>
+│   │   │   ├── ark_pktgen.c<br>
+│   │   │   ├── ark_pktgen.h<br>
+│   │   │   ├── ark_rqp.c<br>
+│   │   │   ├── ark_rqp.h<br>
+│   │   │   ├── ark_udm.c<br>
+│   │   │   ├── ark_udm.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── atlantic<br>
+│   │   │   ├── atl_common.h<br>
+│   │   │   ├── atl_ethdev.c<br>
+│   │   │   ├── atl_ethdev.h<br>
+│   │   │   ├── atl_hw_regs.c<br>
+│   │   │   ├── atl_hw_regs.h<br>
+│   │   │   ├── atl_logs.h<br>
+│   │   │   ├── atl_rxtx.c<br>
+│   │   │   ├── atl_types.h<br>
+│   │   │   ├── hw_atl<br>
+│   │   │   │   ├── hw_atl_b0.c<br>
+│   │   │   │   ├── hw_atl_b0.h<br>
+│   │   │   │   ├── hw_atl_b0_internal.h<br>
+│   │   │   │   ├── hw_atl_llh.c<br>
+│   │   │   │   ├── hw_atl_llh.h<br>
+│   │   │   │   ├── hw_atl_llh_internal.h<br>
+│   │   │   │   ├── hw_atl_utils.c<br>
+│   │   │   │   ├── hw_atl_utils_fw2x.c<br>
+│   │   │   │   └── hw_atl_utils.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_pmd_atlantic.c<br>
+│   │   │   ├── rte_pmd_atlantic.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── avp<br>
+│   │   │   ├── avp_ethdev.c<br>
+│   │   │   ├── avp_logs.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_avp_common.h<br>
+│   │   │   ├── rte_avp_fifo.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── axgbe<br>
+│   │   │   ├── axgbe_common.h<br>
+│   │   │   ├── axgbe_dev.c<br>
+│   │   │   ├── axgbe_ethdev.c<br>
+│   │   │   ├── axgbe_ethdev.h<br>
+│   │   │   ├── axgbe_i2c.c<br>
+│   │   │   ├── axgbe_logs.h<br>
+│   │   │   ├── axgbe_mdio.c<br>
+│   │   │   ├── axgbe_phy.h<br>
+│   │   │   ├── axgbe_phy_impl.c<br>
+│   │   │   ├── axgbe_regs.h<br>
+│   │   │   ├── axgbe_rxtx.c<br>
+│   │   │   ├── axgbe_rxtx.h<br>
+│   │   │   ├── axgbe_rxtx_vec_sse.c<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── bnx2x<br>
+│   │   │   ├── bnx2x.c<br>
+│   │   │   ├── bnx2x_ethdev.c<br>
+│   │   │   ├── bnx2x_ethdev.h<br>
+│   │   │   ├── bnx2x.h<br>
+│   │   │   ├── bnx2x_logs.h<br>
+│   │   │   ├── bnx2x_osal.h<br>
+│   │   │   ├── bnx2x_rxtx.c<br>
+│   │   │   ├── bnx2x_rxtx.h<br>
+│   │   │   ├── bnx2x_stats.c<br>
+│   │   │   ├── bnx2x_stats.h<br>
+│   │   │   ├── bnx2x_vfpf.c<br>
+│   │   │   ├── bnx2x_vfpf.h<br>
+│   │   │   ├── ecore_fw_defs.h<br>
+│   │   │   ├── ecore_hsi.h<br>
+│   │   │   ├── ecore_init.h<br>
+│   │   │   ├── ecore_init_ops.h<br>
+│   │   │   ├── ecore_mfw_req.h<br>
+│   │   │   ├── ecore_reg.h<br>
+│   │   │   ├── ecore_sp.c<br>
+│   │   │   ├── ecore_sp.h<br>
+│   │   │   ├── elink.c<br>
+│   │   │   ├── elink.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── bnxt<br>
+│   │   │   ├── bnxt_cpr.c<br>
+│   │   │   ├── bnxt_cpr.h<br>
+│   │   │   ├── bnxt_ethdev.c<br>
+│   │   │   ├── bnxt_filter.c<br>
+│   │   │   ├── bnxt_filter.h<br>
+│   │   │   ├── bnxt_flow.c<br>
+│   │   │   ├── bnxt.h<br>
+│   │   │   ├── bnxt_hwrm.c<br>
+│   │   │   ├── bnxt_hwrm.h<br>
+│   │   │   ├── bnxt_irq.c<br>
+│   │   │   ├── bnxt_irq.h<br>
+│   │   │   ├── bnxt_nvm_defs.h<br>
+│   │   │   ├── bnxt_reps.c<br>
+│   │   │   ├── bnxt_reps.h<br>
+│   │   │   ├── bnxt_ring.c<br>
+│   │   │   ├── bnxt_ring.h<br>
+│   │   │   ├── bnxt_rxq.c<br>
+│   │   │   ├── bnxt_rxq.h<br>
+│   │   │   ├── bnxt_rxr.c<br>
+│   │   │   ├── bnxt_rxr.h<br>
+│   │   │   ├── bnxt_rxtx_vec_avx2.c<br>
+│   │   │   ├── bnxt_rxtx_vec_common.h<br>
+│   │   │   ├── bnxt_rxtx_vec_neon.c<br>
+│   │   │   ├── bnxt_rxtx_vec_sse.c<br>
+│   │   │   ├── bnxt_stats.c<br>
+│   │   │   ├── bnxt_stats.h<br>
+│   │   │   ├── bnxt_txq.c<br>
+│   │   │   ├── bnxt_txq.h<br>
+│   │   │   ├── bnxt_txr.c<br>
+│   │   │   ├── bnxt_txr.h<br>
+│   │   │   ├── bnxt_util.c<br>
+│   │   │   ├── bnxt_util.h<br>
+│   │   │   ├── bnxt_vnic.c<br>
+│   │   │   ├── bnxt_vnic.h<br>
+│   │   │   ├── hcapi<br>
+│   │   │   │   └── cfa<br>
+│   │   │   │       ├── hcapi_cfa_common.c<br>
+│   │   │   │       ├── hcapi_cfa_defs.h<br>
+│   │   │   │       ├── hcapi_cfa.h<br>
+│   │   │   │       ├── hcapi_cfa_p4.c<br>
+│   │   │   │       ├── hcapi_cfa_p4.h<br>
+│   │   │   │       ├── hcapi_cfa_p58.c<br>
+│   │   │   │       ├── hcapi_cfa_p58.h<br>
+│   │   │   │       └── meson.build<br>
+│   │   │   ├── hsi_struct_def_dpdk.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_pmd_bnxt.c<br>
+│   │   │   ├── rte_pmd_bnxt.h<br>
+│   │   │   ├── tf_core<br>
+│   │   │   │   ├── bitalloc.c<br>
+│   │   │   │   ├── bitalloc.h<br>
+│   │   │   │   ├── cfa_resource_types.h<br>
+│   │   │   │   ├── dpool.c<br>
+│   │   │   │   ├── dpool.h<br>
+│   │   │   │   ├── ll.c<br>
+│   │   │   │   ├── ll.h<br>
+│   │   │   │   ├── lookup3.h<br>
+│   │   │   │   ├── meson.build<br>
+│   │   │   │   ├── rand.c<br>
+│   │   │   │   ├── rand.h<br>
+│   │   │   │   ├── stack.c<br>
+│   │   │   │   ├── stack.h<br>
+│   │   │   │   ├── tf_common.h<br>
+│   │   │   │   ├── tf_core.c<br>
+│   │   │   │   ├── tf_core.h<br>
+│   │   │   │   ├── tf_device.c<br>
+│   │   │   │   ├── tf_device.h<br>
+│   │   │   │   ├── tf_device_p4.c<br>
+│   │   │   │   ├── tf_device_p4.h<br>
+│   │   │   │   ├── tf_device_p58.c<br>
+│   │   │   │   ├── tf_device_p58.h<br>
+│   │   │   │   ├── tf_em_common.c<br>
+│   │   │   │   ├── tf_em_common.h<br>
+│   │   │   │   ├── tf_em.h<br>
+│   │   │   │   ├── tf_em_hash_internal.c<br>
+│   │   │   │   ├── tf_em_host.c<br>
+│   │   │   │   ├── tf_em_internal.c<br>
+│   │   │   │   ├── tf_ext_flow_handle.h<br>
+│   │   │   │   ├── tf_global_cfg.c<br>
+│   │   │   │   ├── tf_global_cfg.h<br>
+│   │   │   │   ├── tf_hash.c<br>
+│   │   │   │   ├── tf_hash.h<br>
+│   │   │   │   ├── tf_identifier.c<br>
+│   │   │   │   ├── tf_identifier.h<br>
+│   │   │   │   ├── tf_if_tbl.c<br>
+│   │   │   │   ├── tf_if_tbl.h<br>
+│   │   │   │   ├── tf_msg.c<br>
+│   │   │   │   ├── tf_msg_common.h<br>
+│   │   │   │   ├── tf_msg.h<br>
+│   │   │   │   ├── tfp.c<br>
+│   │   │   │   ├── tfp.h<br>
+│   │   │   │   ├── tf_project.h<br>
+│   │   │   │   ├── tf_resources.h<br>
+│   │   │   │   ├── tf_rm.c<br>
+│   │   │   │   ├── tf_rm.h<br>
+│   │   │   │   ├── tf_session.c<br>
+│   │   │   │   ├── tf_session.h<br>
+│   │   │   │   ├── tf_shadow_identifier.c<br>
+│   │   │   │   ├── tf_shadow_identifier.h<br>
+│   │   │   │   ├── tf_shadow_tcam.c<br>
+│   │   │   │   ├── tf_shadow_tcam.h<br>
+│   │   │   │   ├── tf_sram_mgr.c<br>
+│   │   │   │   ├── tf_sram_mgr.h<br>
+│   │   │   │   ├── tf_tbl.c<br>
+│   │   │   │   ├── tf_tbl.h<br>
+│   │   │   │   ├── tf_tbl_sram.c<br>
+│   │   │   │   ├── tf_tbl_sram.h<br>
+│   │   │   │   ├── tf_tcam.c<br>
+│   │   │   │   ├── tf_tcam.h<br>
+│   │   │   │   ├── tf_tcam_shared.c<br>
+│   │   │   │   ├── tf_tcam_shared.h<br>
+│   │   │   │   ├── tf_util.c<br>
+│   │   │   │   └── tf_util.h<br>
+│   │   │   ├── tf_ulp<br>
+│   │   │   │   ├── bnxt_tf_common.h<br>
+│   │   │   │   ├── bnxt_tf_pmd_shim.c<br>
+│   │   │   │   ├── bnxt_tf_pmd_shim.h<br>
+│   │   │   │   ├── bnxt_ulp.c<br>
+│   │   │   │   ├── bnxt_ulp_flow.c<br>
+│   │   │   │   ├── bnxt_ulp.h<br>
+│   │   │   │   ├── generic_templates<br>
+│   │   │   │   │   ├── meson.build<br>
+│   │   │   │   │   ├── ulp_template_db_act.c<br>
+│   │   │   │   │   ├── ulp_template_db_class.c<br>
+│   │   │   │   │   ├── ulp_template_db_enum.h<br>
+│   │   │   │   │   ├── ulp_template_db_field.h<br>
+│   │   │   │   │   ├── ulp_template_db_tbl.c<br>
+│   │   │   │   │   ├── ulp_template_db_tbl.h<br>
+│   │   │   │   │   ├── ulp_template_db_thor_act.c<br>
+│   │   │   │   │   ├── ulp_template_db_thor_class.c<br>
+│   │   │   │   │   ├── ulp_template_db_wh_plus_act.c<br>
+│   │   │   │   │   └── ulp_template_db_wh_plus_class.c<br>
+│   │   │   │   ├── meson.build<br>
+│   │   │   │   ├── ulp_def_rules.c<br>
+│   │   │   │   ├── ulp_fc_mgr.c<br>
+│   │   │   │   ├── ulp_fc_mgr.h<br>
+│   │   │   │   ├── ulp_flow_db.c<br>
+│   │   │   │   ├── ulp_flow_db.h<br>
+│   │   │   │   ├── ulp_gen_hash.c<br>
+│   │   │   │   ├── ulp_gen_hash.h<br>
+│   │   │   │   ├── ulp_gen_tbl.c<br>
+│   │   │   │   ├── ulp_gen_tbl.h<br>
+│   │   │   │   ├── ulp_ha_mgr.c<br>
+│   │   │   │   ├── ulp_ha_mgr.h<br>
+│   │   │   │   ├── ulp_mapper.c<br>
+│   │   │   │   ├── ulp_mapper.h<br>
+│   │   │   │   ├── ulp_mark_mgr.c<br>
+│   │   │   │   ├── ulp_mark_mgr.h<br>
+│   │   │   │   ├── ulp_matcher.c<br>
+│   │   │   │   ├── ulp_matcher.h<br>
+│   │   │   │   ├── ulp_port_db.c<br>
+│   │   │   │   ├── ulp_port_db.h<br>
+│   │   │   │   ├── ulp_rte_handler_tbl.c<br>
+│   │   │   │   ├── ulp_rte_parser.c<br>
+│   │   │   │   ├── ulp_rte_parser.h<br>
+│   │   │   │   ├── ulp_template_struct.h<br>
+│   │   │   │   ├── ulp_tun.c<br>
+│   │   │   │   ├── ulp_tun.h<br>
+│   │   │   │   ├── ulp_utils.c<br>
+│   │   │   │   └── ulp_utils.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── bonding<br>
+│   │   │   ├── eth_bond_8023ad_private.h<br>
+│   │   │   ├── eth_bond_private.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_eth_bond_8023ad.c<br>
+│   │   │   ├── rte_eth_bond_8023ad.h<br>
+│   │   │   ├── rte_eth_bond_alb.c<br>
+│   │   │   ├── rte_eth_bond_alb.h<br>
+│   │   │   ├── rte_eth_bond_api.c<br>
+│   │   │   ├── rte_eth_bond_args.c<br>
+│   │   │   ├── rte_eth_bond_flow.c<br>
+│   │   │   ├── rte_eth_bond.h<br>
+│   │   │   ├── rte_eth_bond_pmd.c<br>
+│   │   │   └── version.map<br>
+│   │   ├── cnxk<br>
+│   │   │   ├── cn10k_ethdev.c<br>
+│   │   │   ├── cn10k_ethdev.h<br>
+│   │   │   ├── cn10k_ethdev_sec.c<br>
+│   │   │   ├── cn10k_flow.c<br>
+│   │   │   ├── cn10k_flow.h<br>
+│   │   │   ├── cn10k_rx.h<br>
+│   │   │   ├── cn10k_rx_select.c<br>
+│   │   │   ├── cn10k_tx.h<br>
+│   │   │   ├── cn10k_tx_select.c<br>
+│   │   │   ├── cn9k_ethdev.c<br>
+│   │   │   ├── cn9k_ethdev.h<br>
+│   │   │   ├── cn9k_ethdev_sec.c<br>
+│   │   │   ├── cn9k_flow.c<br>
+│   │   │   ├── cn9k_flow.h<br>
+│   │   │   ├── cn9k_rx.h<br>
+│   │   │   ├── cn9k_rx_select.c<br>
+│   │   │   ├── cn9k_tx.h<br>
+│   │   │   ├── cn9k_tx_select.c<br>
+│   │   │   ├── cnxk_ethdev.c<br>
+│   │   │   ├── cnxk_ethdev_devargs.c<br>
+│   │   │   ├── cnxk_ethdev.h<br>
+│   │   │   ├── cnxk_ethdev_mtr.c<br>
+│   │   │   ├── cnxk_ethdev_ops.c<br>
+│   │   │   ├── cnxk_ethdev_sec.c<br>
+│   │   │   ├── cnxk_ethdev_sec_telemetry.c<br>
+│   │   │   ├── cnxk_ethdev_telemetry.c<br>
+│   │   │   ├── cnxk_flow.c<br>
+│   │   │   ├── cnxk_flow.h<br>
+│   │   │   ├── cnxk_link.c<br>
+│   │   │   ├── cnxk_lookup.c<br>
+│   │   │   ├── cnxk_ptp.c<br>
+│   │   │   ├── cnxk_stats.c<br>
+│   │   │   ├── cnxk_tm.c<br>
+│   │   │   ├── cnxk_tm.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rx<br>
+│   │   │   │   ├── cn10k<br>
+│   │   │   │   │   ├── rx_0_15.c<br>
+│   │   │   │   │   ├── rx_0_15_mseg.c<br>
+│   │   │   │   │   ├── rx_0_15_vec.c<br>
+│   │   │   │   │   ├── rx_0_15_vec_mseg.c<br>
+│   │   │   │   │   ├── rx_112_127.c<br>
+│   │   │   │   │   ├── rx_112_127_mseg.c<br>
+│   │   │   │   │   ├── rx_112_127_vec.c<br>
+│   │   │   │   │   ├── rx_112_127_vec_mseg.c<br>
+│   │   │   │   │   ├── rx_16_31.c<br>
+│   │   │   │   │   ├── rx_16_31_mseg.c<br>
+│   │   │   │   │   ├── rx_16_31_vec.c<br>
+│   │   │   │   │   ├── rx_16_31_vec_mseg.c<br>
+│   │   │   │   │   ├── rx_32_47.c<br>
+│   │   │   │   │   ├── rx_32_47_mseg.c<br>
+│   │   │   │   │   ├── rx_32_47_vec.c<br>
+│   │   │   │   │   ├── rx_32_47_vec_mseg.c<br>
+│   │   │   │   │   ├── rx_48_63.c<br>
+│   │   │   │   │   ├── rx_48_63_mseg.c<br>
+│   │   │   │   │   ├── rx_48_63_vec.c<br>
+│   │   │   │   │   ├── rx_48_63_vec_mseg.c<br>
+│   │   │   │   │   ├── rx_64_79.c<br>
+│   │   │   │   │   ├── rx_64_79_mseg.c<br>
+│   │   │   │   │   ├── rx_64_79_vec.c<br>
+│   │   │   │   │   ├── rx_64_79_vec_mseg.c<br>
+│   │   │   │   │   ├── rx_80_95.c<br>
+│   │   │   │   │   ├── rx_80_95_mseg.c<br>
+│   │   │   │   │   ├── rx_80_95_vec.c<br>
+│   │   │   │   │   ├── rx_80_95_vec_mseg.c<br>
+│   │   │   │   │   ├── rx_96_111.c<br>
+│   │   │   │   │   ├── rx_96_111_mseg.c<br>
+│   │   │   │   │   ├── rx_96_111_vec.c<br>
+│   │   │   │   │   └── rx_96_111_vec_mseg.c<br>
+│   │   │   │   └── cn9k<br>
+│   │   │   │       ├── rx_0_15.c<br>
+│   │   │   │       ├── rx_0_15_mseg.c<br>
+│   │   │   │       ├── rx_0_15_vec.c<br>
+│   │   │   │       ├── rx_0_15_vec_mseg.c<br>
+│   │   │   │       ├── rx_112_127.c<br>
+│   │   │   │       ├── rx_112_127_mseg.c<br>
+│   │   │   │       ├── rx_112_127_vec.c<br>
+│   │   │   │       ├── rx_112_127_vec_mseg.c<br>
+│   │   │   │       ├── rx_16_31.c<br>
+│   │   │   │       ├── rx_16_31_mseg.c<br>
+│   │   │   │       ├── rx_16_31_vec.c<br>
+│   │   │   │       ├── rx_16_31_vec_mseg.c<br>
+│   │   │   │       ├── rx_32_47.c<br>
+│   │   │   │       ├── rx_32_47_mseg.c<br>
+│   │   │   │       ├── rx_32_47_vec.c<br>
+│   │   │   │       ├── rx_32_47_vec_mseg.c<br>
+│   │   │   │       ├── rx_48_63.c<br>
+│   │   │   │       ├── rx_48_63_mseg.c<br>
+│   │   │   │       ├── rx_48_63_vec.c<br>
+│   │   │   │       ├── rx_48_63_vec_mseg.c<br>
+│   │   │   │       ├── rx_64_79.c<br>
+│   │   │   │       ├── rx_64_79_mseg.c<br>
+│   │   │   │       ├── rx_64_79_vec.c<br>
+│   │   │   │       ├── rx_64_79_vec_mseg.c<br>
+│   │   │   │       ├── rx_80_95.c<br>
+│   │   │   │       ├── rx_80_95_mseg.c<br>
+│   │   │   │       ├── rx_80_95_vec.c<br>
+│   │   │   │       ├── rx_80_95_vec_mseg.c<br>
+│   │   │   │       ├── rx_96_111.c<br>
+│   │   │   │       ├── rx_96_111_mseg.c<br>
+│   │   │   │       ├── rx_96_111_vec.c<br>
+│   │   │   │       └── rx_96_111_vec_mseg.c<br>
+│   │   │   ├── tx<br>
+│   │   │   │   ├── cn10k<br>
+│   │   │   │   │   ├── tx_0_15.c<br>
+│   │   │   │   │   ├── tx_0_15_mseg.c<br>
+│   │   │   │   │   ├── tx_0_15_vec.c<br>
+│   │   │   │   │   ├── tx_0_15_vec_mseg.c<br>
+│   │   │   │   │   ├── tx_112_127.c<br>
+│   │   │   │   │   ├── tx_112_127_mseg.c<br>
+│   │   │   │   │   ├── tx_112_127_vec.c<br>
+│   │   │   │   │   ├── tx_112_127_vec_mseg.c<br>
+│   │   │   │   │   ├── tx_16_31.c<br>
+│   │   │   │   │   ├── tx_16_31_mseg.c<br>
+│   │   │   │   │   ├── tx_16_31_vec.c<br>
+│   │   │   │   │   ├── tx_16_31_vec_mseg.c<br>
+│   │   │   │   │   ├── tx_32_47.c<br>
+│   │   │   │   │   ├── tx_32_47_mseg.c<br>
+│   │   │   │   │   ├── tx_32_47_vec.c<br>
+│   │   │   │   │   ├── tx_32_47_vec_mseg.c<br>
+│   │   │   │   │   ├── tx_48_63.c<br>
+│   │   │   │   │   ├── tx_48_63_mseg.c<br>
+│   │   │   │   │   ├── tx_48_63_vec.c<br>
+│   │   │   │   │   ├── tx_48_63_vec_mseg.c<br>
+│   │   │   │   │   ├── tx_64_79.c<br>
+│   │   │   │   │   ├── tx_64_79_mseg.c<br>
+│   │   │   │   │   ├── tx_64_79_vec.c<br>
+│   │   │   │   │   ├── tx_64_79_vec_mseg.c<br>
+│   │   │   │   │   ├── tx_80_95.c<br>
+│   │   │   │   │   ├── tx_80_95_mseg.c<br>
+│   │   │   │   │   ├── tx_80_95_vec.c<br>
+│   │   │   │   │   ├── tx_80_95_vec_mseg.c<br>
+│   │   │   │   │   ├── tx_96_111.c<br>
+│   │   │   │   │   ├── tx_96_111_mseg.c<br>
+│   │   │   │   │   ├── tx_96_111_vec.c<br>
+│   │   │   │   │   └── tx_96_111_vec_mseg.c<br>
+│   │   │   │   └── cn9k<br>
+│   │   │   │       ├── tx_0_15.c<br>
+│   │   │   │       ├── tx_0_15_mseg.c<br>
+│   │   │   │       ├── tx_0_15_vec.c<br>
+│   │   │   │       ├── tx_0_15_vec_mseg.c<br>
+│   │   │   │       ├── tx_112_127.c<br>
+│   │   │   │       ├── tx_112_127_mseg.c<br>
+│   │   │   │       ├── tx_112_127_vec.c<br>
+│   │   │   │       ├── tx_112_127_vec_mseg.c<br>
+│   │   │   │       ├── tx_16_31.c<br>
+│   │   │   │       ├── tx_16_31_mseg.c<br>
+│   │   │   │       ├── tx_16_31_vec.c<br>
+│   │   │   │       ├── tx_16_31_vec_mseg.c<br>
+│   │   │   │       ├── tx_32_47.c<br>
+│   │   │   │       ├── tx_32_47_mseg.c<br>
+│   │   │   │       ├── tx_32_47_vec.c<br>
+│   │   │   │       ├── tx_32_47_vec_mseg.c<br>
+│   │   │   │       ├── tx_48_63.c<br>
+│   │   │   │       ├── tx_48_63_mseg.c<br>
+│   │   │   │       ├── tx_48_63_vec.c<br>
+│   │   │   │       ├── tx_48_63_vec_mseg.c<br>
+│   │   │   │       ├── tx_64_79.c<br>
+│   │   │   │       ├── tx_64_79_mseg.c<br>
+│   │   │   │       ├── tx_64_79_vec.c<br>
+│   │   │   │       ├── tx_64_79_vec_mseg.c<br>
+│   │   │   │       ├── tx_80_95.c<br>
+│   │   │   │       ├── tx_80_95_mseg.c<br>
+│   │   │   │       ├── tx_80_95_vec.c<br>
+│   │   │   │       ├── tx_80_95_vec_mseg.c<br>
+│   │   │   │       ├── tx_96_111.c<br>
+│   │   │   │       ├── tx_96_111_mseg.c<br>
+│   │   │   │       ├── tx_96_111_vec.c<br>
+│   │   │   │       └── tx_96_111_vec_mseg.c<br>
+│   │   │   └── version.map<br>
+│   │   ├── cxgbe<br>
+│   │   │   ├── base<br>
+│   │   │   │   ├── adapter.h<br>
+│   │   │   │   ├── common.h<br>
+│   │   │   │   ├── t4_chip_type.h<br>
+│   │   │   │   ├── t4fw_interface.h<br>
+│   │   │   │   ├── t4_hw.c<br>
+│   │   │   │   ├── t4_hw.h<br>
+│   │   │   │   ├── t4_msg.h<br>
+│   │   │   │   ├── t4_pci_id_tbl.h<br>
+│   │   │   │   ├── t4_regs.h<br>
+│   │   │   │   ├── t4_regs_values.h<br>
+│   │   │   │   ├── t4_tcb.h<br>
+│   │   │   │   ├── t4vf_hw.c<br>
+│   │   │   │   └── t4vf_hw.h<br>
+│   │   │   ├── clip_tbl.c<br>
+│   │   │   ├── clip_tbl.h<br>
+│   │   │   ├── cxgbe_compat.h<br>
+│   │   │   ├── cxgbe_ethdev.c<br>
+│   │   │   ├── cxgbe_filter.c<br>
+│   │   │   ├── cxgbe_filter.h<br>
+│   │   │   ├── cxgbe_flow.c<br>
+│   │   │   ├── cxgbe_flow.h<br>
+│   │   │   ├── cxgbe.h<br>
+│   │   │   ├── cxgbe_main.c<br>
+│   │   │   ├── cxgbe_ofld.h<br>
+│   │   │   ├── cxgbe_pfvf.h<br>
+│   │   │   ├── cxgbevf_ethdev.c<br>
+│   │   │   ├── cxgbevf_main.c<br>
+│   │   │   ├── l2t.c<br>
+│   │   │   ├── l2t.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── mps_tcam.c<br>
+│   │   │   ├── mps_tcam.h<br>
+│   │   │   ├── sge.c<br>
+│   │   │   ├── smt.c<br>
+│   │   │   ├── smt.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── dpaa<br>
+│   │   │   ├── dpaa_ethdev.c<br>
+│   │   │   ├── dpaa_ethdev.h<br>
+│   │   │   ├── dpaa_flow.c<br>
+│   │   │   ├── dpaa_flow.h<br>
+│   │   │   ├── dpaa_fmc.c<br>
+│   │   │   ├── dpaa_rxtx.c<br>
+│   │   │   ├── dpaa_rxtx.h<br>
+│   │   │   ├── fmlib<br>
+│   │   │   │   ├── dpaa_integration.h<br>
+│   │   │   │   ├── fm_ext.h<br>
+│   │   │   │   ├── fm_lib.c<br>
+│   │   │   │   ├── fm_pcd_ext.h<br>
+│   │   │   │   ├── fm_port_ext.h<br>
+│   │   │   │   ├── fm_vsp.c<br>
+│   │   │   │   ├── fm_vsp_ext.h<br>
+│   │   │   │   ├── ncsw_ext.h<br>
+│   │   │   │   └── net_ext.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_pmd_dpaa.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── dpaa2<br>
+│   │   │   ├── base<br>
+│   │   │   │   ├── dpaa2_hw_dpni_annot.h<br>
+│   │   │   │   ├── dpaa2_hw_dpni.c<br>
+│   │   │   │   └── dpaa2_tlu_hash.c<br>
+│   │   │   ├── dpaa2_ethdev.c<br>
+│   │   │   ├── dpaa2_ethdev.h<br>
+│   │   │   ├── dpaa2_flow.c<br>
+│   │   │   ├── dpaa2_mux.c<br>
+│   │   │   ├── dpaa2_pmd_logs.h<br>
+│   │   │   ├── dpaa2_ptp.c<br>
+│   │   │   ├── dpaa2_recycle.c<br>
+│   │   │   ├── dpaa2_rxtx.c<br>
+│   │   │   ├── dpaa2_sparser.c<br>
+│   │   │   ├── dpaa2_sparser.h<br>
+│   │   │   ├── dpaa2_tm.c<br>
+│   │   │   ├── dpaa2_tm.h<br>
+│   │   │   ├── mc<br>
+│   │   │   │   ├── dpdmux.c<br>
+│   │   │   │   ├── dpkg.c<br>
+│   │   │   │   ├── dpni.c<br>
+│   │   │   │   ├── dprtc.c<br>
+│   │   │   │   ├── fsl_dpdmux_cmd.h<br>
+│   │   │   │   ├── fsl_dpdmux.h<br>
+│   │   │   │   ├── fsl_dpkg.h<br>
+│   │   │   │   ├── fsl_dpni_cmd.h<br>
+│   │   │   │   ├── fsl_dpni.h<br>
+│   │   │   │   ├── fsl_dprtc_cmd.h<br>
+│   │   │   │   ├── fsl_dprtc.h<br>
+│   │   │   │   └── fsl_net.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_pmd_dpaa2.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── e1000<br>
+│   │   │   ├── base<br>
+│   │   │   │   ├── e1000_80003es2lan.c<br>
+│   │   │   │   ├── e1000_80003es2lan.h<br>
+│   │   │   │   ├── e1000_82540.c<br>
+│   │   │   │   ├── e1000_82541.c<br>
+│   │   │   │   ├── e1000_82541.h<br>
+│   │   │   │   ├── e1000_82542.c<br>
+│   │   │   │   ├── e1000_82543.c<br>
+│   │   │   │   ├── e1000_82543.h<br>
+│   │   │   │   ├── e1000_82571.c<br>
+│   │   │   │   ├── e1000_82571.h<br>
+│   │   │   │   ├── e1000_82575.c<br>
+│   │   │   │   ├── e1000_82575.h<br>
+│   │   │   │   ├── e1000_api.c<br>
+│   │   │   │   ├── e1000_api.h<br>
+│   │   │   │   ├── e1000_base.c<br>
+│   │   │   │   ├── e1000_base.h<br>
+│   │   │   │   ├── e1000_defines.h<br>
+│   │   │   │   ├── e1000_hw.h<br>
+│   │   │   │   ├── e1000_i210.c<br>
+│   │   │   │   ├── e1000_i210.h<br>
+│   │   │   │   ├── e1000_ich8lan.c<br>
+│   │   │   │   ├── e1000_ich8lan.h<br>
+│   │   │   │   ├── e1000_mac.c<br>
+│   │   │   │   ├── e1000_mac.h<br>
+│   │   │   │   ├── e1000_manage.c<br>
+│   │   │   │   ├── e1000_manage.h<br>
+│   │   │   │   ├── e1000_mbx.c<br>
+│   │   │   │   ├── e1000_mbx.h<br>
+│   │   │   │   ├── e1000_nvm.c<br>
+│   │   │   │   ├── e1000_nvm.h<br>
+│   │   │   │   ├── e1000_osdep.c<br>
+│   │   │   │   ├── e1000_osdep.h<br>
+│   │   │   │   ├── e1000_phy.c<br>
+│   │   │   │   ├── e1000_phy.h<br>
+│   │   │   │   ├── e1000_regs.h<br>
+│   │   │   │   ├── e1000_vf.c<br>
+│   │   │   │   ├── e1000_vf.h<br>
+│   │   │   │   ├── meson.build<br>
+│   │   │   │   └── README<br>
+│   │   │   ├── e1000_ethdev.h<br>
+│   │   │   ├── e1000_logs.c<br>
+│   │   │   ├── e1000_logs.h<br>
+│   │   │   ├── em_ethdev.c<br>
+│   │   │   ├── em_rxtx.c<br>
+│   │   │   ├── igb_ethdev.c<br>
+│   │   │   ├── igb_flow.c<br>
+│   │   │   ├── igb_pf.c<br>
+│   │   │   ├── igb_regs.h<br>
+│   │   │   ├── igb_rxtx.c<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── ena<br>
+│   │   │   ├── base<br>
+│   │   │   │   ├── ena_com.c<br>
+│   │   │   │   ├── ena_com.h<br>
+│   │   │   │   ├── ena_defs<br>
+│   │   │   │   │   ├── ena_admin_defs.h<br>
+│   │   │   │   │   ├── ena_common_defs.h<br>
+│   │   │   │   │   ├── ena_eth_io_defs.h<br>
+│   │   │   │   │   ├── ena_gen_info.h<br>
+│   │   │   │   │   ├── ena_includes.h<br>
+│   │   │   │   │   └── ena_regs_defs.h<br>
+│   │   │   │   ├── ena_eth_com.c<br>
+│   │   │   │   ├── ena_eth_com.h<br>
+│   │   │   │   ├── ena_plat_dpdk.h<br>
+│   │   │   │   └── ena_plat.h<br>
+│   │   │   ├── ena_ethdev.c<br>
+│   │   │   ├── ena_ethdev.h<br>
+│   │   │   ├── ena_logs.h<br>
+│   │   │   ├── ena_platform.h<br>
+│   │   │   ├── ena_rss.c<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── enetc<br>
+│   │   │   ├── base<br>
+│   │   │   │   └── enetc_hw.h<br>
+│   │   │   ├── enetc_ethdev.c<br>
+│   │   │   ├── enetc.h<br>
+│   │   │   ├── enetc_logs.h<br>
+│   │   │   ├── enetc_rxtx.c<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── enetfec<br>
+│   │   │   ├── enet_ethdev.c<br>
+│   │   │   ├── enet_ethdev.h<br>
+│   │   │   ├── enet_pmd_logs.h<br>
+│   │   │   ├── enet_regs.h<br>
+│   │   │   ├── enet_rxtx.c<br>
+│   │   │   ├── enet_uio.c<br>
+│   │   │   ├── enet_uio.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── enic<br>
+│   │   │   ├── base<br>
+│   │   │   │   ├── cq_desc.h<br>
+│   │   │   │   ├── cq_enet_desc.h<br>
+│   │   │   │   ├── rq_enet_desc.h<br>
+│   │   │   │   ├── vnic_cq.c<br>
+│   │   │   │   ├── vnic_cq.h<br>
+│   │   │   │   ├── vnic_dev.c<br>
+│   │   │   │   ├── vnic_devcmd.h<br>
+│   │   │   │   ├── vnic_dev.h<br>
+│   │   │   │   ├── vnic_enet.h<br>
+│   │   │   │   ├── vnic_flowman.h<br>
+│   │   │   │   ├── vnic_intr.c<br>
+│   │   │   │   ├── vnic_intr.h<br>
+│   │   │   │   ├── vnic_nic.h<br>
+│   │   │   │   ├── vnic_resource.h<br>
+│   │   │   │   ├── vnic_rq.c<br>
+│   │   │   │   ├── vnic_rq.h<br>
+│   │   │   │   ├── vnic_rss.h<br>
+│   │   │   │   ├── vnic_stats.h<br>
+│   │   │   │   ├── vnic_wq.c<br>
+│   │   │   │   ├── vnic_wq.h<br>
+│   │   │   │   └── wq_enet_desc.h<br>
+│   │   │   ├── enic_compat.h<br>
+│   │   │   ├── enic_ethdev.c<br>
+│   │   │   ├── enic_flow.c<br>
+│   │   │   ├── enic_fm_flow.c<br>
+│   │   │   ├── enic.h<br>
+│   │   │   ├── enic_main.c<br>
+│   │   │   ├── enic_res.c<br>
+│   │   │   ├── enic_res.h<br>
+│   │   │   ├── enic_rxtx.c<br>
+│   │   │   ├── enic_rxtx_common.h<br>
+│   │   │   ├── enic_rxtx_vec_avx2.c<br>
+│   │   │   ├── enic_vf_representor.c<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── failsafe<br>
+│   │   │   ├── failsafe_args.c<br>
+│   │   │   ├── failsafe.c<br>
+│   │   │   ├── failsafe_eal.c<br>
+│   │   │   ├── failsafe_ether.c<br>
+│   │   │   ├── failsafe_flow.c<br>
+│   │   │   ├── failsafe_intr.c<br>
+│   │   │   ├── failsafe_ops.c<br>
+│   │   │   ├── failsafe_private.h<br>
+│   │   │   ├── failsafe_rxtx.c<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── fm10k<br>
+│   │   │   ├── base<br>
+│   │   │   │   ├── fm10k_api.c<br>
+│   │   │   │   ├── fm10k_api.h<br>
+│   │   │   │   ├── fm10k_common.c<br>
+│   │   │   │   ├── fm10k_common.h<br>
+│   │   │   │   ├── fm10k_mbx.c<br>
+│   │   │   │   ├── fm10k_mbx.h<br>
+│   │   │   │   ├── fm10k_osdep.h<br>
+│   │   │   │   ├── fm10k_pf.c<br>
+│   │   │   │   ├── fm10k_pf.h<br>
+│   │   │   │   ├── fm10k_tlv.c<br>
+│   │   │   │   ├── fm10k_tlv.h<br>
+│   │   │   │   ├── fm10k_type.h<br>
+│   │   │   │   ├── fm10k_vf.c<br>
+│   │   │   │   ├── fm10k_vf.h<br>
+│   │   │   │   └── meson.build<br>
+│   │   │   ├── fm10k_ethdev.c<br>
+│   │   │   ├── fm10k.h<br>
+│   │   │   ├── fm10k_logs.h<br>
+│   │   │   ├── fm10k_rxtx.c<br>
+│   │   │   ├── fm10k_rxtx_vec.c<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── hinic<br>
+│   │   │   ├── base<br>
+│   │   │   │   ├── hinic_compat.h<br>
+│   │   │   │   ├── hinic_csr.h<br>
+│   │   │   │   ├── hinic_pmd_api_cmd.c<br>
+│   │   │   │   ├── hinic_pmd_api_cmd.h<br>
+│   │   │   │   ├── hinic_pmd_cfg.c<br>
+│   │   │   │   ├── hinic_pmd_cfg.h<br>
+│   │   │   │   ├── hinic_pmd_cmd.h<br>
+│   │   │   │   ├── hinic_pmd_cmdq.c<br>
+│   │   │   │   ├── hinic_pmd_cmdq.h<br>
+│   │   │   │   ├── hinic_pmd_eqs.c<br>
+│   │   │   │   ├── hinic_pmd_eqs.h<br>
+│   │   │   │   ├── hinic_pmd_hwdev.c<br>
+│   │   │   │   ├── hinic_pmd_hwdev.h<br>
+│   │   │   │   ├── hinic_pmd_hwif.c<br>
+│   │   │   │   ├── hinic_pmd_hwif.h<br>
+│   │   │   │   ├── hinic_pmd_mbox.c<br>
+│   │   │   │   ├── hinic_pmd_mbox.h<br>
+│   │   │   │   ├── hinic_pmd_mgmt.c<br>
+│   │   │   │   ├── hinic_pmd_mgmt.h<br>
+│   │   │   │   ├── hinic_pmd_niccfg.c<br>
+│   │   │   │   ├── hinic_pmd_niccfg.h<br>
+│   │   │   │   ├── hinic_pmd_nicio.c<br>
+│   │   │   │   ├── hinic_pmd_nicio.h<br>
+│   │   │   │   ├── hinic_pmd_wq.c<br>
+│   │   │   │   ├── hinic_pmd_wq.h<br>
+│   │   │   │   └── meson.build<br>
+│   │   │   ├── hinic_pmd_ethdev.c<br>
+│   │   │   ├── hinic_pmd_ethdev.h<br>
+│   │   │   ├── hinic_pmd_flow.c<br>
+│   │   │   ├── hinic_pmd_rx.c<br>
+│   │   │   ├── hinic_pmd_rx.h<br>
+│   │   │   ├── hinic_pmd_tx.c<br>
+│   │   │   ├── hinic_pmd_tx.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── hns3<br>
+│   │   │   ├── hns3_cmd.c<br>
+│   │   │   ├── hns3_cmd.h<br>
+│   │   │   ├── hns3_common.c<br>
+│   │   │   ├── hns3_common.h<br>
+│   │   │   ├── hns3_dcb.c<br>
+│   │   │   ├── hns3_dcb.h<br>
+│   │   │   ├── hns3_ethdev.c<br>
+│   │   │   ├── hns3_ethdev_dump.c<br>
+│   │   │   ├── hns3_ethdev.h<br>
+│   │   │   ├── hns3_ethdev_vf.c<br>
+│   │   │   ├── hns3_fdir.c<br>
+│   │   │   ├── hns3_fdir.h<br>
+│   │   │   ├── hns3_flow.c<br>
+│   │   │   ├── hns3_flow.h<br>
+│   │   │   ├── hns3_intr.c<br>
+│   │   │   ├── hns3_intr.h<br>
+│   │   │   ├── hns3_logs.h<br>
+│   │   │   ├── hns3_mbx.c<br>
+│   │   │   ├── hns3_mbx.h<br>
+│   │   │   ├── hns3_mp.c<br>
+│   │   │   ├── hns3_mp.h<br>
+│   │   │   ├── hns3_ptp.c<br>
+│   │   │   ├── hns3_regs.c<br>
+│   │   │   ├── hns3_regs.h<br>
+│   │   │   ├── hns3_rss.c<br>
+│   │   │   ├── hns3_rss.h<br>
+│   │   │   ├── hns3_rxtx.c<br>
+│   │   │   ├── hns3_rxtx.h<br>
+│   │   │   ├── hns3_rxtx_vec.c<br>
+│   │   │   ├── hns3_rxtx_vec.h<br>
+│   │   │   ├── hns3_rxtx_vec_neon.h<br>
+│   │   │   ├── hns3_rxtx_vec_sve.c<br>
+│   │   │   ├── hns3_stats.c<br>
+│   │   │   ├── hns3_stats.h<br>
+│   │   │   ├── hns3_tm.c<br>
+│   │   │   ├── hns3_tm.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── i40e<br>
+│   │   │   ├── base<br>
+│   │   │   │   ├── i40e_adminq.c<br>
+│   │   │   │   ├── i40e_adminq_cmd.h<br>
+│   │   │   │   ├── i40e_adminq.h<br>
+│   │   │   │   ├── i40e_alloc.h<br>
+│   │   │   │   ├── i40e_common.c<br>
+│   │   │   │   ├── i40e_dcb.c<br>
+│   │   │   │   ├── i40e_dcb.h<br>
+│   │   │   │   ├── i40e_devids.h<br>
+│   │   │   │   ├── i40e_diag.c<br>
+│   │   │   │   ├── i40e_diag.h<br>
+│   │   │   │   ├── i40e_hmc.c<br>
+│   │   │   │   ├── i40e_hmc.h<br>
+│   │   │   │   ├── i40e_lan_hmc.c<br>
+│   │   │   │   ├── i40e_lan_hmc.h<br>
+│   │   │   │   ├── i40e_nvm.c<br>
+│   │   │   │   ├── i40e_osdep.h<br>
+│   │   │   │   ├── i40e_prototype.h<br>
+│   │   │   │   ├── i40e_register.h<br>
+│   │   │   │   ├── i40e_status.h<br>
+│   │   │   │   ├── i40e_type.h<br>
+│   │   │   │   ├── meson.build<br>
+│   │   │   │   ├── README<br>
+│   │   │   │   └── virtchnl.h<br>
+│   │   │   ├── i40e_ethdev.c<br>
+│   │   │   ├── i40e_ethdev.h<br>
+│   │   │   ├── i40e_fdir.c<br>
+│   │   │   ├── i40e_flow.c<br>
+│   │   │   ├── i40e_hash.c<br>
+│   │   │   ├── i40e_hash.h<br>
+│   │   │   ├── i40e_logs.h<br>
+│   │   │   ├── i40e_pf.c<br>
+│   │   │   ├── i40e_pf.h<br>
+│   │   │   ├── i40e_regs.h<br>
+│   │   │   ├── i40e_rxtx.c<br>
+│   │   │   ├── i40e_rxtx_common_avx.h<br>
+│   │   │   ├── i40e_rxtx.h<br>
+│   │   │   ├── i40e_rxtx_vec_altivec.c<br>
+│   │   │   ├── i40e_rxtx_vec_avx2.c<br>
+│   │   │   ├── i40e_rxtx_vec_avx512.c<br>
+│   │   │   ├── i40e_rxtx_vec_common.h<br>
+│   │   │   ├── i40e_rxtx_vec_neon.c<br>
+│   │   │   ├── i40e_rxtx_vec_sse.c<br>
+│   │   │   ├── i40e_tm.c<br>
+│   │   │   ├── i40e_vf_representor.c<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_pmd_i40e.c<br>
+│   │   │   ├── rte_pmd_i40e.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── iavf<br>
+│   │   │   ├── iavf_ethdev.c<br>
+│   │   │   ├── iavf_fdir.c<br>
+│   │   │   ├── iavf_generic_flow.c<br>
+│   │   │   ├── iavf_generic_flow.h<br>
+│   │   │   ├── iavf.h<br>
+│   │   │   ├── iavf_hash.c<br>
+│   │   │   ├── iavf_ipsec_crypto.c<br>
+│   │   │   ├── iavf_ipsec_crypto_capabilities.h<br>
+│   │   │   ├── iavf_ipsec_crypto.h<br>
+│   │   │   ├── iavf_log.h<br>
+│   │   │   ├── iavf_rxtx.c<br>
+│   │   │   ├── iavf_rxtx.h<br>
+│   │   │   ├── iavf_rxtx_vec_avx2.c<br>
+│   │   │   ├── iavf_rxtx_vec_avx512.c<br>
+│   │   │   ├── iavf_rxtx_vec_common.h<br>
+│   │   │   ├── iavf_rxtx_vec_sse.c<br>
+│   │   │   ├── iavf_tm.c<br>
+│   │   │   ├── iavf_vchnl.c<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_pmd_iavf.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── ice<br>
+│   │   │   ├── base<br>
+│   │   │   │   ├── ice_acl.c<br>
+│   │   │   │   ├── ice_acl_ctrl.c<br>
+│   │   │   │   ├── ice_acl.h<br>
+│   │   │   │   ├── ice_adminq_cmd.h<br>
+│   │   │   │   ├── ice_alloc.h<br>
+│   │   │   │   ├── ice_bitops.h<br>
+│   │   │   │   ├── ice_bst_tcam.c<br>
+│   │   │   │   ├── ice_bst_tcam.h<br>
+│   │   │   │   ├── ice_cgu_regs.h<br>
+│   │   │   │   ├── ice_common.c<br>
+│   │   │   │   ├── ice_common.h<br>
+│   │   │   │   ├── ice_controlq.c<br>
+│   │   │   │   ├── ice_controlq.h<br>
+│   │   │   │   ├── ice_dcb.c<br>
+│   │   │   │   ├── ice_dcb.h<br>
+│   │   │   │   ├── ice_devids.h<br>
+│   │   │   │   ├── ice_fdir.c<br>
+│   │   │   │   ├── ice_fdir.h<br>
+│   │   │   │   ├── ice_flex_pipe.c<br>
+│   │   │   │   ├── ice_flex_pipe.h<br>
+│   │   │   │   ├── ice_flex_type.h<br>
+│   │   │   │   ├── ice_flg_rd.c<br>
+│   │   │   │   ├── ice_flg_rd.h<br>
+│   │   │   │   ├── ice_flow.c<br>
+│   │   │   │   ├── ice_flow.h<br>
+│   │   │   │   ├── ice_hw_autogen.h<br>
+│   │   │   │   ├── ice_imem.c<br>
+│   │   │   │   ├── ice_imem.h<br>
+│   │   │   │   ├── ice_lan_tx_rx.h<br>
+│   │   │   │   ├── ice_metainit.c<br>
+│   │   │   │   ├── ice_metainit.h<br>
+│   │   │   │   ├── ice_mk_grp.c<br>
+│   │   │   │   ├── ice_mk_grp.h<br>
+│   │   │   │   ├── ice_nvm.c<br>
+│   │   │   │   ├── ice_nvm.h<br>
+│   │   │   │   ├── ice_osdep.h<br>
+│   │   │   │   ├── ice_parser.c<br>
+│   │   │   │   ├── ice_parser.h<br>
+│   │   │   │   ├── ice_parser_rt.c<br>
+│   │   │   │   ├── ice_parser_rt.h<br>
+│   │   │   │   ├── ice_parser_util.h<br>
+│   │   │   │   ├── ice_pg_cam.c<br>
+│   │   │   │   ├── ice_pg_cam.h<br>
+│   │   │   │   ├── ice_protocol_type.h<br>
+│   │   │   │   ├── ice_proto_grp.c<br>
+│   │   │   │   ├── ice_proto_grp.h<br>
+│   │   │   │   ├── ice_ptp_consts.h<br>
+│   │   │   │   ├── ice_ptp_hw.c<br>
+│   │   │   │   ├── ice_ptp_hw.h<br>
+│   │   │   │   ├── ice_ptype_mk.c<br>
+│   │   │   │   ├── ice_ptype_mk.h<br>
+│   │   │   │   ├── ice_sbq_cmd.h<br>
+│   │   │   │   ├── ice_sched.c<br>
+│   │   │   │   ├── ice_sched.h<br>
+│   │   │   │   ├── ice_status.h<br>
+│   │   │   │   ├── ice_switch.c<br>
+│   │   │   │   ├── ice_switch.h<br>
+│   │   │   │   ├── ice_tmatch.h<br>
+│   │   │   │   ├── ice_type.h<br>
+│   │   │   │   ├── ice_vlan_mode.c<br>
+│   │   │   │   ├── ice_vlan_mode.h<br>
+│   │   │   │   ├── ice_xlt_kb.c<br>
+│   │   │   │   ├── ice_xlt_kb.h<br>
+│   │   │   │   ├── meson.build<br>
+│   │   │   │   └── README<br>
+│   │   │   ├── ice_acl_filter.c<br>
+│   │   │   ├── ice_dcf.c<br>
+│   │   │   ├── ice_dcf_ethdev.c<br>
+│   │   │   ├── ice_dcf_ethdev.h<br>
+│   │   │   ├── ice_dcf.h<br>
+│   │   │   ├── ice_dcf_parent.c<br>
+│   │   │   ├── ice_dcf_sched.c<br>
+│   │   │   ├── ice_dcf_vf_representor.c<br>
+│   │   │   ├── ice_ethdev.c<br>
+│   │   │   ├── ice_ethdev.h<br>
+│   │   │   ├── ice_fdir_filter.c<br>
+│   │   │   ├── ice_generic_flow.c<br>
+│   │   │   ├── ice_generic_flow.h<br>
+│   │   │   ├── ice_hash.c<br>
+│   │   │   ├── ice_logs.h<br>
+│   │   │   ├── ice_rxtx.c<br>
+│   │   │   ├── ice_rxtx_common_avx.h<br>
+│   │   │   ├── ice_rxtx.h<br>
+│   │   │   ├── ice_rxtx_vec_avx2.c<br>
+│   │   │   ├── ice_rxtx_vec_avx512.c<br>
+│   │   │   ├── ice_rxtx_vec_common.h<br>
+│   │   │   ├── ice_rxtx_vec_sse.c<br>
+│   │   │   ├── ice_switch_filter.c<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_pmd_ice.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── igc<br>
+│   │   │   ├── base<br>
+│   │   │   │   ├── igc_82571.h<br>
+│   │   │   │   ├── igc_82575.h<br>
+│   │   │   │   ├── igc_api.c<br>
+│   │   │   │   ├── igc_api.h<br>
+│   │   │   │   ├── igc_base.c<br>
+│   │   │   │   ├── igc_base.h<br>
+│   │   │   │   ├── igc_defines.h<br>
+│   │   │   │   ├── igc_hw.h<br>
+│   │   │   │   ├── igc_i225.c<br>
+│   │   │   │   ├── igc_i225.h<br>
+│   │   │   │   ├── igc_ich8lan.h<br>
+│   │   │   │   ├── igc_mac.c<br>
+│   │   │   │   ├── igc_mac.h<br>
+│   │   │   │   ├── igc_manage.c<br>
+│   │   │   │   ├── igc_manage.h<br>
+│   │   │   │   ├── igc_nvm.c<br>
+│   │   │   │   ├── igc_nvm.h<br>
+│   │   │   │   ├── igc_osdep.c<br>
+│   │   │   │   ├── igc_osdep.h<br>
+│   │   │   │   ├── igc_phy.c<br>
+│   │   │   │   ├── igc_phy.h<br>
+│   │   │   │   ├── igc_regs.h<br>
+│   │   │   │   ├── meson.build<br>
+│   │   │   │   └── README<br>
+│   │   │   ├── igc_ethdev.c<br>
+│   │   │   ├── igc_ethdev.h<br>
+│   │   │   ├── igc_filter.c<br>
+│   │   │   ├── igc_filter.h<br>
+│   │   │   ├── igc_flow.c<br>
+│   │   │   ├── igc_flow.h<br>
+│   │   │   ├── igc_logs.c<br>
+│   │   │   ├── igc_logs.h<br>
+│   │   │   ├── igc_txrx.c<br>
+│   │   │   ├── igc_txrx.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── ionic<br>
+│   │   │   ├── ionic_dev.c<br>
+│   │   │   ├── ionic_dev.h<br>
+│   │   │   ├── ionic_ethdev.c<br>
+│   │   │   ├── ionic_ethdev.h<br>
+│   │   │   ├── ionic.h<br>
+│   │   │   ├── ionic_if.h<br>
+│   │   │   ├── ionic_lif.c<br>
+│   │   │   ├── ionic_lif.h<br>
+│   │   │   ├── ionic_logs.h<br>
+│   │   │   ├── ionic_mac_api.c<br>
+│   │   │   ├── ionic_mac_api.h<br>
+│   │   │   ├── ionic_main.c<br>
+│   │   │   ├── ionic_osdep.h<br>
+│   │   │   ├── ionic_regs.h<br>
+│   │   │   ├── ionic_rx_filter.c<br>
+│   │   │   ├── ionic_rx_filter.h<br>
+│   │   │   ├── ionic_rxtx.c<br>
+│   │   │   ├── ionic_rxtx.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── ipn3ke<br>
+│   │   │   ├── ipn3ke_ethdev.c<br>
+│   │   │   ├── ipn3ke_ethdev.h<br>
+│   │   │   ├── ipn3ke_flow.c<br>
+│   │   │   ├── ipn3ke_flow.h<br>
+│   │   │   ├── ipn3ke_logs.h<br>
+│   │   │   ├── ipn3ke_rawdev_api.h<br>
+│   │   │   ├── ipn3ke_representor.c<br>
+│   │   │   ├── ipn3ke_tm.c<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── ixgbe<br>
+│   │   │   ├── base<br>
+│   │   │   │   ├── ixgbe_82598.c<br>
+│   │   │   │   ├── ixgbe_82598.h<br>
+│   │   │   │   ├── ixgbe_82599.c<br>
+│   │   │   │   ├── ixgbe_82599.h<br>
+│   │   │   │   ├── ixgbe_api.c<br>
+│   │   │   │   ├── ixgbe_api.h<br>
+│   │   │   │   ├── ixgbe_common.c<br>
+│   │   │   │   ├── ixgbe_common.h<br>
+│   │   │   │   ├── ixgbe_dcb_82598.c<br>
+│   │   │   │   ├── ixgbe_dcb_82598.h<br>
+│   │   │   │   ├── ixgbe_dcb_82599.c<br>
+│   │   │   │   ├── ixgbe_dcb_82599.h<br>
+│   │   │   │   ├── ixgbe_dcb.c<br>
+│   │   │   │   ├── ixgbe_dcb.h<br>
+│   │   │   │   ├── ixgbe_hv_vf.c<br>
+│   │   │   │   ├── ixgbe_hv_vf.h<br>
+│   │   │   │   ├── ixgbe_mbx.c<br>
+│   │   │   │   ├── ixgbe_mbx.h<br>
+│   │   │   │   ├── ixgbe_osdep.h<br>
+│   │   │   │   ├── ixgbe_phy.c<br>
+│   │   │   │   ├── ixgbe_phy.h<br>
+│   │   │   │   ├── ixgbe_type.h<br>
+│   │   │   │   ├── ixgbe_vf.c<br>
+│   │   │   │   ├── ixgbe_vf.h<br>
+│   │   │   │   ├── ixgbe_x540.c<br>
+│   │   │   │   ├── ixgbe_x540.h<br>
+│   │   │   │   ├── ixgbe_x550.c<br>
+│   │   │   │   ├── ixgbe_x550.h<br>
+│   │   │   │   ├── meson.build<br>
+│   │   │   │   └── README<br>
+│   │   │   ├── ixgbe_82599_bypass.c<br>
+│   │   │   ├── ixgbe_bypass_api.h<br>
+│   │   │   ├── ixgbe_bypass.c<br>
+│   │   │   ├── ixgbe_bypass_defines.h<br>
+│   │   │   ├── ixgbe_bypass.h<br>
+│   │   │   ├── ixgbe_ethdev.c<br>
+│   │   │   ├── ixgbe_ethdev.h<br>
+│   │   │   ├── ixgbe_fdir.c<br>
+│   │   │   ├── ixgbe_flow.c<br>
+│   │   │   ├── ixgbe_ipsec.c<br>
+│   │   │   ├── ixgbe_ipsec.h<br>
+│   │   │   ├── ixgbe_logs.h<br>
+│   │   │   ├── ixgbe_pf.c<br>
+│   │   │   ├── ixgbe_regs.h<br>
+│   │   │   ├── ixgbe_rxtx.c<br>
+│   │   │   ├── ixgbe_rxtx.h<br>
+│   │   │   ├── ixgbe_rxtx_vec_common.h<br>
+│   │   │   ├── ixgbe_rxtx_vec_neon.c<br>
+│   │   │   ├── ixgbe_rxtx_vec_sse.c<br>
+│   │   │   ├── ixgbe_tm.c<br>
+│   │   │   ├── ixgbe_vf_representor.c<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_pmd_ixgbe.c<br>
+│   │   │   ├── rte_pmd_ixgbe.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── kni<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_eth_kni.c<br>
+│   │   │   └── version.map<br>
+│   │   ├── liquidio<br>
+│   │   │   ├── base<br>
+│   │   │   │   ├── lio_23xx_reg.h<br>
+│   │   │   │   ├── lio_23xx_vf.c<br>
+│   │   │   │   ├── lio_23xx_vf.h<br>
+│   │   │   │   ├── lio_hw_defs.h<br>
+│   │   │   │   ├── lio_mbox.c<br>
+│   │   │   │   └── lio_mbox.h<br>
+│   │   │   ├── lio_ethdev.c<br>
+│   │   │   ├── lio_ethdev.h<br>
+│   │   │   ├── lio_logs.h<br>
+│   │   │   ├── lio_rxtx.c<br>
+│   │   │   ├── lio_rxtx.h<br>
+│   │   │   ├── lio_struct.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── memif<br>
+│   │   │   ├── memif.h<br>
+│   │   │   ├── memif_socket.c<br>
+│   │   │   ├── memif_socket.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_eth_memif.c<br>
+│   │   │   ├── rte_eth_memif.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── meson.build<br>
+│   │   ├── mlx4<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── mlx4.c<br>
+│   │   │   ├── mlx4_ethdev.c<br>
+│   │   │   ├── mlx4_flow.c<br>
+│   │   │   ├── mlx4_flow.h<br>
+│   │   │   ├── mlx4_glue.c<br>
+│   │   │   ├── mlx4_glue.h<br>
+│   │   │   ├── mlx4.h<br>
+│   │   │   ├── mlx4_intr.c<br>
+│   │   │   ├── mlx4_mp.c<br>
+│   │   │   ├── mlx4_mr.c<br>
+│   │   │   ├── mlx4_mr.h<br>
+│   │   │   ├── mlx4_prm.h<br>
+│   │   │   ├── mlx4_rxq.c<br>
+│   │   │   ├── mlx4_rxtx.c<br>
+│   │   │   ├── mlx4_rxtx.h<br>
+│   │   │   ├── mlx4_txq.c<br>
+│   │   │   ├── mlx4_utils.c<br>
+│   │   │   ├── mlx4_utils.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── mlx5<br>
+│   │   │   ├── linux<br>
+│   │   │   │   ├── meson.build<br>
+│   │   │   │   ├── mlx5_ethdev_os.c<br>
+│   │   │   │   ├── mlx5_flow_os.c<br>
+│   │   │   │   ├── mlx5_flow_os.h<br>
+│   │   │   │   ├── mlx5_mp_os.c<br>
+│   │   │   │   ├── mlx5_os.c<br>
+│   │   │   │   ├── mlx5_os.h<br>
+│   │   │   │   ├── mlx5_socket.c<br>
+│   │   │   │   ├── mlx5_verbs.c<br>
+│   │   │   │   ├── mlx5_verbs.h<br>
+│   │   │   │   └── mlx5_vlan_os.c<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── mlx5.c<br>
+│   │   │   ├── mlx5_defs.h<br>
+│   │   │   ├── mlx5_devx.c<br>
+│   │   │   ├── mlx5_devx.h<br>
+│   │   │   ├── mlx5_dr.c<br>
+│   │   │   ├── mlx5_dr.h<br>
+│   │   │   ├── mlx5_ethdev.c<br>
+│   │   │   ├── mlx5_flow_aso.c<br>
+│   │   │   ├── mlx5_flow.c<br>
+│   │   │   ├── mlx5_flow_dv.c<br>
+│   │   │   ├── mlx5_flow_flex.c<br>
+│   │   │   ├── mlx5_flow.h<br>
+│   │   │   ├── mlx5_flow_hw.c<br>
+│   │   │   ├── mlx5_flow_meter.c<br>
+│   │   │   ├── mlx5_flow_verbs.c<br>
+│   │   │   ├── mlx5.h<br>
+│   │   │   ├── mlx5_mac.c<br>
+│   │   │   ├── mlx5_rss.c<br>
+│   │   │   ├── mlx5_rx.c<br>
+│   │   │   ├── mlx5_rx.h<br>
+│   │   │   ├── mlx5_rxmode.c<br>
+│   │   │   ├── mlx5_rxq.c<br>
+│   │   │   ├── mlx5_rxtx.c<br>
+│   │   │   ├── mlx5_rxtx.h<br>
+│   │   │   ├── mlx5_rxtx_vec_altivec.h<br>
+│   │   │   ├── mlx5_rxtx_vec.c<br>
+│   │   │   ├── mlx5_rxtx_vec.h<br>
+│   │   │   ├── mlx5_rxtx_vec_neon.h<br>
+│   │   │   ├── mlx5_rxtx_vec_sse.h<br>
+│   │   │   ├── mlx5_stats.c<br>
+│   │   │   ├── mlx5_trigger.c<br>
+│   │   │   ├── mlx5_tx.c<br>
+│   │   │   ├── mlx5_tx_empw.c<br>
+│   │   │   ├── mlx5_tx.h<br>
+│   │   │   ├── mlx5_tx_mpw.c<br>
+│   │   │   ├── mlx5_tx_nompw.c<br>
+│   │   │   ├── mlx5_txpp.c<br>
+│   │   │   ├── mlx5_txq.c<br>
+│   │   │   ├── mlx5_tx_txpp.c<br>
+│   │   │   ├── mlx5_utils.c<br>
+│   │   │   ├── mlx5_utils.h<br>
+│   │   │   ├── mlx5_vlan.c<br>
+│   │   │   ├── rte_pmd_mlx5.h<br>
+│   │   │   ├── version.map<br>
+│   │   │   └── windows<br>
+│   │   │       ├── meson.build<br>
+│   │   │       ├── mlx5_ethdev_os.c<br>
+│   │   │       ├── mlx5_flow_os.c<br>
+│   │   │       ├── mlx5_flow_os.h<br>
+│   │   │       ├── mlx5_mp_os.c<br>
+│   │   │       ├── mlx5_os.c<br>
+│   │   │       ├── mlx5_os.h<br>
+│   │   │       └── mlx5_vlan_os.c<br>
+│   │   ├── mvneta<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── mvneta_ethdev.c<br>
+│   │   │   ├── mvneta_ethdev.h<br>
+│   │   │   ├── mvneta_rxtx.c<br>
+│   │   │   ├── mvneta_rxtx.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── mvpp2<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── mrvl_ethdev.c<br>
+│   │   │   ├── mrvl_ethdev.h<br>
+│   │   │   ├── mrvl_flow.c<br>
+│   │   │   ├── mrvl_flow.h<br>
+│   │   │   ├── mrvl_mtr.c<br>
+│   │   │   ├── mrvl_mtr.h<br>
+│   │   │   ├── mrvl_qos.c<br>
+│   │   │   ├── mrvl_qos.h<br>
+│   │   │   ├── mrvl_tm.c<br>
+│   │   │   ├── mrvl_tm.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── netvsc<br>
+│   │   │   ├── hn_ethdev.c<br>
+│   │   │   ├── hn_logs.h<br>
+│   │   │   ├── hn_nvs.c<br>
+│   │   │   ├── hn_nvs.h<br>
+│   │   │   ├── hn_rndis.c<br>
+│   │   │   ├── hn_rndis.h<br>
+│   │   │   ├── hn_rxtx.c<br>
+│   │   │   ├── hn_var.h<br>
+│   │   │   ├── hn_vf.c<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── ndis.h<br>
+│   │   │   ├── rndis.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── nfb<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── nfb_ethdev.c<br>
+│   │   │   ├── nfb.h<br>
+│   │   │   ├── nfb_rx.c<br>
+│   │   │   ├── nfb_rx.h<br>
+│   │   │   ├── nfb_rxmode.c<br>
+│   │   │   ├── nfb_rxmode.h<br>
+│   │   │   ├── nfb_stats.c<br>
+│   │   │   ├── nfb_stats.h<br>
+│   │   │   ├── nfb_tx.c<br>
+│   │   │   ├── nfb_tx.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── nfp<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── nfp_common.c<br>
+│   │   │   ├── nfp_common.h<br>
+│   │   │   ├── nfpcore<br>
+│   │   │   │   ├── nfp6000<br>
+│   │   │   │   │   ├── nfp6000.h<br>
+│   │   │   │   │   └── nfp_xpb.h<br>
+│   │   │   │   ├── nfp-common<br>
+│   │   │   │   │   ├── nfp_cppat.h<br>
+│   │   │   │   │   ├── nfp_platform.h<br>
+│   │   │   │   │   └── nfp_resid.h<br>
+│   │   │   │   ├── nfp_cppcore.c<br>
+│   │   │   │   ├── nfp_cpp.h<br>
+│   │   │   │   ├── nfp_cpp_pcie_ops.c<br>
+│   │   │   │   ├── nfp_crc.c<br>
+│   │   │   │   ├── nfp_crc.h<br>
+│   │   │   │   ├── nfp_hwinfo.c<br>
+│   │   │   │   ├── nfp_hwinfo.h<br>
+│   │   │   │   ├── nfp_mip.c<br>
+│   │   │   │   ├── nfp_mip.h<br>
+│   │   │   │   ├── nfp_mutex.c<br>
+│   │   │   │   ├── nfp_nffw.c<br>
+│   │   │   │   ├── nfp_nffw.h<br>
+│   │   │   │   ├── nfp_nsp.c<br>
+│   │   │   │   ├── nfp_nsp_cmds.c<br>
+│   │   │   │   ├── nfp_nsp_eth.c<br>
+│   │   │   │   ├── nfp_nsp.h<br>
+│   │   │   │   ├── nfp_resource.c<br>
+│   │   │   │   ├── nfp_resource.h<br>
+│   │   │   │   ├── nfp_rtsym.c<br>
+│   │   │   │   ├── nfp_rtsym.h<br>
+│   │   │   │   └── nfp_target.h<br>
+│   │   │   ├── nfp_cpp_bridge.c<br>
+│   │   │   ├── nfp_cpp_bridge.h<br>
+│   │   │   ├── nfp_ctrl.h<br>
+│   │   │   ├── nfp_ethdev.c<br>
+│   │   │   ├── nfp_ethdev_vf.c<br>
+│   │   │   ├── nfp_logs.h<br>
+│   │   │   ├── nfp_rxtx.c<br>
+│   │   │   ├── nfp_rxtx.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── ngbe<br>
+│   │   │   ├── base<br>
+│   │   │   │   ├── meson.build<br>
+│   │   │   │   ├── ngbe_devids.h<br>
+│   │   │   │   ├── ngbe_dummy.h<br>
+│   │   │   │   ├── ngbe_eeprom.c<br>
+│   │   │   │   ├── ngbe_eeprom.h<br>
+│   │   │   │   ├── ngbe.h<br>
+│   │   │   │   ├── ngbe_hw.c<br>
+│   │   │   │   ├── ngbe_hw.h<br>
+│   │   │   │   ├── ngbe_mbx.c<br>
+│   │   │   │   ├── ngbe_mbx.h<br>
+│   │   │   │   ├── ngbe_mng.c<br>
+│   │   │   │   ├── ngbe_mng.h<br>
+│   │   │   │   ├── ngbe_osdep.h<br>
+│   │   │   │   ├── ngbe_phy.c<br>
+│   │   │   │   ├── ngbe_phy.h<br>
+│   │   │   │   ├── ngbe_phy_mvl.c<br>
+│   │   │   │   ├── ngbe_phy_mvl.h<br>
+│   │   │   │   ├── ngbe_phy_rtl.c<br>
+│   │   │   │   ├── ngbe_phy_rtl.h<br>
+│   │   │   │   ├── ngbe_phy_yt.c<br>
+│   │   │   │   ├── ngbe_phy_yt.h<br>
+│   │   │   │   ├── ngbe_regs.h<br>
+│   │   │   │   ├── ngbe_status.h<br>
+│   │   │   │   └── ngbe_type.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── ngbe_ethdev.c<br>
+│   │   │   ├── ngbe_ethdev.h<br>
+│   │   │   ├── ngbe_logs.h<br>
+│   │   │   ├── ngbe_pf.c<br>
+│   │   │   ├── ngbe_ptypes.c<br>
+│   │   │   ├── ngbe_ptypes.h<br>
+│   │   │   ├── ngbe_regs_group.h<br>
+│   │   │   ├── ngbe_rxtx.c<br>
+│   │   │   ├── ngbe_rxtx.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── null<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_eth_null.c<br>
+│   │   │   └── version.map<br>
+│   │   ├── octeontx<br>
+│   │   │   ├── base<br>
+│   │   │   │   ├── meson.build<br>
+│   │   │   │   ├── octeontx_bgx.c<br>
+│   │   │   │   ├── octeontx_bgx.h<br>
+│   │   │   │   ├── octeontx_io.h<br>
+│   │   │   │   ├── octeontx_pki_var.h<br>
+│   │   │   │   ├── octeontx_pkivf.c<br>
+│   │   │   │   ├── octeontx_pkivf.h<br>
+│   │   │   │   ├── octeontx_pkovf.c<br>
+│   │   │   │   └── octeontx_pkovf.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── octeontx_ethdev.c<br>
+│   │   │   ├── octeontx_ethdev.h<br>
+│   │   │   ├── octeontx_ethdev_ops.c<br>
+│   │   │   ├── octeontx_logs.h<br>
+│   │   │   ├── octeontx_rxtx.c<br>
+│   │   │   ├── octeontx_rxtx.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── octeontx_ep<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── otx2_ep_vf.c<br>
+│   │   │   ├── otx2_ep_vf.h<br>
+│   │   │   ├── otx_ep_common.h<br>
+│   │   │   ├── otx_ep_ethdev.c<br>
+│   │   │   ├── otx_ep_rxtx.c<br>
+│   │   │   ├── otx_ep_rxtx.h<br>
+│   │   │   ├── otx_ep_vf.c<br>
+│   │   │   ├── otx_ep_vf.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── pcap<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── pcap_ethdev.c<br>
+│   │   │   ├── pcap_osdep_freebsd.c<br>
+│   │   │   ├── pcap_osdep.h<br>
+│   │   │   ├── pcap_osdep_linux.c<br>
+│   │   │   ├── pcap_osdep_windows.c<br>
+│   │   │   └── version.map<br>
+│   │   ├── pfe<br>
+│   │   │   ├── base<br>
+│   │   │   │   ├── cbus<br>
+│   │   │   │   │   ├── bmu.h<br>
+│   │   │   │   │   ├── class_csr.h<br>
+│   │   │   │   │   ├── emac_mtip.h<br>
+│   │   │   │   │   ├── gpi.h<br>
+│   │   │   │   │   ├── hif.h<br>
+│   │   │   │   │   ├── hif_nocpy.h<br>
+│   │   │   │   │   ├── tmu_csr.h<br>
+│   │   │   │   │   └── util_csr.h<br>
+│   │   │   │   ├── cbus.h<br>
+│   │   │   │   └── pfe.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── pfe_ethdev.c<br>
+│   │   │   ├── pfe_eth.h<br>
+│   │   │   ├── pfe_hal.c<br>
+│   │   │   ├── pfe_hif.c<br>
+│   │   │   ├── pfe_hif.h<br>
+│   │   │   ├── pfe_hif_lib.c<br>
+│   │   │   ├── pfe_hif_lib.h<br>
+│   │   │   ├── pfe_logs.h<br>
+│   │   │   ├── pfe_mod.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── qede<br>
+│   │   │   ├── base<br>
+│   │   │   │   ├── bcm_osal.c<br>
+│   │   │   │   ├── bcm_osal.h<br>
+│   │   │   │   ├── common_hsi.h<br>
+│   │   │   │   ├── ecore_attn_values.h<br>
+│   │   │   │   ├── ecore_chain.h<br>
+│   │   │   │   ├── ecore_cxt_api.h<br>
+│   │   │   │   ├── ecore_cxt.c<br>
+│   │   │   │   ├── ecore_cxt.h<br>
+│   │   │   │   ├── ecore_dcbx_api.h<br>
+│   │   │   │   ├── ecore_dcbx.c<br>
+│   │   │   │   ├── ecore_dcbx.h<br>
+│   │   │   │   ├── ecore_dev_api.h<br>
+│   │   │   │   ├── ecore_dev.c<br>
+│   │   │   │   ├── ecore_gtt_reg_addr.h<br>
+│   │   │   │   ├── ecore_gtt_values.h<br>
+│   │   │   │   ├── ecore.h<br>
+│   │   │   │   ├── ecore_hsi_common.h<br>
+│   │   │   │   ├── ecore_hsi_debug_tools.h<br>
+│   │   │   │   ├── ecore_hsi_eth.h<br>
+│   │   │   │   ├── ecore_hsi_func_common.h<br>
+│   │   │   │   ├── ecore_hsi_init_func.h<br>
+│   │   │   │   ├── ecore_hsi_init_tool.h<br>
+│   │   │   │   ├── ecore_hw.c<br>
+│   │   │   │   ├── ecore_hw_defs.h<br>
+│   │   │   │   ├── ecore_hw.h<br>
+│   │   │   │   ├── ecore_init_fw_funcs.c<br>
+│   │   │   │   ├── ecore_init_fw_funcs.h<br>
+│   │   │   │   ├── ecore_init_ops.c<br>
+│   │   │   │   ├── ecore_init_ops.h<br>
+│   │   │   │   ├── ecore_int_api.h<br>
+│   │   │   │   ├── ecore_int.c<br>
+│   │   │   │   ├── ecore_int.h<br>
+│   │   │   │   ├── ecore_iov_api.h<br>
+│   │   │   │   ├── ecore_iro.h<br>
+│   │   │   │   ├── ecore_iro_values.h<br>
+│   │   │   │   ├── ecore_l2_api.h<br>
+│   │   │   │   ├── ecore_l2.c<br>
+│   │   │   │   ├── ecore_l2.h<br>
+│   │   │   │   ├── ecore_mcp_api.h<br>
+│   │   │   │   ├── ecore_mcp.c<br>
+│   │   │   │   ├── ecore_mcp.h<br>
+│   │   │   │   ├── ecore_mng_tlv.c<br>
+│   │   │   │   ├── ecore_proto_if.h<br>
+│   │   │   │   ├── ecore_rt_defs.h<br>
+│   │   │   │   ├── ecore_sp_api.h<br>
+│   │   │   │   ├── ecore_sp_commands.c<br>
+│   │   │   │   ├── ecore_sp_commands.h<br>
+│   │   │   │   ├── ecore_spq.c<br>
+│   │   │   │   ├── ecore_spq.h<br>
+│   │   │   │   ├── ecore_sriov.c<br>
+│   │   │   │   ├── ecore_sriov.h<br>
+│   │   │   │   ├── ecore_status.h<br>
+│   │   │   │   ├── ecore_utils.h<br>
+│   │   │   │   ├── ecore_vf_api.h<br>
+│   │   │   │   ├── ecore_vf.c<br>
+│   │   │   │   ├── ecore_vf.h<br>
+│   │   │   │   ├── ecore_vfpf_if.h<br>
+│   │   │   │   ├── eth_common.h<br>
+│   │   │   │   ├── mcp_public.h<br>
+│   │   │   │   ├── meson.build<br>
+│   │   │   │   ├── nvm_cfg.h<br>
+│   │   │   │   └── reg_addr.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── qede_debug.c<br>
+│   │   │   ├── qede_debug.h<br>
+│   │   │   ├── qede_ethdev.c<br>
+│   │   │   ├── qede_ethdev.h<br>
+│   │   │   ├── qede_filter.c<br>
+│   │   │   ├── qede_if.h<br>
+│   │   │   ├── qede_logs.h<br>
+│   │   │   ├── qede_main.c<br>
+│   │   │   ├── qede_regs.c<br>
+│   │   │   ├── qede_rxtx.c<br>
+│   │   │   ├── qede_rxtx.h<br>
+│   │   │   ├── qede_sriov.c<br>
+│   │   │   ├── qede_sriov.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── ring<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_eth_ring.c<br>
+│   │   │   ├── rte_eth_ring.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── sfc<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── sfc.c<br>
+│   │   │   ├── sfc_debug.h<br>
+│   │   │   ├── sfc_dp.c<br>
+│   │   │   ├── sfc_dp.h<br>
+│   │   │   ├── sfc_dp_rx.h<br>
+│   │   │   ├── sfc_dp_tx.h<br>
+│   │   │   ├── sfc_ef100.h<br>
+│   │   │   ├── sfc_ef100_rx.c<br>
+│   │   │   ├── sfc_ef100_tx.c<br>
+│   │   │   ├── sfc_ef10_essb_rx.c<br>
+│   │   │   ├── sfc_ef10.h<br>
+│   │   │   ├── sfc_ef10_rx.c<br>
+│   │   │   ├── sfc_ef10_rx_ev.h<br>
+│   │   │   ├── sfc_ef10_tx.c<br>
+│   │   │   ├── sfc_ethdev.c<br>
+│   │   │   ├── sfc_ethdev_state.h<br>
+│   │   │   ├── sfc_ev.c<br>
+│   │   │   ├── sfc_ev.h<br>
+│   │   │   ├── sfc_filter.c<br>
+│   │   │   ├── sfc_filter.h<br>
+│   │   │   ├── sfc_flow.c<br>
+│   │   │   ├── sfc_flow.h<br>
+│   │   │   ├── sfc_flow_rss.c<br>
+│   │   │   ├── sfc_flow_rss.h<br>
+│   │   │   ├── sfc_flow_tunnel.c<br>
+│   │   │   ├── sfc_flow_tunnel.h<br>
+│   │   │   ├── sfc.h<br>
+│   │   │   ├── sfc_intr.c<br>
+│   │   │   ├── sfc_kvargs.c<br>
+│   │   │   ├── sfc_kvargs.h<br>
+│   │   │   ├── sfc_log.h<br>
+│   │   │   ├── sfc_mae.c<br>
+│   │   │   ├── sfc_mae_counter.c<br>
+│   │   │   ├── sfc_mae_counter.h<br>
+│   │   │   ├── sfc_mae.h<br>
+│   │   │   ├── sfc_mcdi.c<br>
+│   │   │   ├── sfc_nic_dma.c<br>
+│   │   │   ├── sfc_nic_dma_dp.h<br>
+│   │   │   ├── sfc_nic_dma.h<br>
+│   │   │   ├── sfc_port.c<br>
+│   │   │   ├── sfc_repr.c<br>
+│   │   │   ├── sfc_repr.h<br>
+│   │   │   ├── sfc_repr_proxy_api.h<br>
+│   │   │   ├── sfc_repr_proxy.c<br>
+│   │   │   ├── sfc_repr_proxy.h<br>
+│   │   │   ├── sfc_rx.c<br>
+│   │   │   ├── sfc_rx.h<br>
+│   │   │   ├── sfc_service.c<br>
+│   │   │   ├── sfc_service.h<br>
+│   │   │   ├── sfc_sriov.c<br>
+│   │   │   ├── sfc_sriov.h<br>
+│   │   │   ├── sfc_stats.h<br>
+│   │   │   ├── sfc_switch.c<br>
+│   │   │   ├── sfc_switch.h<br>
+│   │   │   ├── sfc_sw_stats.c<br>
+│   │   │   ├── sfc_sw_stats.h<br>
+│   │   │   ├── sfc_tso.c<br>
+│   │   │   ├── sfc_tso.h<br>
+│   │   │   ├── sfc_tweak.h<br>
+│   │   │   ├── sfc_tx.c<br>
+│   │   │   ├── sfc_tx.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── softnic<br>
+│   │   │   ├── conn.c<br>
+│   │   │   ├── conn.h<br>
+│   │   │   ├── firmware.cli<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── parser.c<br>
+│   │   │   ├── parser.h<br>
+│   │   │   ├── rte_eth_softnic_action.c<br>
+│   │   │   ├── rte_eth_softnic.c<br>
+│   │   │   ├── rte_eth_softnic_cli.c<br>
+│   │   │   ├── rte_eth_softnic_cryptodev.c<br>
+│   │   │   ├── rte_eth_softnic_flow.c<br>
+│   │   │   ├── rte_eth_softnic.h<br>
+│   │   │   ├── rte_eth_softnic_internals.h<br>
+│   │   │   ├── rte_eth_softnic_link.c<br>
+│   │   │   ├── rte_eth_softnic_mempool.c<br>
+│   │   │   ├── rte_eth_softnic_meter.c<br>
+│   │   │   ├── rte_eth_softnic_pipeline.c<br>
+│   │   │   ├── rte_eth_softnic_swq.c<br>
+│   │   │   ├── rte_eth_softnic_tap.c<br>
+│   │   │   ├── rte_eth_softnic_thread.c<br>
+│   │   │   ├── rte_eth_softnic_tm.c<br>
+│   │   │   └── version.map<br>
+│   │   ├── tap<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_eth_tap.c<br>
+│   │   │   ├── rte_eth_tap.h<br>
+│   │   │   ├── tap_bpf_api.c<br>
+│   │   │   ├── tap_bpf.h<br>
+│   │   │   ├── tap_bpf_insns.h<br>
+│   │   │   ├── tap_bpf_program.c<br>
+│   │   │   ├── tap_flow.c<br>
+│   │   │   ├── tap_flow.h<br>
+│   │   │   ├── tap_intr.c<br>
+│   │   │   ├── tap_log.h<br>
+│   │   │   ├── tap_netlink.c<br>
+│   │   │   ├── tap_netlink.h<br>
+│   │   │   ├── tap_rss.h<br>
+│   │   │   ├── tap_tcmsgs.c<br>
+│   │   │   ├── tap_tcmsgs.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── thunderx<br>
+│   │   │   ├── base<br>
+│   │   │   │   ├── meson.build<br>
+│   │   │   │   ├── nicvf_bsvf.c<br>
+│   │   │   │   ├── nicvf_bsvf.h<br>
+│   │   │   │   ├── nicvf_hw.c<br>
+│   │   │   │   ├── nicvf_hw_defs.h<br>
+│   │   │   │   ├── nicvf_hw.h<br>
+│   │   │   │   ├── nicvf_mbox.c<br>
+│   │   │   │   ├── nicvf_mbox.h<br>
+│   │   │   │   └── nicvf_plat.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── nicvf_ethdev.c<br>
+│   │   │   ├── nicvf_ethdev.h<br>
+│   │   │   ├── nicvf_logs.h<br>
+│   │   │   ├── nicvf_rxtx.c<br>
+│   │   │   ├── nicvf_rxtx.h<br>
+│   │   │   ├── nicvf_struct.h<br>
+│   │   │   ├── nicvf_svf.c<br>
+│   │   │   ├── nicvf_svf.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── txgbe<br>
+│   │   │   ├── base<br>
+│   │   │   │   ├── meson.build<br>
+│   │   │   │   ├── txgbe_dcb.c<br>
+│   │   │   │   ├── txgbe_dcb.h<br>
+│   │   │   │   ├── txgbe_dcb_hw.c<br>
+│   │   │   │   ├── txgbe_dcb_hw.h<br>
+│   │   │   │   ├── txgbe_devids.h<br>
+│   │   │   │   ├── txgbe_dummy.h<br>
+│   │   │   │   ├── txgbe_eeprom.c<br>
+│   │   │   │   ├── txgbe_eeprom.h<br>
+│   │   │   │   ├── txgbe.h<br>
+│   │   │   │   ├── txgbe_hw.c<br>
+│   │   │   │   ├── txgbe_hw.h<br>
+│   │   │   │   ├── txgbe_mbx.c<br>
+│   │   │   │   ├── txgbe_mbx.h<br>
+│   │   │   │   ├── txgbe_mng.c<br>
+│   │   │   │   ├── txgbe_mng.h<br>
+│   │   │   │   ├── txgbe_osdep.h<br>
+│   │   │   │   ├── txgbe_phy.c<br>
+│   │   │   │   ├── txgbe_phy.h<br>
+│   │   │   │   ├── txgbe_regs.h<br>
+│   │   │   │   ├── txgbe_status.h<br>
+│   │   │   │   ├── txgbe_type.h<br>
+│   │   │   │   ├── txgbe_vf.c<br>
+│   │   │   │   └── txgbe_vf.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_pmd_txgbe.h<br>
+│   │   │   ├── txgbe_ethdev.c<br>
+│   │   │   ├── txgbe_ethdev.h<br>
+│   │   │   ├── txgbe_ethdev_vf.c<br>
+│   │   │   ├── txgbe_fdir.c<br>
+│   │   │   ├── txgbe_flow.c<br>
+│   │   │   ├── txgbe_ipsec.c<br>
+│   │   │   ├── txgbe_ipsec.h<br>
+│   │   │   ├── txgbe_logs.h<br>
+│   │   │   ├── txgbe_pf.c<br>
+│   │   │   ├── txgbe_ptypes.c<br>
+│   │   │   ├── txgbe_ptypes.h<br>
+│   │   │   ├── txgbe_regs_group.h<br>
+│   │   │   ├── txgbe_rxtx.c<br>
+│   │   │   ├── txgbe_rxtx.h<br>
+│   │   │   ├── txgbe_tm.c<br>
+│   │   │   └── version.map<br>
+│   │   ├── vdev_netvsc<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── vdev_netvsc.c<br>
+│   │   │   └── version.map<br>
+│   │   ├── vhost<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_eth_vhost.c<br>
+│   │   │   ├── rte_eth_vhost.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── virtio<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── version.map<br>
+│   │   │   ├── virtio.c<br>
+│   │   │   ├── virtio_ethdev.c<br>
+│   │   │   ├── virtio_ethdev.h<br>
+│   │   │   ├── virtio.h<br>
+│   │   │   ├── virtio_logs.h<br>
+│   │   │   ├── virtio_pci.c<br>
+│   │   │   ├── virtio_pci_ethdev.c<br>
+│   │   │   ├── virtio_pci.h<br>
+│   │   │   ├── virtio_ring.h<br>
+│   │   │   ├── virtio_rxtx.c<br>
+│   │   │   ├── virtio_rxtx.h<br>
+│   │   │   ├── virtio_rxtx_packed_avx.h<br>
+│   │   │   ├── virtio_rxtx_packed.c<br>
+│   │   │   ├── virtio_rxtx_packed.h<br>
+│   │   │   ├── virtio_rxtx_packed_neon.h<br>
+│   │   │   ├── virtio_rxtx_simple_altivec.c<br>
+│   │   │   ├── virtio_rxtx_simple.c<br>
+│   │   │   ├── virtio_rxtx_simple.h<br>
+│   │   │   ├── virtio_rxtx_simple_neon.c<br>
+│   │   │   ├── virtio_rxtx_simple_sse.c<br>
+│   │   │   ├── virtio_user<br>
+│   │   │   │   ├── vhost.h<br>
+│   │   │   │   ├── vhost_kernel.c<br>
+│   │   │   │   ├── vhost_kernel_tap.c<br>
+│   │   │   │   ├── vhost_kernel_tap.h<br>
+│   │   │   │   ├── vhost_user.c<br>
+│   │   │   │   ├── vhost_vdpa.c<br>
+│   │   │   │   ├── virtio_user_dev.c<br>
+│   │   │   │   └── virtio_user_dev.h<br>
+│   │   │   ├── virtio_user_ethdev.c<br>
+│   │   │   ├── virtqueue.c<br>
+│   │   │   └── virtqueue.h<br>
+│   │   └── vmxnet3<br>
+│   │       ├── base<br>
+│   │       │   ├── README<br>
+│   │       │   ├── upt1_defs.h<br>
+│   │       │   ├── vmware_pack_begin.h<br>
+│   │       │   ├── vmware_pack_end.h<br>
+│   │       │   ├── vmxnet3_defs.h<br>
+│   │       │   └── vmxnet3_osdep.h<br>
+│   │       ├── meson.build<br>
+│   │       ├── version.map<br>
+│   │       ├── vmxnet3_ethdev.c<br>
+│   │       ├── vmxnet3_ethdev.h<br>
+│   │       ├── vmxnet3_logs.h<br>
+│   │       ├── vmxnet3_ring.h<br>
+│   │       └── vmxnet3_rxtx.c<br>
+│   ├── raw<br>
+│   │   ├── cnxk_bphy<br>
+│   │   │   ├── cnxk_bphy.c<br>
+│   │   │   ├── cnxk_bphy_cgx.c<br>
+│   │   │   ├── cnxk_bphy_cgx.h<br>
+│   │   │   ├── cnxk_bphy_cgx_test.c<br>
+│   │   │   ├── cnxk_bphy_irq.c<br>
+│   │   │   ├── cnxk_bphy_irq.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_pmd_bphy.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── cnxk_gpio<br>
+│   │   │   ├── cnxk_gpio.c<br>
+│   │   │   ├── cnxk_gpio.h<br>
+│   │   │   ├── cnxk_gpio_irq.c<br>
+│   │   │   ├── cnxk_gpio_selftest.c<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_pmd_cnxk_gpio.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── dpaa2_cmdif<br>
+│   │   │   ├── dpaa2_cmdif.c<br>
+│   │   │   ├── dpaa2_cmdif_logs.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_pmd_dpaa2_cmdif.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── dpaa2_qdma<br>
+│   │   │   ├── dpaa2_qdma.c<br>
+│   │   │   ├── dpaa2_qdma.h<br>
+│   │   │   ├── dpaa2_qdma_logs.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_pmd_dpaa2_qdma.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── ifpga<br>
+│   │   │   ├── base<br>
+│   │   │   │   ├── ifpga_api.c<br>
+│   │   │   │   ├── ifpga_api.h<br>
+│   │   │   │   ├── ifpga_compat.h<br>
+│   │   │   │   ├── ifpga_defines.h<br>
+│   │   │   │   ├── ifpga_enumerate.c<br>
+│   │   │   │   ├── ifpga_enumerate.h<br>
+│   │   │   │   ├── ifpga_feature_dev.c<br>
+│   │   │   │   ├── ifpga_feature_dev.h<br>
+│   │   │   │   ├── ifpga_fme.c<br>
+│   │   │   │   ├── ifpga_fme_dperf.c<br>
+│   │   │   │   ├── ifpga_fme_error.c<br>
+│   │   │   │   ├── ifpga_fme_iperf.c<br>
+│   │   │   │   ├── ifpga_fme_pr.c<br>
+│   │   │   │   ├── ifpga_fme_rsu.c<br>
+│   │   │   │   ├── ifpga_hw.h<br>
+│   │   │   │   ├── ifpga_port.c<br>
+│   │   │   │   ├── ifpga_port_error.c<br>
+│   │   │   │   ├── ifpga_sec_mgr.c<br>
+│   │   │   │   ├── ifpga_sec_mgr.h<br>
+│   │   │   │   ├── meson.build<br>
+│   │   │   │   ├── opae_at24_eeprom.c<br>
+│   │   │   │   ├── opae_at24_eeprom.h<br>
+│   │   │   │   ├── opae_debug.c<br>
+│   │   │   │   ├── opae_debug.h<br>
+│   │   │   │   ├── opae_eth_group.c<br>
+│   │   │   │   ├── opae_eth_group.h<br>
+│   │   │   │   ├── opae_hw_api.c<br>
+│   │   │   │   ├── opae_hw_api.h<br>
+│   │   │   │   ├── opae_i2c.c<br>
+│   │   │   │   ├── opae_i2c.h<br>
+│   │   │   │   ├── opae_ifpga_hw_api.c<br>
+│   │   │   │   ├── opae_ifpga_hw_api.h<br>
+│   │   │   │   ├── opae_intel_max10.c<br>
+│   │   │   │   ├── opae_intel_max10.h<br>
+│   │   │   │   ├── opae_osdep.h<br>
+│   │   │   │   ├── opae_spi.c<br>
+│   │   │   │   ├── opae_spi.h<br>
+│   │   │   │   ├── opae_spi_transaction.c<br>
+│   │   │   │   ├── osdep_raw<br>
+│   │   │   │   │   └── osdep_generic.h<br>
+│   │   │   │   ├── osdep_rte<br>
+│   │   │   │   │   └── osdep_generic.h<br>
+│   │   │   │   └── README<br>
+│   │   │   ├── ifpga_rawdev.c<br>
+│   │   │   ├── ifpga_rawdev.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_pmd_ifpga.c<br>
+│   │   │   ├── rte_pmd_ifpga.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── ioat<br>
+│   │   │   ├── dpdk_idxd_cfg.py -> ../../dma/idxd/dpdk_idxd_cfg.py<br>
+│   │   │   ├── idxd_bus.c<br>
+│   │   │   ├── idxd_pci.c<br>
+│   │   │   ├── ioat_common.c<br>
+│   │   │   ├── ioat_private.h<br>
+│   │   │   ├── ioat_rawdev.c<br>
+│   │   │   ├── ioat_rawdev_test.c<br>
+│   │   │   ├── ioat_spec.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_idxd_rawdev_fns.h<br>
+│   │   │   ├── rte_ioat_rawdev_fns.h<br>
+│   │   │   ├── rte_ioat_rawdev.h<br>
+│   │   │   └── version.map<br>
+│   │   ├── meson.build<br>
+│   │   ├── ntb<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── ntb.c<br>
+│   │   │   ├── ntb.h<br>
+│   │   │   ├── ntb_hw_intel.c<br>
+│   │   │   ├── ntb_hw_intel.h<br>
+│   │   │   ├── rte_pmd_ntb.h<br>
+│   │   │   └── version.map<br>
+│   │   └── skeleton<br>
+│   │       ├── meson.build<br>
+│   │       ├── skeleton_rawdev.c<br>
+│   │       ├── skeleton_rawdev.h<br>
+│   │       ├── skeleton_rawdev_test.c<br>
+│   │       └── version.map<br>
+│   ├── regex<br>
+│   │   ├── cn9k<br>
+│   │   │   ├── cn9k_regexdev.c<br>
+│   │   │   ├── cn9k_regexdev_compiler.c<br>
+│   │   │   ├── cn9k_regexdev_compiler.h<br>
+│   │   │   ├── cn9k_regexdev.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── version.map<br>
+│   │   ├── meson.build<br>
+│   │   └── mlx5<br>
+│   │       ├── meson.build<br>
+│   │       ├── mlx5_regex.c<br>
+│   │       ├── mlx5_regex_control.c<br>
+│   │       ├── mlx5_regex_devx.c<br>
+│   │       ├── mlx5_regex_fastpath.c<br>
+│   │       ├── mlx5_regex.h<br>
+│   │       ├── mlx5_regex_utils.h<br>
+│   │       ├── mlx5_rxp.c<br>
+│   │       ├── mlx5_rxp.h<br>
+│   │       └── version.map<br>
+│   └── vdpa<br>
+│       ├── ifc<br>
+│       │   ├── base<br>
+│       │   │   ├── ifcvf.c<br>
+│       │   │   ├── ifcvf.h<br>
+│       │   │   └── ifcvf_osdep.h<br>
+│       │   ├── ifcvf_vdpa.c<br>
+│       │   ├── meson.build<br>
+│       │   └── version.map<br>
+│       ├── meson.build<br>
+│       ├── mlx5<br>
+│       │   ├── meson.build<br>
+│       │   ├── mlx5_vdpa.c<br>
+│       │   ├── mlx5_vdpa_event.c<br>
+│       │   ├── mlx5_vdpa.h<br>
+│       │   ├── mlx5_vdpa_lm.c<br>
+│       │   ├── mlx5_vdpa_mem.c<br>
+│       │   ├── mlx5_vdpa_steer.c<br>
+│       │   ├── mlx5_vdpa_utils.h<br>
+│       │   ├── mlx5_vdpa_virtq.c<br>
+│       │   └── version.map<br>
+│       └── sfc<br>
+│           ├── meson.build<br>
+│           ├── sfc_vdpa.c<br>
+│           ├── sfc_vdpa_debug.h<br>
+│           ├── sfc_vdpa_filter.c<br>
+│           ├── sfc_vdpa.h<br>
+│           ├── sfc_vdpa_hw.c<br>
+│           ├── sfc_vdpa_log.h<br>
+│           ├── sfc_vdpa_mcdi.c<br>
+│           ├── sfc_vdpa_ops.c<br>
+│           ├── sfc_vdpa_ops.h<br>
+│           └── version.map<br>
+├── examples<br>
+│   ├── bbdev_app<br>
+│   │   ├── main.c<br>
+│   │   ├── Makefile<br>
+│   │   └── meson.build<br>
+│   ├── bond<br>
+│   │   ├── main.c<br>
+│   │   ├── main.h<br>
+│   │   ├── Makefile<br>
+│   │   └── meson.build<br>
+│   ├── bpf<br>
+│   │   ├── dummy.c<br>
+│   │   ├── README<br>
+│   │   ├── t1.c<br>
+│   │   ├── t2.c<br>
+│   │   └── t3.c<br>
+│   ├── cmdline<br>
+│   │   ├── commands.c<br>
+│   │   ├── commands.h<br>
+│   │   ├── main.c<br>
+│   │   ├── Makefile<br>
+│   │   ├── meson.build<br>
+│   │   ├── parse_obj_list.c<br>
+│   │   └── parse_obj_list.h<br>
+│   ├── distributor<br>
+│   │   ├── main.c<br>
+│   │   ├── Makefile<br>
+│   │   └── meson.build<br>
+│   ├── dma<br>
+│   │   ├── dmafwd.c<br>
+│   │   ├── Makefile<br>
+│   │   └── meson.build<br>
+│   ├── ethtool<br>
+│   │   ├── ethtool-app<br>
+│   │   │   ├── ethapp.c<br>
+│   │   │   ├── ethapp.h<br>
+│   │   │   ├── main.c<br>
+│   │   │   └── Makefile<br>
+│   │   ├── lib<br>
+│   │   │   ├── Makefile<br>
+│   │   │   ├── rte_ethtool.c<br>
+│   │   │   └── rte_ethtool.h<br>
+│   │   ├── Makefile<br>
+│   │   └── meson.build<br>
+│   ├── eventdev_pipeline<br>
+│   │   ├── main.c<br>
+│   │   ├── Makefile<br>
+│   │   ├── meson.build<br>
+│   │   ├── pipeline_common.h<br>
+│   │   ├── pipeline_worker_generic.c<br>
+│   │   └── pipeline_worker_tx.c<br>
+│   ├── fips_validation<br>
+│   │   ├── fips_dev_self_test.c<br>
+│   │   ├── fips_dev_self_test.h<br>
+│   │   ├── fips_validation_aes.c<br>
+│   │   ├── fips_validation.c<br>
+│   │   ├── fips_validation_ccm.c<br>
+│   │   ├── fips_validation_cmac.c<br>
+│   │   ├── fips_validation_gcm.c<br>
+│   │   ├── fips_validation.h<br>
+│   │   ├── fips_validation_hmac.c<br>
+│   │   ├── fips_validation_sha.c<br>
+│   │   ├── fips_validation_tdes.c<br>
+│   │   ├── fips_validation_xts.c<br>
+│   │   ├── main.c<br>
+│   │   ├── Makefile<br>
+│   │   └── meson.build<br>
+│   ├── flow_classify<br>
+│   │   ├── flow_classify.c<br>
+│   │   ├── ipv4_rules_file.txt<br>
+│   │   ├── Makefile<br>
+│   │   └── meson.build<br>
+│   ├── flow_filtering<br>
+│   │   ├── flow_blocks.c<br>
+│   │   ├── main.c<br>
+│   │   ├── Makefile<br>
+│   │   └── meson.build<br>
+│   ├── helloworld<br>
+│   │   ├── main.c<br>
+│   │   ├── Makefile<br>
+│   │   └── meson.build<br>
+│   ├── ip_fragmentation<br>
+│   │   ├── main.c<br>
+│   │   ├── Makefile<br>
+│   │   └── meson.build<br>
+│   ├── ip_pipeline<br>
+│   │   ├── action.c<br>
+│   │   ├── action.h<br>
+│   │   ├── cli.c<br>
+│   │   ├── cli.h<br>
+│   │   ├── common.h<br>
+│   │   ├── conn.c<br>
+│   │   ├── conn.h<br>
+│   │   ├── cryptodev.c<br>
+│   │   ├── cryptodev.h<br>
+│   │   ├── examples<br>
+│   │   │   ├── firewall.cli<br>
+│   │   │   ├── flow.cli<br>
+│   │   │   ├── flow_crypto.cli<br>
+│   │   │   ├── kni.cli<br>
+│   │   │   ├── l2fwd.cli<br>
+│   │   │   ├── route.cli<br>
+│   │   │   ├── route_ecmp.cli<br>
+│   │   │   ├── rss.cli<br>
+│   │   │   └── tap.cli<br>
+│   │   ├── kni.c<br>
+│   │   ├── kni.h<br>
+│   │   ├── link.c<br>
+│   │   ├── link.h<br>
+│   │   ├── main.c<br>
+│   │   ├── Makefile<br>
+│   │   ├── mempool.c<br>
+│   │   ├── mempool.h<br>
+│   │   ├── meson.build<br>
+│   │   ├── parser.c<br>
+│   │   ├── parser.h<br>
+│   │   ├── pipeline.c<br>
+│   │   ├── pipeline.h<br>
+│   │   ├── swq.c<br>
+│   │   ├── swq.h<br>
+│   │   ├── tap.c<br>
+│   │   ├── tap.h<br>
+│   │   ├── thread.c<br>
+│   │   ├── thread.h<br>
+│   │   ├── tmgr.c<br>
+│   │   └── tmgr.h<br>
+│   ├── ip_reassembly<br>
+│   │   ├── main.c<br>
+│   │   ├── Makefile<br>
+│   │   └── meson.build<br>
+│   ├── ipsec-secgw<br>
+│   │   ├── ep0.cfg<br>
+│   │   ├── ep1.cfg<br>
+│   │   ├── esp.c<br>
+│   │   ├── esp.h<br>
+│   │   ├── event_helper.c<br>
+│   │   ├── event_helper.h<br>
+│   │   ├── flow.c<br>
+│   │   ├── flow.h<br>
+│   │   ├── ipip.h<br>
+│   │   ├── ipsec.c<br>
+│   │   ├── ipsec.h<br>
+│   │   ├── ipsec_process.c<br>
+│   │   ├── ipsec-secgw.c<br>
+│   │   ├── ipsec-secgw.h<br>
+│   │   ├── ipsec_worker.c<br>
+│   │   ├── ipsec_worker.h<br>
+│   │   ├── Makefile<br>
+│   │   ├── meson.build<br>
+│   │   ├── parser.c<br>
+│   │   ├── parser.h<br>
+│   │   ├── rt.c<br>
+│   │   ├── sa.c<br>
+│   │   ├── sad.c<br>
+│   │   ├── sad.h<br>
+│   │   ├── sp4.c<br>
+│   │   ├── sp6.c<br>
+│   │   └── test<br>
+│   │       ├── bypass_defs.sh<br>
+│   │       ├── common_defs_secgw.sh<br>
+│   │       ├── common_defs.sh<br>
+│   │       ├── data_rxtx.sh<br>
+│   │       ├── linux_test.sh<br>
+│   │       ├── load_env.sh<br>
+│   │       ├── pkttest.py<br>
+│   │       ├── pkttest.sh<br>
+│   │       ├── run_test.sh<br>
+│   │       ├── trs_3descbc_sha1_common_defs.sh<br>
+│   │       ├── trs_3descbc_sha1_defs.sh<br>
+│   │       ├── trs_aescbc_sha1_common_defs.sh<br>
+│   │       ├── trs_aescbc_sha1_defs.sh<br>
+│   │       ├── trs_aesctr_sha1_common_defs.sh<br>
+│   │       ├── trs_aesctr_sha1_defs.sh<br>
+│   │       ├── trs_aesgcm_common_defs.sh<br>
+│   │       ├── trs_aesgcm_defs.sh<br>
+│   │       ├── trs_ipv6opts.py<br>
+│   │       ├── tun_3descbc_sha1_common_defs.sh<br>
+│   │       ├── tun_3descbc_sha1_defs.sh<br>
+│   │       ├── tun_aescbc_sha1_common_defs.sh<br>
+│   │       ├── tun_aescbc_sha1_defs.sh<br>
+│   │       ├── tun_aesctr_sha1_common_defs.sh<br>
+│   │       ├── tun_aesctr_sha1_defs.sh<br>
+│   │       ├── tun_aesgcm_common_defs.sh<br>
+│   │       ├── tun_aesgcm_defs.sh<br>
+│   │       └── tun_null_header_reconstruct.py<br>
+│   ├── ipv4_multicast<br>
+│   │   ├── main.c<br>
+│   │   ├── Makefile<br>
+│   │   └── meson.build<br>
+│   ├── kni<br>
+│   │   ├── main.c<br>
+│   │   ├── Makefile<br>
+│   │   └── meson.build<br>
+│   ├── l2fwd<br>
+│   │   ├── main.c<br>
+│   │   ├── Makefile<br>
+│   │   └── meson.build<br>
+│   ├── l2fwd-cat<br>
+│   │   ├── cat.c<br>
+│   │   ├── cat.h<br>
+│   │   ├── l2fwd-cat.c<br>
+│   │   ├── Makefile<br>
+│   │   └── meson.build<br>
+│   ├── l2fwd-crypto<br>
+│   │   ├── main.c<br>
+│   │   ├── Makefile<br>
+│   │   └── meson.build<br>
+│   ├── l2fwd-event<br>
+│   │   ├── l2fwd_common.c<br>
+│   │   ├── l2fwd_common.h<br>
+│   │   ├── l2fwd_event.c<br>
+│   │   ├── l2fwd_event_generic.c<br>
+│   │   ├── l2fwd_event.h<br>
+│   │   ├── l2fwd_event_internal_port.c<br>
+│   │   ├── l2fwd_poll.c<br>
+│   │   ├── l2fwd_poll.h<br>
+│   │   ├── main.c<br>
+│   │   ├── Makefile<br>
+│   │   └── meson.build<br>
+│   ├── l2fwd-jobstats<br>
+│   │   ├── main.c<br>
+│   │   ├── Makefile<br>
+│   │   └── meson.build<br>
+│   ├── l2fwd-keepalive<br>
+│   │   ├── ka-agent<br>
+│   │   │   ├── main.c<br>
+│   │   │   └── Makefile<br>
+│   │   ├── main.c<br>
+│   │   ├── Makefile<br>
+│   │   ├── meson.build<br>
+│   │   ├── shm.c<br>
+│   │   └── shm.h<br>
+│   ├── l3fwd<br>
+│   │   ├── em_default_v4.cfg<br>
+│   │   ├── em_default_v6.cfg<br>
+│   │   ├── em_route_parse.c<br>
+│   │   ├── l3fwd_altivec.h<br>
+│   │   ├── l3fwd_common.h<br>
+│   │   ├── l3fwd_em.c<br>
+│   │   ├── l3fwd_em.h<br>
+│   │   ├── l3fwd_em_hlm.h<br>
+│   │   ├── l3fwd_em_hlm_neon.h<br>
+│   │   ├── l3fwd_em_hlm_sse.h<br>
+│   │   ├── l3fwd_em_sequential.h<br>
+│   │   ├── l3fwd_event.c<br>
+│   │   ├── l3fwd_event_generic.c<br>
+│   │   ├── l3fwd_event.h<br>
+│   │   ├── l3fwd_event_internal_port.c<br>
+│   │   ├── l3fwd_fib.c<br>
+│   │   ├── l3fwd.h<br>
+│   │   ├── l3fwd_lpm_altivec.h<br>
+│   │   ├── l3fwd_lpm.c<br>
+│   │   ├── l3fwd_lpm.h<br>
+│   │   ├── l3fwd_lpm_neon.h<br>
+│   │   ├── l3fwd_lpm_sse.h<br>
+│   │   ├── l3fwd_neon.h<br>
+│   │   ├── l3fwd_route.h<br>
+│   │   ├── l3fwd_sse.h<br>
+│   │   ├── lpm_default_v4.cfg<br>
+│   │   ├── lpm_default_v6.cfg<br>
+│   │   ├── lpm_route_parse.c<br>
+│   │   ├── main.c<br>
+│   │   ├── Makefile<br>
+│   │   └── meson.build<br>
+│   ├── l3fwd-acl<br>
+│   │   ├── main.c<br>
+│   │   ├── Makefile<br>
+│   │   └── meson.build<br>
+│   ├── l3fwd-graph<br>
+│   │   ├── main.c<br>
+│   │   ├── Makefile<br>
+│   │   └── meson.build<br>
+│   ├── l3fwd-power<br>
+│   │   ├── main.c<br>
+│   │   ├── main.h<br>
+│   │   ├── Makefile<br>
+│   │   ├── meson.build<br>
+│   │   ├── perf_core.c<br>
+│   │   └── perf_core.h<br>
+│   ├── link_status_interrupt<br>
+│   │   ├── main.c<br>
+│   │   ├── Makefile<br>
+│   │   └── meson.build<br>
+│   ├── meson.build<br>
+│   ├── multi_process<br>
+│   │   ├── client_server_mp<br>
+│   │   │   ├── Makefile<br>
+│   │   │   ├── mp_client<br>
+│   │   │   │   ├── client.c<br>
+│   │   │   │   ├── Makefile<br>
+│   │   │   │   └── meson.build<br>
+│   │   │   ├── mp_server<br>
+│   │   │   │   ├── args.c<br>
+│   │   │   │   ├── args.h<br>
+│   │   │   │   ├── init.c<br>
+│   │   │   │   ├── init.h<br>
+│   │   │   │   ├── main.c<br>
+│   │   │   │   ├── Makefile<br>
+│   │   │   │   └── meson.build<br>
+│   │   │   └── shared<br>
+│   │   │       └── common.h<br>
+│   │   ├── hotplug_mp<br>
+│   │   │   ├── commands.c<br>
+│   │   │   ├── commands.h<br>
+│   │   │   ├── main.c<br>
+│   │   │   ├── Makefile<br>
+│   │   │   └── meson.build<br>
+│   │   ├── Makefile<br>
+│   │   ├── simple_mp<br>
+│   │   │   ├── main.c<br>
+│   │   │   ├── Makefile<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── mp_commands.c<br>
+│   │   │   └── mp_commands.h<br>
+│   │   └── symmetric_mp<br>
+│   │       ├── main.c<br>
+│   │       ├── Makefile<br>
+│   │       └── meson.build<br>
+│   ├── ntb<br>
+│   │   ├── Makefile<br>
+│   │   ├── meson.build<br>
+│   │   └── ntb_fwd.c<br>
+│   ├── packet_ordering<br>
+│   │   ├── main.c<br>
+│   │   ├── Makefile<br>
+│   │   └── meson.build<br>
+│   ├── pipeline<br>
+│   │   ├── cli.c<br>
+│   │   ├── cli.h<br>
+│   │   ├── conn.c<br>
+│   │   ├── conn.h<br>
+│   │   ├── examples<br>
+│   │   │   ├── fib.cli<br>
+│   │   │   ├── fib_nexthop_group_table.txt<br>
+│   │   │   ├── fib_nexthop_table.txt<br>
+│   │   │   ├── fib_routing_table.txt<br>
+│   │   │   ├── fib.spec<br>
+│   │   │   ├── l2fwd.cli<br>
+│   │   │   ├── l2fwd_macswp.cli<br>
+│   │   │   ├── l2fwd_macswp_pcap.cli<br>
+│   │   │   ├── l2fwd_macswp.spec<br>
+│   │   │   ├── l2fwd_pcap.cli<br>
+│   │   │   ├── l2fwd.spec<br>
+│   │   │   ├── learner.cli<br>
+│   │   │   ├── learner.spec<br>
+│   │   │   ├── meter.cli<br>
+│   │   │   ├── meter.spec<br>
+│   │   │   ├── packet.txt<br>
+│   │   │   ├── registers.cli<br>
+│   │   │   ├── registers.spec<br>
+│   │   │   ├── selector.cli<br>
+│   │   │   ├── selector.spec<br>
+│   │   │   ├── selector.txt<br>
+│   │   │   ├── varbit.cli<br>
+│   │   │   ├── varbit.spec<br>
+│   │   │   ├── vxlan.cli<br>
+│   │   │   ├── vxlan_pcap.cli<br>
+│   │   │   ├── vxlan.spec<br>
+│   │   │   ├── vxlan_table.py<br>
+│   │   │   └── vxlan_table.txt<br>
+│   │   ├── main.c<br>
+│   │   ├── Makefile<br>
+│   │   ├── meson.build<br>
+│   │   ├── obj.c<br>
+│   │   ├── obj.h<br>
+│   │   ├── thread.c<br>
+│   │   └── thread.h<br>
+│   ├── ptpclient<br>
+│   │   ├── Makefile<br>
+│   │   ├── meson.build<br>
+│   │   └── ptpclient.c<br>
+│   ├── qos_meter<br>
+│   │   ├── main.c<br>
+│   │   ├── main.h<br>
+│   │   ├── Makefile<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_policer.c<br>
+│   │   └── rte_policer.h<br>
+│   ├── qos_sched<br>
+│   │   ├── app_thread.c<br>
+│   │   ├── args.c<br>
+│   │   ├── cfg_file.c<br>
+│   │   ├── cfg_file.h<br>
+│   │   ├── cmdline.c<br>
+│   │   ├── init.c<br>
+│   │   ├── main.c<br>
+│   │   ├── main.h<br>
+│   │   ├── Makefile<br>
+│   │   ├── meson.build<br>
+│   │   ├── profile.cfg<br>
+│   │   ├── profile_ov.cfg<br>
+│   │   └── stats.c<br>
+│   ├── rxtx_callbacks<br>
+│   │   ├── main.c<br>
+│   │   ├── Makefile<br>
+│   │   └── meson.build<br>
+│   ├── server_node_efd<br>
+│   │   ├── Makefile<br>
+│   │   ├── node<br>
+│   │   │   ├── Makefile<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── node.c<br>
+│   │   ├── server<br>
+│   │   │   ├── args.c<br>
+│   │   │   ├── args.h<br>
+│   │   │   ├── init.c<br>
+│   │   │   ├── init.h<br>
+│   │   │   ├── main.c<br>
+│   │   │   ├── Makefile<br>
+│   │   │   └── meson.build<br>
+│   │   └── shared<br>
+│   │       └── common.h<br>
+│   ├── service_cores<br>
+│   │   ├── main.c<br>
+│   │   ├── Makefile<br>
+│   │   └── meson.build<br>
+│   ├── skeleton<br>
+│   │   ├── basicfwd.c<br>
+│   │   ├── Makefile<br>
+│   │   └── meson.build<br>
+│   ├── timer<br>
+│   │   ├── main.c<br>
+│   │   ├── Makefile<br>
+│   │   └── meson.build<br>
+│   ├── vdpa<br>
+│   │   ├── main.c<br>
+│   │   ├── Makefile<br>
+│   │   └── meson.build<br>
+│   ├── vhost<br>
+│   │   ├── main.c<br>
+│   │   ├── main.h<br>
+│   │   ├── Makefile<br>
+│   │   ├── meson.build<br>
+│   │   └── virtio_net.c<br>
+│   ├── vhost_blk<br>
+│   │   ├── blk.c<br>
+│   │   ├── blk_spec.h<br>
+│   │   ├── Makefile<br>
+│   │   ├── meson.build<br>
+│   │   ├── vhost_blk.c<br>
+│   │   ├── vhost_blk_compat.c<br>
+│   │   └── vhost_blk.h<br>
+│   ├── vhost_crypto<br>
+│   │   ├── main.c<br>
+│   │   ├── Makefile<br>
+│   │   └── meson.build<br>
+│   ├── vmdq<br>
+│   │   ├── main.c<br>
+│   │   ├── Makefile<br>
+│   │   └── meson.build<br>
+│   ├── vmdq_dcb<br>
+│   │   ├── main.c<br>
+│   │   ├── Makefile<br>
+│   │   └── meson.build<br>
+│   └── vm_power_manager<br>
+│       ├── channel_manager.c<br>
+│       ├── channel_manager.h<br>
+│       ├── channel_monitor.c<br>
+│       ├── channel_monitor.h<br>
+│       ├── guest_cli<br>
+│       │   ├── main.c<br>
+│       │   ├── Makefile<br>
+│       │   ├── meson.build<br>
+│       │   ├── parse.c<br>
+│       │   ├── parse.h<br>
+│       │   ├── vm_power_cli_guest.c<br>
+│       │   └── vm_power_cli_guest.h<br>
+│       ├── main.c<br>
+│       ├── Makefile<br>
+│       ├── meson.build<br>
+│       ├── oob_monitor.h<br>
+│       ├── oob_monitor_nop.c<br>
+│       ├── oob_monitor_x86.c<br>
+│       ├── parse.c<br>
+│       ├── parse.h<br>
+│       ├── power_manager.c<br>
+│       ├── power_manager.h<br>
+│       ├── vm_power_cli.c<br>
+│       └── vm_power_cli.h<br>
+├── kernel<br>
+│   ├── freebsd<br>
+│   │   ├── BSDmakefile.meson<br>
+│   │   ├── contigmem<br>
+│   │   │   ├── BSDmakefile<br>
+│   │   │   ├── contigmem.c<br>
+│   │   │   └── meson.build<br>
+│   │   ├── meson.build<br>
+│   │   └── nic_uio<br>
+│   │       ├── BSDmakefile<br>
+│   │       ├── meson.build<br>
+│   │       └── nic_uio.c<br>
+│   ├── linux<br>
+│   │   ├── kni<br>
+│   │   │   ├── compat.h<br>
+│   │   │   ├── Kbuild<br>
+│   │   │   ├── kni_dev.h<br>
+│   │   │   ├── kni_fifo.h<br>
+│   │   │   ├── kni_misc.c<br>
+│   │   │   ├── kni_net.c<br>
+│   │   │   └── meson.build<br>
+│   │   └── meson.build<br>
+│   └── meson.build<br>
+├── lib<br>
+│   ├── acl<br>
+│   │   ├── acl_bld.c<br>
+│   │   ├── acl_gen.c<br>
+│   │   ├── acl.h<br>
+│   │   ├── acl_run_altivec.c<br>
+│   │   ├── acl_run_altivec.h<br>
+│   │   ├── acl_run_avx2.c<br>
+│   │   ├── acl_run_avx2.h<br>
+│   │   ├── acl_run_avx512.c<br>
+│   │   ├── acl_run_avx512_common.h<br>
+│   │   ├── acl_run_avx512x16.h<br>
+│   │   ├── acl_run_avx512x8.h<br>
+│   │   ├── acl_run.h<br>
+│   │   ├── acl_run_neon.c<br>
+│   │   ├── acl_run_neon.h<br>
+│   │   ├── acl_run_scalar.c<br>
+│   │   ├── acl_run_sse.c<br>
+│   │   ├── acl_run_sse.h<br>
+│   │   ├── acl_vect.h<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_acl.c<br>
+│   │   ├── rte_acl.h<br>
+│   │   ├── rte_acl_osdep.h<br>
+│   │   ├── tb_mem.c<br>
+│   │   ├── tb_mem.h<br>
+│   │   └── version.map<br>
+│   ├── bbdev<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_bbdev.c<br>
+│   │   ├── rte_bbdev.h<br>
+│   │   ├── rte_bbdev_op.h<br>
+│   │   ├── rte_bbdev_pmd.h<br>
+│   │   └── version.map<br>
+│   ├── bitratestats<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_bitrate.c<br>
+│   │   ├── rte_bitrate.h<br>
+│   │   └── version.map<br>
+│   ├── bpf<br>
+│   │   ├── bpf.c<br>
+│   │   ├── bpf_convert.c<br>
+│   │   ├── bpf_def.h<br>
+│   │   ├── bpf_dump.c<br>
+│   │   ├── bpf_exec.c<br>
+│   │   ├── bpf_impl.h<br>
+│   │   ├── bpf_jit_arm64.c<br>
+│   │   ├── bpf_jit_x86.c<br>
+│   │   ├── bpf_load.c<br>
+│   │   ├── bpf_load_elf.c<br>
+│   │   ├── bpf_pkt.c<br>
+│   │   ├── bpf_stub.c<br>
+│   │   ├── bpf_validate.c<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_bpf_ethdev.h<br>
+│   │   ├── rte_bpf.h<br>
+│   │   └── version.map<br>
+│   ├── cfgfile<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_cfgfile.c<br>
+│   │   ├── rte_cfgfile.h<br>
+│   │   └── version.map<br>
+│   ├── cmdline<br>
+│   │   ├── cmdline.c<br>
+│   │   ├── cmdline_cirbuf.c<br>
+│   │   ├── cmdline_cirbuf.h<br>
+│   │   ├── cmdline.h<br>
+│   │   ├── cmdline_os_unix.c<br>
+│   │   ├── cmdline_os_windows.c<br>
+│   │   ├── cmdline_parse.c<br>
+│   │   ├── cmdline_parse_etheraddr.c<br>
+│   │   ├── cmdline_parse_etheraddr.h<br>
+│   │   ├── cmdline_parse.h<br>
+│   │   ├── cmdline_parse_ipaddr.c<br>
+│   │   ├── cmdline_parse_ipaddr.h<br>
+│   │   ├── cmdline_parse_num.c<br>
+│   │   ├── cmdline_parse_num.h<br>
+│   │   ├── cmdline_parse_portlist.c<br>
+│   │   ├── cmdline_parse_portlist.h<br>
+│   │   ├── cmdline_parse_string.c<br>
+│   │   ├── cmdline_parse_string.h<br>
+│   │   ├── cmdline_private.h<br>
+│   │   ├── cmdline_rdline.c<br>
+│   │   ├── cmdline_rdline.h<br>
+│   │   ├── cmdline_socket.c<br>
+│   │   ├── cmdline_socket.h<br>
+│   │   ├── cmdline_vt100.c<br>
+│   │   ├── cmdline_vt100.h<br>
+│   │   ├── meson.build<br>
+│   │   └── version.map<br>
+│   ├── compressdev<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_comp.c<br>
+│   │   ├── rte_comp.h<br>
+│   │   ├── rte_compressdev.c<br>
+│   │   ├── rte_compressdev.h<br>
+│   │   ├── rte_compressdev_internal.h<br>
+│   │   ├── rte_compressdev_pmd.c<br>
+│   │   ├── rte_compressdev_pmd.h<br>
+│   │   └── version.map<br>
+│   ├── cryptodev<br>
+│   │   ├── cryptodev_pmd.c<br>
+│   │   ├── cryptodev_pmd.h<br>
+│   │   ├── cryptodev_trace_points.c<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_crypto_asym.h<br>
+│   │   ├── rte_cryptodev.c<br>
+│   │   ├── rte_cryptodev_core.h<br>
+│   │   ├── rte_cryptodev.h<br>
+│   │   ├── rte_cryptodev_trace_fp.h<br>
+│   │   ├── rte_cryptodev_trace.h<br>
+│   │   ├── rte_crypto.h<br>
+│   │   ├── rte_crypto_sym.h<br>
+│   │   └── version.map<br>
+│   ├── distributor<br>
+│   │   ├── distributor_private.h<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_distributor.c<br>
+│   │   ├── rte_distributor.h<br>
+│   │   ├── rte_distributor_match_generic.c<br>
+│   │   ├── rte_distributor_match_sse.c<br>
+│   │   ├── rte_distributor_single.c<br>
+│   │   ├── rte_distributor_single.h<br>
+│   │   └── version.map<br>
+│   ├── dmadev<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_dmadev.c<br>
+│   │   ├── rte_dmadev_core.h<br>
+│   │   ├── rte_dmadev.h<br>
+│   │   ├── rte_dmadev_pmd.h<br>
+│   │   └── version.map<br>
+│   ├── eal<br>
+│   │   ├── arm<br>
+│   │   │   ├── include<br>
+│   │   │   │   ├── meson.build<br>
+│   │   │   │   ├── rte_atomic_32.h<br>
+│   │   │   │   ├── rte_atomic_64.h<br>
+│   │   │   │   ├── rte_atomic.h<br>
+│   │   │   │   ├── rte_byteorder.h<br>
+│   │   │   │   ├── rte_cpuflags_32.h<br>
+│   │   │   │   ├── rte_cpuflags_64.h<br>
+│   │   │   │   ├── rte_cpuflags.h<br>
+│   │   │   │   ├── rte_cycles_32.h<br>
+│   │   │   │   ├── rte_cycles_64.h<br>
+│   │   │   │   ├── rte_cycles.h<br>
+│   │   │   │   ├── rte_io_64.h<br>
+│   │   │   │   ├── rte_io.h<br>
+│   │   │   │   ├── rte_mcslock.h<br>
+│   │   │   │   ├── rte_memcpy_32.h<br>
+│   │   │   │   ├── rte_memcpy_64.h<br>
+│   │   │   │   ├── rte_memcpy.h<br>
+│   │   │   │   ├── rte_pause_32.h<br>
+│   │   │   │   ├── rte_pause_64.h<br>
+│   │   │   │   ├── rte_pause.h<br>
+│   │   │   │   ├── rte_pflock.h<br>
+│   │   │   │   ├── rte_power_intrinsics.h<br>
+│   │   │   │   ├── rte_prefetch_32.h<br>
+│   │   │   │   ├── rte_prefetch_64.h<br>
+│   │   │   │   ├── rte_prefetch.h<br>
+│   │   │   │   ├── rte_rwlock.h<br>
+│   │   │   │   ├── rte_spinlock.h<br>
+│   │   │   │   ├── rte_ticketlock.h<br>
+│   │   │   │   └── rte_vect.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_cpuflags.c<br>
+│   │   │   ├── rte_cycles.c<br>
+│   │   │   ├── rte_hypervisor.c<br>
+│   │   │   └── rte_power_intrinsics.c<br>
+│   │   ├── common<br>
+│   │   │   ├── eal_common_bus.c<br>
+│   │   │   ├── eal_common_class.c<br>
+│   │   │   ├── eal_common_config.c<br>
+│   │   │   ├── eal_common_cpuflags.c<br>
+│   │   │   ├── eal_common_debug.c<br>
+│   │   │   ├── eal_common_devargs.c<br>
+│   │   │   ├── eal_common_dev.c<br>
+│   │   │   ├── eal_common_dynmem.c<br>
+│   │   │   ├── eal_common_errno.c<br>
+│   │   │   ├── eal_common_fbarray.c<br>
+│   │   │   ├── eal_common_hexdump.c<br>
+│   │   │   ├── eal_common_hypervisor.c<br>
+│   │   │   ├── eal_common_interrupts.c<br>
+│   │   │   ├── eal_common_launch.c<br>
+│   │   │   ├── eal_common_lcore.c<br>
+│   │   │   ├── eal_common_log.c<br>
+│   │   │   ├── eal_common_mcfg.c<br>
+│   │   │   ├── eal_common_memalloc.c<br>
+│   │   │   ├── eal_common_memory.c<br>
+│   │   │   ├── eal_common_memzone.c<br>
+│   │   │   ├── eal_common_options.c<br>
+│   │   │   ├── eal_common_proc.c<br>
+│   │   │   ├── eal_common_string_fns.c<br>
+│   │   │   ├── eal_common_tailqs.c<br>
+│   │   │   ├── eal_common_thread.c<br>
+│   │   │   ├── eal_common_timer.c<br>
+│   │   │   ├── eal_common_trace.c<br>
+│   │   │   ├── eal_common_trace_ctf.c<br>
+│   │   │   ├── eal_common_trace_points.c<br>
+│   │   │   ├── eal_common_trace_utils.c<br>
+│   │   │   ├── eal_common_uuid.c<br>
+│   │   │   ├── eal_filesystem.h<br>
+│   │   │   ├── eal_firmware.h<br>
+│   │   │   ├── eal_hugepages.h<br>
+│   │   │   ├── eal_internal_cfg.h<br>
+│   │   │   ├── eal_interrupts.h<br>
+│   │   │   ├── eal_log.h<br>
+│   │   │   ├── eal_memalloc.h<br>
+│   │   │   ├── eal_memcfg.h<br>
+│   │   │   ├── eal_options.h<br>
+│   │   │   ├── eal_private.h<br>
+│   │   │   ├── eal_thread.h<br>
+│   │   │   ├── eal_trace.h<br>
+│   │   │   ├── hotplug_mp.c<br>
+│   │   │   ├── hotplug_mp.h<br>
+│   │   │   ├── malloc_elem.c<br>
+│   │   │   ├── malloc_elem.h<br>
+│   │   │   ├── malloc_heap.c<br>
+│   │   │   ├── malloc_heap.h<br>
+│   │   │   ├── malloc_mp.c<br>
+│   │   │   ├── malloc_mp.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_keepalive.c<br>
+│   │   │   ├── rte_malloc.c<br>
+│   │   │   ├── rte_random.c<br>
+│   │   │   ├── rte_reciprocal.c<br>
+│   │   │   ├── rte_service.c<br>
+│   │   │   └── rte_version.c<br>
+│   │   ├── freebsd<br>
+│   │   │   ├── eal_alarm.c<br>
+│   │   │   ├── eal_alarm_private.h<br>
+│   │   │   ├── eal.c<br>
+│   │   │   ├── eal_cpuflags.c<br>
+│   │   │   ├── eal_debug.c<br>
+│   │   │   ├── eal_dev.c<br>
+│   │   │   ├── eal_hugepage_info.c<br>
+│   │   │   ├── eal_interrupts.c<br>
+│   │   │   ├── eal_lcore.c<br>
+│   │   │   ├── eal_memalloc.c<br>
+│   │   │   ├── eal_memory.c<br>
+│   │   │   ├── eal_thread.c<br>
+│   │   │   ├── eal_timer.c<br>
+│   │   │   ├── include<br>
+│   │   │   │   ├── meson.build<br>
+│   │   │   │   ├── rte_os.h<br>
+│   │   │   │   └── rte_os_shim.h<br>
+│   │   │   └── meson.build<br>
+│   │   ├── include<br>
+│   │   │   ├── generic<br>
+│   │   │   │   ├── rte_atomic.h<br>
+│   │   │   │   ├── rte_byteorder.h<br>
+│   │   │   │   ├── rte_cpuflags.h<br>
+│   │   │   │   ├── rte_cycles.h<br>
+│   │   │   │   ├── rte_io.h<br>
+│   │   │   │   ├── rte_mcslock.h<br>
+│   │   │   │   ├── rte_memcpy.h<br>
+│   │   │   │   ├── rte_pause.h<br>
+│   │   │   │   ├── rte_pflock.h<br>
+│   │   │   │   ├── rte_power_intrinsics.h<br>
+│   │   │   │   ├── rte_prefetch.h<br>
+│   │   │   │   ├── rte_rwlock.h<br>
+│   │   │   │   ├── rte_spinlock.h<br>
+│   │   │   │   ├── rte_ticketlock.h<br>
+│   │   │   │   └── rte_vect.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_alarm.h<br>
+│   │   │   ├── rte_bitmap.h<br>
+│   │   │   ├── rte_bitops.h<br>
+│   │   │   ├── rte_branch_prediction.h<br>
+│   │   │   ├── rte_bus.h<br>
+│   │   │   ├── rte_class.h<br>
+│   │   │   ├── rte_common.h<br>
+│   │   │   ├── rte_compat.h<br>
+│   │   │   ├── rte_debug.h<br>
+│   │   │   ├── rte_devargs.h<br>
+│   │   │   ├── rte_dev.h<br>
+│   │   │   ├── rte_eal.h<br>
+│   │   │   ├── rte_eal_memconfig.h<br>
+│   │   │   ├── rte_eal_paging.h<br>
+│   │   │   ├── rte_eal_trace.h<br>
+│   │   │   ├── rte_epoll.h<br>
+│   │   │   ├── rte_errno.h<br>
+│   │   │   ├── rte_fbarray.h<br>
+│   │   │   ├── rte_function_versioning.h<br>
+│   │   │   ├── rte_hexdump.h<br>
+│   │   │   ├── rte_hypervisor.h<br>
+│   │   │   ├── rte_interrupts.h<br>
+│   │   │   ├── rte_keepalive.h<br>
+│   │   │   ├── rte_launch.h<br>
+│   │   │   ├── rte_lcore.h<br>
+│   │   │   ├── rte_log.h<br>
+│   │   │   ├── rte_malloc.h<br>
+│   │   │   ├── rte_memory.h<br>
+│   │   │   ├── rte_memzone.h<br>
+│   │   │   ├── rte_pci_dev_feature_defs.h<br>
+│   │   │   ├── rte_pci_dev_features.h<br>
+│   │   │   ├── rte_per_lcore.h<br>
+│   │   │   ├── rte_random.h<br>
+│   │   │   ├── rte_reciprocal.h<br>
+│   │   │   ├── rte_service_component.h<br>
+│   │   │   ├── rte_service.h<br>
+│   │   │   ├── rte_string_fns.h<br>
+│   │   │   ├── rte_tailq.h<br>
+│   │   │   ├── rte_test.h<br>
+│   │   │   ├── rte_thread.h<br>
+│   │   │   ├── rte_time.h<br>
+│   │   │   ├── rte_trace.h<br>
+│   │   │   ├── rte_trace_point.h<br>
+│   │   │   ├── rte_trace_point_register.h<br>
+│   │   │   ├── rte_uuid.h<br>
+│   │   │   ├── rte_version.h<br>
+│   │   │   └── rte_vfio.h<br>
+│   │   ├── linux<br>
+│   │   │   ├── eal_alarm.c<br>
+│   │   │   ├── eal.c<br>
+│   │   │   ├── eal_cpuflags.c<br>
+│   │   │   ├── eal_debug.c<br>
+│   │   │   ├── eal_dev.c<br>
+│   │   │   ├── eal_hugepage_info.c<br>
+│   │   │   ├── eal_interrupts.c<br>
+│   │   │   ├── eal_lcore.c<br>
+│   │   │   ├── eal_log.c<br>
+│   │   │   ├── eal_memalloc.c<br>
+│   │   │   ├── eal_memory.c<br>
+│   │   │   ├── eal_thread.c<br>
+│   │   │   ├── eal_timer.c<br>
+│   │   │   ├── eal_vfio.c<br>
+│   │   │   ├── eal_vfio.h<br>
+│   │   │   ├── eal_vfio_mp_sync.c<br>
+│   │   │   ├── include<br>
+│   │   │   │   ├── meson.build<br>
+│   │   │   │   ├── rte_os.h<br>
+│   │   │   │   └── rte_os_shim.h<br>
+│   │   │   └── meson.build<br>
+│   │   ├── meson.build<br>
+│   │   ├── ppc<br>
+│   │   │   ├── include<br>
+│   │   │   │   ├── meson.build<br>
+│   │   │   │   ├── rte_altivec.h<br>
+│   │   │   │   ├── rte_atomic.h<br>
+│   │   │   │   ├── rte_byteorder.h<br>
+│   │   │   │   ├── rte_cpuflags.h<br>
+│   │   │   │   ├── rte_cycles.h<br>
+│   │   │   │   ├── rte_io.h<br>
+│   │   │   │   ├── rte_mcslock.h<br>
+│   │   │   │   ├── rte_memcpy.h<br>
+│   │   │   │   ├── rte_pause.h<br>
+│   │   │   │   ├── rte_pflock.h<br>
+│   │   │   │   ├── rte_power_intrinsics.h<br>
+│   │   │   │   ├── rte_prefetch.h<br>
+│   │   │   │   ├── rte_rwlock.h<br>
+│   │   │   │   ├── rte_spinlock.h<br>
+│   │   │   │   ├── rte_ticketlock.h<br>
+│   │   │   │   └── rte_vect.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   ├── rte_cpuflags.c<br>
+│   │   │   ├── rte_cycles.c<br>
+│   │   │   ├── rte_hypervisor.c<br>
+│   │   │   └── rte_power_intrinsics.c<br>
+│   │   ├── unix<br>
+│   │   │   ├── eal_file.c<br>
+│   │   │   ├── eal_filesystem.c<br>
+│   │   │   ├── eal_firmware.c<br>
+│   │   │   ├── eal_unix_memory.c<br>
+│   │   │   ├── eal_unix_timer.c<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── rte_thread.c<br>
+│   │   ├── version.map<br>
+│   │   ├── windows<br>
+│   │   │   ├── eal_alarm.c<br>
+│   │   │   ├── eal.c<br>
+│   │   │   ├── eal_debug.c<br>
+│   │   │   ├── eal_dev.c<br>
+│   │   │   ├── eal_file.c<br>
+│   │   │   ├── eal_hugepages.c<br>
+│   │   │   ├── eal_interrupts.c<br>
+│   │   │   ├── eal_lcore.c<br>
+│   │   │   ├── eal_log.c<br>
+│   │   │   ├── eal_memalloc.c<br>
+│   │   │   ├── eal_memory.c<br>
+│   │   │   ├── eal_mp.c<br>
+│   │   │   ├── eal_thread.c<br>
+│   │   │   ├── eal_timer.c<br>
+│   │   │   ├── eal_windows.h<br>
+│   │   │   ├── fnmatch.c<br>
+│   │   │   ├── getopt.c<br>
+│   │   │   ├── include<br>
+│   │   │   │   ├── dirent.h<br>
+│   │   │   │   ├── fnmatch.h<br>
+│   │   │   │   ├── getopt.h<br>
+│   │   │   │   ├── meson.build<br>
+│   │   │   │   ├── pthread.h<br>
+│   │   │   │   ├── regex.h<br>
+│   │   │   │   ├── rte_os.h<br>
+│   │   │   │   ├── rte_os_shim.h<br>
+│   │   │   │   ├── rte_virt2phys.h<br>
+│   │   │   │   ├── rte_windows.h<br>
+│   │   │   │   ├── sched.h<br>
+│   │   │   │   ├── sys<br>
+│   │   │   │   │   └── queue.h<br>
+│   │   │   │   └── unistd.h<br>
+│   │   │   ├── meson.build<br>
+│   │   │   └── rte_thread.c<br>
+│   │   └── x86<br>
+│   │       ├── include<br>
+│   │       │   ├── meson.build<br>
+│   │       │   ├── rte_atomic_32.h<br>
+│   │       │   ├── rte_atomic_64.h<br>
+│   │       │   ├── rte_atomic.h<br>
+│   │       │   ├── rte_byteorder_32.h<br>
+│   │       │   ├── rte_byteorder_64.h<br>
+│   │       │   ├── rte_byteorder.h<br>
+│   │       │   ├── rte_cpuflags.h<br>
+│   │       │   ├── rte_cycles.h<br>
+│   │       │   ├── rte_io.h<br>
+│   │       │   ├── rte_mcslock.h<br>
+│   │       │   ├── rte_memcpy.h<br>
+│   │       │   ├── rte_pause.h<br>
+│   │       │   ├── rte_pflock.h<br>
+│   │       │   ├── rte_power_intrinsics.h<br>
+│   │       │   ├── rte_prefetch.h<br>
+│   │       │   ├── rte_rtm.h<br>
+│   │       │   ├── rte_rwlock.h<br>
+│   │       │   ├── rte_spinlock.h<br>
+│   │       │   ├── rte_ticketlock.h<br>
+│   │       │   └── rte_vect.h<br>
+│   │       ├── meson.build<br>
+│   │       ├── rte_cpuflags.c<br>
+│   │       ├── rte_cpuid.h<br>
+│   │       ├── rte_cycles.c<br>
+│   │       ├── rte_hypervisor.c<br>
+│   │       ├── rte_power_intrinsics.c<br>
+│   │       └── rte_spinlock.c<br>
+│   ├── efd<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_efd_arm64.h<br>
+│   │   ├── rte_efd.c<br>
+│   │   ├── rte_efd.h<br>
+│   │   ├── rte_efd_x86.h<br>
+│   │   └── version.map<br>
+│   ├── ethdev<br>
+│   │   ├── ethdev_driver.c<br>
+│   │   ├── ethdev_driver.h<br>
+│   │   ├── ethdev_pci.h<br>
+│   │   ├── ethdev_private.c<br>
+│   │   ├── ethdev_private.h<br>
+│   │   ├── ethdev_profile.c<br>
+│   │   ├── ethdev_profile.h<br>
+│   │   ├── ethdev_trace_points.c<br>
+│   │   ├── ethdev_vdev.h<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_class_eth.c<br>
+│   │   ├── rte_dev_info.h<br>
+│   │   ├── rte_eth_ctrl.h<br>
+│   │   ├── rte_ethdev.c<br>
+│   │   ├── rte_ethdev_core.h<br>
+│   │   ├── rte_ethdev.h<br>
+│   │   ├── rte_ethdev_trace_fp.h<br>
+│   │   ├── rte_ethdev_trace.h<br>
+│   │   ├── rte_flow.c<br>
+│   │   ├── rte_flow_driver.h<br>
+│   │   ├── rte_flow.h<br>
+│   │   ├── rte_mtr.c<br>
+│   │   ├── rte_mtr_driver.h<br>
+│   │   ├── rte_mtr.h<br>
+│   │   ├── rte_tm.c<br>
+│   │   ├── rte_tm_driver.h<br>
+│   │   ├── rte_tm.h<br>
+│   │   └── version.map<br>
+│   ├── eventdev<br>
+│   │   ├── eventdev_pmd.h<br>
+│   │   ├── eventdev_pmd_pci.h<br>
+│   │   ├── eventdev_pmd_vdev.h<br>
+│   │   ├── eventdev_private.c<br>
+│   │   ├── eventdev_trace.h<br>
+│   │   ├── eventdev_trace_points.c<br>
+│   │   ├── event_timer_adapter_pmd.h<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_event_crypto_adapter.c<br>
+│   │   ├── rte_event_crypto_adapter.h<br>
+│   │   ├── rte_eventdev.c<br>
+│   │   ├── rte_eventdev_core.h<br>
+│   │   ├── rte_eventdev.h<br>
+│   │   ├── rte_eventdev_trace_fp.h<br>
+│   │   ├── rte_event_eth_rx_adapter.c<br>
+│   │   ├── rte_event_eth_rx_adapter.h<br>
+│   │   ├── rte_event_eth_tx_adapter.c<br>
+│   │   ├── rte_event_eth_tx_adapter.h<br>
+│   │   ├── rte_event_ring.c<br>
+│   │   ├── rte_event_ring.h<br>
+│   │   ├── rte_event_timer_adapter.c<br>
+│   │   ├── rte_event_timer_adapter.h<br>
+│   │   └── version.map<br>
+│   ├── fib<br>
+│   │   ├── dir24_8_avx512.c<br>
+│   │   ├── dir24_8_avx512.h<br>
+│   │   ├── dir24_8.c<br>
+│   │   ├── dir24_8.h<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_fib6.c<br>
+│   │   ├── rte_fib6.h<br>
+│   │   ├── rte_fib.c<br>
+│   │   ├── rte_fib.h<br>
+│   │   ├── trie_avx512.c<br>
+│   │   ├── trie_avx512.h<br>
+│   │   ├── trie.c<br>
+│   │   ├── trie.h<br>
+│   │   └── version.map<br>
+│   ├── flow_classify<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_flow_classify.c<br>
+│   │   ├── rte_flow_classify.h<br>
+│   │   ├── rte_flow_classify_parse.c<br>
+│   │   ├── rte_flow_classify_parse.h<br>
+│   │   └── version.map<br>
+│   ├── gpudev<br>
+│   │   ├── gpudev.c<br>
+│   │   ├── gpudev_driver.h<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_gpudev.h<br>
+│   │   └── version.map<br>
+│   ├── graph<br>
+│   │   ├── graph.c<br>
+│   │   ├── graph_debug.c<br>
+│   │   ├── graph_ops.c<br>
+│   │   ├── graph_populate.c<br>
+│   │   ├── graph_private.h<br>
+│   │   ├── graph_stats.c<br>
+│   │   ├── meson.build<br>
+│   │   ├── node.c<br>
+│   │   ├── rte_graph.h<br>
+│   │   ├── rte_graph_worker.h<br>
+│   │   └── version.map<br>
+│   ├── gro<br>
+│   │   ├── gro_tcp4.c<br>
+│   │   ├── gro_tcp4.h<br>
+│   │   ├── gro_udp4.c<br>
+│   │   ├── gro_udp4.h<br>
+│   │   ├── gro_vxlan_tcp4.c<br>
+│   │   ├── gro_vxlan_tcp4.h<br>
+│   │   ├── gro_vxlan_udp4.c<br>
+│   │   ├── gro_vxlan_udp4.h<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_gro.c<br>
+│   │   ├── rte_gro.h<br>
+│   │   └── version.map<br>
+│   ├── gso<br>
+│   │   ├── gso_common.c<br>
+│   │   ├── gso_common.h<br>
+│   │   ├── gso_tcp4.c<br>
+│   │   ├── gso_tcp4.h<br>
+│   │   ├── gso_tunnel_tcp4.c<br>
+│   │   ├── gso_tunnel_tcp4.h<br>
+│   │   ├── gso_tunnel_udp4.c<br>
+│   │   ├── gso_tunnel_udp4.h<br>
+│   │   ├── gso_udp4.c<br>
+│   │   ├── gso_udp4.h<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_gso.c<br>
+│   │   ├── rte_gso.h<br>
+│   │   └── version.map<br>
+│   ├── hash<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_cmp_arm64.h<br>
+│   │   ├── rte_cmp_x86.h<br>
+│   │   ├── rte_crc_arm64.h<br>
+│   │   ├── rte_cuckoo_hash.c<br>
+│   │   ├── rte_cuckoo_hash.h<br>
+│   │   ├── rte_fbk_hash.c<br>
+│   │   ├── rte_fbk_hash.h<br>
+│   │   ├── rte_hash_crc.h<br>
+│   │   ├── rte_hash.h<br>
+│   │   ├── rte_jhash.h<br>
+│   │   ├── rte_thash.c<br>
+│   │   ├── rte_thash_gfni.h<br>
+│   │   ├── rte_thash.h<br>
+│   │   ├── rte_thash_x86_gfni.h<br>
+│   │   └── version.map<br>
+│   ├── ip_frag<br>
+│   │   ├── ip_frag_common.h<br>
+│   │   ├── ip_frag_internal.c<br>
+│   │   ├── ip_reassembly.h<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_ip_frag_common.c<br>
+│   │   ├── rte_ip_frag.h<br>
+│   │   ├── rte_ipv4_fragmentation.c<br>
+│   │   ├── rte_ipv4_reassembly.c<br>
+│   │   ├── rte_ipv6_fragmentation.c<br>
+│   │   ├── rte_ipv6_reassembly.c<br>
+│   │   └── version.map<br>
+│   ├── ipsec<br>
+│   │   ├── crypto.h<br>
+│   │   ├── esp_inb.c<br>
+│   │   ├── esp_outb.c<br>
+│   │   ├── iph.h<br>
+│   │   ├── ipsec_sad.c<br>
+│   │   ├── ipsec_sqn.h<br>
+│   │   ├── ipsec_telemetry.c<br>
+│   │   ├── meson.build<br>
+│   │   ├── misc.h<br>
+│   │   ├── pad.h<br>
+│   │   ├── rte_ipsec_group.h<br>
+│   │   ├── rte_ipsec.h<br>
+│   │   ├── rte_ipsec_sad.h<br>
+│   │   ├── rte_ipsec_sa.h<br>
+│   │   ├── sa.c<br>
+│   │   ├── sa.h<br>
+│   │   ├── ses.c<br>
+│   │   └── version.map<br>
+│   ├── jobstats<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_jobstats.c<br>
+│   │   ├── rte_jobstats.h<br>
+│   │   └── version.map<br>
+│   ├── kni<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_kni.c<br>
+│   │   ├── rte_kni_common.h<br>
+│   │   ├── rte_kni_fifo.h<br>
+│   │   ├── rte_kni.h<br>
+│   │   └── version.map<br>
+│   ├── kvargs<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_kvargs.c<br>
+│   │   ├── rte_kvargs.h<br>
+│   │   └── version.map<br>
+│   ├── latencystats<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_latencystats.c<br>
+│   │   ├── rte_latencystats.h<br>
+│   │   └── version.map<br>
+│   ├── lpm<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_lpm6.c<br>
+│   │   ├── rte_lpm6.h<br>
+│   │   ├── rte_lpm_altivec.h<br>
+│   │   ├── rte_lpm.c<br>
+│   │   ├── rte_lpm.h<br>
+│   │   ├── rte_lpm_neon.h<br>
+│   │   ├── rte_lpm_sse.h<br>
+│   │   ├── rte_lpm_sve.h<br>
+│   │   └── version.map<br>
+│   ├── mbuf<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_mbuf.c<br>
+│   │   ├── rte_mbuf_core.h<br>
+│   │   ├── rte_mbuf_dyn.c<br>
+│   │   ├── rte_mbuf_dyn.h<br>
+│   │   ├── rte_mbuf.h<br>
+│   │   ├── rte_mbuf_pool_ops.c<br>
+│   │   ├── rte_mbuf_pool_ops.h<br>
+│   │   ├── rte_mbuf_ptype.c<br>
+│   │   ├── rte_mbuf_ptype.h<br>
+│   │   └── version.map<br>
+│   ├── member<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_member.c<br>
+│   │   ├── rte_member.h<br>
+│   │   ├── rte_member_ht.c<br>
+│   │   ├── rte_member_ht.h<br>
+│   │   ├── rte_member_vbf.c<br>
+│   │   ├── rte_member_vbf.h<br>
+│   │   ├── rte_member_x86.h<br>
+│   │   └── version.map<br>
+│   ├── mempool<br>
+│   │   ├── mempool_trace_points.c<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_mempool.c<br>
+│   │   ├── rte_mempool.h<br>
+│   │   ├── rte_mempool_ops.c<br>
+│   │   ├── rte_mempool_ops_default.c<br>
+│   │   ├── rte_mempool_trace_fp.h<br>
+│   │   ├── rte_mempool_trace.h<br>
+│   │   └── version.map<br>
+│   ├── meson.build<br>
+│   ├── meter<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_meter.c<br>
+│   │   ├── rte_meter.h<br>
+│   │   └── version.map<br>
+│   ├── metrics<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_metrics.c<br>
+│   │   ├── rte_metrics.h<br>
+│   │   ├── rte_metrics_telemetry.c<br>
+│   │   ├── rte_metrics_telemetry.h<br>
+│   │   └── version.map<br>
+│   ├── net<br>
+│   │   ├── meson.build<br>
+│   │   ├── net_crc_avx512.c<br>
+│   │   ├── net_crc.h<br>
+│   │   ├── net_crc_neon.c<br>
+│   │   ├── net_crc_sse.c<br>
+│   │   ├── rte_arp.c<br>
+│   │   ├── rte_arp.h<br>
+│   │   ├── rte_ecpri.h<br>
+│   │   ├── rte_esp.h<br>
+│   │   ├── rte_ether.c<br>
+│   │   ├── rte_ether.h<br>
+│   │   ├── rte_geneve.h<br>
+│   │   ├── rte_gre.h<br>
+│   │   ├── rte_gtp.h<br>
+│   │   ├── rte_higig.h<br>
+│   │   ├── rte_icmp.h<br>
+│   │   ├── rte_ip.h<br>
+│   │   ├── rte_l2tpv2.h<br>
+│   │   ├── rte_mpls.h<br>
+│   │   ├── rte_net.c<br>
+│   │   ├── rte_net_crc.c<br>
+│   │   ├── rte_net_crc.h<br>
+│   │   ├── rte_net.h<br>
+│   │   ├── rte_ppp.h<br>
+│   │   ├── rte_sctp.h<br>
+│   │   ├── rte_tcp.h<br>
+│   │   ├── rte_udp.h<br>
+│   │   ├── rte_vxlan.h<br>
+│   │   └── version.map<br>
+│   ├── node<br>
+│   │   ├── ethdev_ctrl.c<br>
+│   │   ├── ethdev_rx.c<br>
+│   │   ├── ethdev_rx_priv.h<br>
+│   │   ├── ethdev_tx.c<br>
+│   │   ├── ethdev_tx_priv.h<br>
+│   │   ├── ip4_lookup.c<br>
+│   │   ├── ip4_lookup_neon.h<br>
+│   │   ├── ip4_lookup_sse.h<br>
+│   │   ├── ip4_rewrite.c<br>
+│   │   ├── ip4_rewrite_priv.h<br>
+│   │   ├── log.c<br>
+│   │   ├── meson.build<br>
+│   │   ├── node_private.h<br>
+│   │   ├── null.c<br>
+│   │   ├── pkt_cls.c<br>
+│   │   ├── pkt_cls_priv.h<br>
+│   │   ├── pkt_drop.c<br>
+│   │   ├── rte_node_eth_api.h<br>
+│   │   ├── rte_node_ip4_api.h<br>
+│   │   └── version.map<br>
+│   ├── pcapng<br>
+│   │   ├── meson.build<br>
+│   │   ├── pcapng_proto.h<br>
+│   │   ├── rte_pcapng.c<br>
+│   │   ├── rte_pcapng.h<br>
+│   │   └── version.map<br>
+│   ├── pci<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_pci.c<br>
+│   │   ├── rte_pci.h<br>
+│   │   └── version.map<br>
+│   ├── pdump<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_pdump.c<br>
+│   │   ├── rte_pdump.h<br>
+│   │   └── version.map<br>
+│   ├── pipeline<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_pipeline.c<br>
+│   │   ├── rte_pipeline.h<br>
+│   │   ├── rte_port_in_action.c<br>
+│   │   ├── rte_port_in_action.h<br>
+│   │   ├── rte_swx_ctl.c<br>
+│   │   ├── rte_swx_ctl.h<br>
+│   │   ├── rte_swx_extern.h<br>
+│   │   ├── rte_swx_pipeline.c<br>
+│   │   ├── rte_swx_pipeline.h<br>
+│   │   ├── rte_swx_pipeline_internal.h<br>
+│   │   ├── rte_swx_pipeline_spec.c<br>
+│   │   ├── rte_table_action.c<br>
+│   │   ├── rte_table_action.h<br>
+│   │   └── version.map<br>
+│   ├── port<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_port_ethdev.c<br>
+│   │   ├── rte_port_ethdev.h<br>
+│   │   ├── rte_port_eventdev.c<br>
+│   │   ├── rte_port_eventdev.h<br>
+│   │   ├── rte_port_fd.c<br>
+│   │   ├── rte_port_fd.h<br>
+│   │   ├── rte_port_frag.c<br>
+│   │   ├── rte_port_frag.h<br>
+│   │   ├── rte_port.h<br>
+│   │   ├── rte_port_kni.c<br>
+│   │   ├── rte_port_kni.h<br>
+│   │   ├── rte_port_ras.c<br>
+│   │   ├── rte_port_ras.h<br>
+│   │   ├── rte_port_ring.c<br>
+│   │   ├── rte_port_ring.h<br>
+│   │   ├── rte_port_sched.c<br>
+│   │   ├── rte_port_sched.h<br>
+│   │   ├── rte_port_source_sink.c<br>
+│   │   ├── rte_port_source_sink.h<br>
+│   │   ├── rte_port_sym_crypto.c<br>
+│   │   ├── rte_port_sym_crypto.h<br>
+│   │   ├── rte_swx_port_ethdev.c<br>
+│   │   ├── rte_swx_port_ethdev.h<br>
+│   │   ├── rte_swx_port_fd.c<br>
+│   │   ├── rte_swx_port_fd.h<br>
+│   │   ├── rte_swx_port.h<br>
+│   │   ├── rte_swx_port_ring.c<br>
+│   │   ├── rte_swx_port_ring.h<br>
+│   │   ├── rte_swx_port_source_sink.c<br>
+│   │   ├── rte_swx_port_source_sink.h<br>
+│   │   └── version.map<br>
+│   ├── power<br>
+│   │   ├── guest_channel.c<br>
+│   │   ├── guest_channel.h<br>
+│   │   ├── meson.build<br>
+│   │   ├── power_acpi_cpufreq.c<br>
+│   │   ├── power_acpi_cpufreq.h<br>
+│   │   ├── power_common.c<br>
+│   │   ├── power_common.h<br>
+│   │   ├── power_cppc_cpufreq.c<br>
+│   │   ├── power_cppc_cpufreq.h<br>
+│   │   ├── power_kvm_vm.c<br>
+│   │   ├── power_kvm_vm.h<br>
+│   │   ├── power_pstate_cpufreq.c<br>
+│   │   ├── power_pstate_cpufreq.h<br>
+│   │   ├── rte_power.c<br>
+│   │   ├── rte_power_empty_poll.c<br>
+│   │   ├── rte_power_empty_poll.h<br>
+│   │   ├── rte_power_guest_channel.h<br>
+│   │   ├── rte_power.h<br>
+│   │   ├── rte_power_pmd_mgmt.c<br>
+│   │   ├── rte_power_pmd_mgmt.h<br>
+│   │   └── version.map<br>
+│   ├── rawdev<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_rawdev.c<br>
+│   │   ├── rte_rawdev.h<br>
+│   │   ├── rte_rawdev_pmd.h<br>
+│   │   └── version.map<br>
+│   ├── rcu<br>
+│   │   ├── meson.build<br>
+│   │   ├── rcu_qsbr_pvt.h<br>
+│   │   ├── rte_rcu_qsbr.c<br>
+│   │   ├── rte_rcu_qsbr.h<br>
+│   │   └── version.map<br>
+│   ├── regexdev<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_regexdev.c<br>
+│   │   ├── rte_regexdev_core.h<br>
+│   │   ├── rte_regexdev_driver.h<br>
+│   │   ├── rte_regexdev.h<br>
+│   │   └── version.map<br>
+│   ├── reorder<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_reorder.c<br>
+│   │   ├── rte_reorder.h<br>
+│   │   └── version.map<br>
+│   ├── rib<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_rib6.c<br>
+│   │   ├── rte_rib6.h<br>
+│   │   ├── rte_rib.c<br>
+│   │   ├── rte_rib.h<br>
+│   │   └── version.map<br>
+│   ├── ring<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_ring.c<br>
+│   │   ├── rte_ring_c11_pvt.h<br>
+│   │   ├── rte_ring_core.h<br>
+│   │   ├── rte_ring_elem.h<br>
+│   │   ├── rte_ring_elem_pvt.h<br>
+│   │   ├── rte_ring_generic_pvt.h<br>
+│   │   ├── rte_ring.h<br>
+│   │   ├── rte_ring_hts_elem_pvt.h<br>
+│   │   ├── rte_ring_hts.h<br>
+│   │   ├── rte_ring_peek_elem_pvt.h<br>
+│   │   ├── rte_ring_peek.h<br>
+│   │   ├── rte_ring_peek_zc.h<br>
+│   │   ├── rte_ring_rts_elem_pvt.h<br>
+│   │   ├── rte_ring_rts.h<br>
+│   │   └── version.map<br>
+│   ├── sched<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_approx.c<br>
+│   │   ├── rte_approx.h<br>
+│   │   ├── rte_pie.c<br>
+│   │   ├── rte_pie.h<br>
+│   │   ├── rte_red.c<br>
+│   │   ├── rte_red.h<br>
+│   │   ├── rte_sched.c<br>
+│   │   ├── rte_sched_common.h<br>
+│   │   ├── rte_sched.h<br>
+│   │   └── version.map<br>
+│   ├── security<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_security.c<br>
+│   │   ├── rte_security_driver.h<br>
+│   │   ├── rte_security.h<br>
+│   │   └── version.map<br>
+│   ├── stack<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_stack.c<br>
+│   │   ├── rte_stack.h<br>
+│   │   ├── rte_stack_lf.c<br>
+│   │   ├── rte_stack_lf_c11.h<br>
+│   │   ├── rte_stack_lf_generic.h<br>
+│   │   ├── rte_stack_lf.h<br>
+│   │   ├── rte_stack_lf_stubs.h<br>
+│   │   ├── rte_stack_std.c<br>
+│   │   ├── rte_stack_std.h<br>
+│   │   ├── stack_pvt.h<br>
+│   │   └── version.map<br>
+│   ├── table<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_lru_arm64.h<br>
+│   │   ├── rte_lru.h<br>
+│   │   ├── rte_lru_x86.h<br>
+│   │   ├── rte_swx_table_em.c<br>
+│   │   ├── rte_swx_table_em.h<br>
+│   │   ├── rte_swx_table.h<br>
+│   │   ├── rte_swx_table_learner.c<br>
+│   │   ├── rte_swx_table_learner.h<br>
+│   │   ├── rte_swx_table_selector.c<br>
+│   │   ├── rte_swx_table_selector.h<br>
+│   │   ├── rte_swx_table_wm.c<br>
+│   │   ├── rte_swx_table_wm.h<br>
+│   │   ├── rte_table_acl.c<br>
+│   │   ├── rte_table_acl.h<br>
+│   │   ├── rte_table_array.c<br>
+│   │   ├── rte_table_array.h<br>
+│   │   ├── rte_table.h<br>
+│   │   ├── rte_table_hash_cuckoo.c<br>
+│   │   ├── rte_table_hash_cuckoo.h<br>
+│   │   ├── rte_table_hash_ext.c<br>
+│   │   ├── rte_table_hash_func_arm64.h<br>
+│   │   ├── rte_table_hash_func.h<br>
+│   │   ├── rte_table_hash.h<br>
+│   │   ├── rte_table_hash_key16.c<br>
+│   │   ├── rte_table_hash_key32.c<br>
+│   │   ├── rte_table_hash_key8.c<br>
+│   │   ├── rte_table_hash_lru.c<br>
+│   │   ├── rte_table_lpm.c<br>
+│   │   ├── rte_table_lpm.h<br>
+│   │   ├── rte_table_lpm_ipv6.c<br>
+│   │   ├── rte_table_lpm_ipv6.h<br>
+│   │   ├── rte_table_stub.c<br>
+│   │   ├── rte_table_stub.h<br>
+│   │   └── version.map<br>
+│   ├── telemetry<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_telemetry.h<br>
+│   │   ├── telemetry.c<br>
+│   │   ├── telemetry_data.c<br>
+│   │   ├── telemetry_data.h<br>
+│   │   ├── telemetry_internal.h<br>
+│   │   ├── telemetry_json.h<br>
+│   │   ├── telemetry_legacy.c<br>
+│   │   └── version.map<br>
+│   ├── timer<br>
+│   │   ├── meson.build<br>
+│   │   ├── rte_timer.c<br>
+│   │   ├── rte_timer.h<br>
+│   │   └── version.map<br>
+│   └── vhost<br>
+│       ├── fd_man.c<br>
+│       ├── fd_man.h<br>
+│       ├── iotlb.c<br>
+│       ├── iotlb.h<br>
+│       ├── meson.build<br>
+│       ├── rte_vdpa.h<br>
+│       ├── rte_vhost_async.h<br>
+│       ├── rte_vhost_crypto.h<br>
+│       ├── rte_vhost.h<br>
+│       ├── socket.c<br>
+│       ├── vdpa.c<br>
+│       ├── vdpa_driver.h<br>
+│       ├── version.map<br>
+│       ├── vhost.c<br>
+│       ├── vhost_crypto.c<br>
+│       ├── vhost.h<br>
+│       ├── vhost_user.c<br>
+│       ├── vhost_user.h<br>
+│       ├── virtio_crypto.h<br>
+│       └── virtio_net.c<br>
+├── license<br>
+│   ├── bsd-2-clause.txt<br>
+│   ├── bsd-3-clause.txt<br>
+│   ├── exceptions.txt<br>
+│   ├── gpl-2.0.txt<br>
+│   ├── isc.txt<br>
+│   ├── lgpl-2.1.txt<br>
+│   ├── mit.txt<br>
+│   └── README<br>
+├── MAINTAINERS<br>
+├── Makefile<br>
+├── meson.build<br>
+├── meson_options.txt<br>
+├── README<br>
+├── usertools<br>
+│   ├── cpu_layout.py<br>
+│   ├── dpdk-devbind.py<br>
+│   ├── dpdk-hugepages.py<br>
+│   ├── dpdk-pmdinfo.py<br>
+│   ├── dpdk-telemetry-client.py<br>
+│   ├── dpdk-telemetry.py<br>
+│   └── meson.build<br>
+└── VERSION<br>

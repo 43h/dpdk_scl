@@ -42,22 +42,24 @@ extern "C" {
 /** enqueue/dequeue behavior types */
 enum rte_ring_queue_behavior {
 	/** Enq/Deq a fixed number of items from a ring */
-	RTE_RING_QUEUE_FIXED = 0,
+	RTE_RING_QUEUE_FIXED = 0, //每次取固定个数
 	/** Enq/Deq as many items as possible from ring */
-	RTE_RING_QUEUE_VARIABLE
+	RTE_RING_QUEUE_VARIABLE   //每次尽可能多取
 };
 
-#define RTE_RING_MZ_PREFIX "RG_"
+#define RTE_RING_MZ_PREFIX "RG_"                     //ring名称前缀
 /** The maximum length of a ring name. */
-#define RTE_RING_NAMESIZE (RTE_MEMZONE_NAMESIZE - \
+#define RTE_RING_NAMESIZE (RTE_MEMZONE_NAMESIZE - \  //32-3+1 = 30
 			   sizeof(RTE_RING_MZ_PREFIX) + 1)
 
-/** prod/cons sync types */
+/** prod/cons sync types */ //生产者&消费者同步模式
 enum rte_ring_sync_type {
-	RTE_RING_SYNC_MT,     /**< multi-thread safe (default mode) */
-	RTE_RING_SYNC_ST,     /**< single thread only */
-	RTE_RING_SYNC_MT_RTS, /**< multi-thread relaxed tail sync */
-	RTE_RING_SYNC_MT_HTS, /**< multi-thread head/tail sync */
+	RTE_RING_SYNC_MT,     /**< multi-thread safe (default mode) */ /**<多线程同步*/
+	RTE_RING_SYNC_ST,     /**< single thread only */               /**<单线程模式*/
+	RTE_RING_SYNC_MT_RTS, /**< multi-thread relaxed tail sync */   /**<与默认多线程的区别是，
+                                                                     tail值由最后操作完的那个线程负责更新
+                                                                     避免多线程为了更新tail值而去抢占spin锁 */
+	RTE_RING_SYNC_MT_HTS, /**< multi-thread head/tail sync */      /**<同一时间只有一个入队或出队线程可以操作*/
 };
 
 /**

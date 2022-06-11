@@ -42,24 +42,24 @@ extern "C" {
 /** enqueue/dequeue behavior types */
 enum rte_ring_queue_behavior {
 	/** Enq/Deq a fixed number of items from a ring */
-	RTE_RING_QUEUE_FIXED = 0, //Ã¿´ÎÈ¡¹Ì¶¨¸öÊı
+	RTE_RING_QUEUE_FIXED = 0, //æ¯æ¬¡å–å›ºå®šä¸ªæ•°
 	/** Enq/Deq as many items as possible from ring */
-	RTE_RING_QUEUE_VARIABLE   //Ã¿´Î¾¡¿ÉÄÜ¶àÈ¡
+	RTE_RING_QUEUE_VARIABLE   //æ¯æ¬¡å°½å¯èƒ½å¤šå–
 };
 
-#define RTE_RING_MZ_PREFIX "RG_"                     //ringÃû³ÆÇ°×º
+#define RTE_RING_MZ_PREFIX "RG_"                     //ringåç§°å‰ç¼€
 /** The maximum length of a ring name. */
 #define RTE_RING_NAMESIZE (RTE_MEMZONE_NAMESIZE - \  //32-3+1 = 30
 			   sizeof(RTE_RING_MZ_PREFIX) + 1)
 
-/** prod/cons sync types */ //Éú²úÕß&Ïû·ÑÕßÍ¬²½Ä£Ê½
+/** prod/cons sync types */ //ç”Ÿäº§è€…&æ¶ˆè´¹è€…åŒæ­¥æ¨¡å¼
 enum rte_ring_sync_type {
-	RTE_RING_SYNC_MT,     /**< multi-thread safe (default mode) */ /**<¶àÏß³ÌÍ¬²½*/
-	RTE_RING_SYNC_ST,     /**< single thread only */               /**<µ¥Ïß³ÌÄ£Ê½*/
-	RTE_RING_SYNC_MT_RTS, /**< multi-thread relaxed tail sync */   /**<ÓëÄ¬ÈÏ¶àÏß³ÌµÄÇø±ğÊÇ£¬
-                                                                     tailÖµÓÉ×îºó²Ù×÷ÍêµÄÄÇ¸öÏß³Ì¸ºÔğ¸üĞÂ
-                                                                     ±ÜÃâ¶àÏß³ÌÎªÁË¸üĞÂtailÖµ¶øÈ¥ÇÀÕ¼spinËø */
-	RTE_RING_SYNC_MT_HTS, /**< multi-thread head/tail sync */      /**<Í¬Ò»Ê±¼äÖ»ÓĞÒ»¸öÈë¶Ó»ò³ö¶ÓÏß³Ì¿ÉÒÔ²Ù×÷*/
+	RTE_RING_SYNC_MT,     /**< multi-thread safe (default mode) */ /**<å¤šçº¿ç¨‹åŒæ­¥*/
+	RTE_RING_SYNC_ST,     /**< single thread only */               /**<å•çº¿ç¨‹æ¨¡å¼*/
+	RTE_RING_SYNC_MT_RTS, /**< multi-thread relaxed tail sync */   /**<ä¸é»˜è®¤å¤šçº¿ç¨‹çš„åŒºåˆ«æ˜¯ï¼Œ
+                                                                     tailå€¼ç”±æœ€åæ“ä½œå®Œçš„é‚£ä¸ªçº¿ç¨‹è´Ÿè´£æ›´æ–°
+                                                                     é¿å…å¤šçº¿ç¨‹ä¸ºäº†æ›´æ–°tailå€¼è€Œå»æŠ¢å spiné” */
+	RTE_RING_SYNC_MT_HTS, /**< multi-thread head/tail sync */      /**<åŒä¸€æ—¶é—´åªæœ‰ä¸€ä¸ªå…¥é˜Ÿæˆ–å‡ºé˜Ÿçº¿ç¨‹å¯ä»¥æ“ä½œ*/
 };
 
 /**

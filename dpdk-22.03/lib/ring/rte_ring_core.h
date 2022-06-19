@@ -49,8 +49,7 @@ enum rte_ring_queue_behavior {
 
 #define RTE_RING_MZ_PREFIX "RG_"                     //ring名称前缀
 /** The maximum length of a ring name. */
-#define RTE_RING_NAMESIZE (RTE_MEMZONE_NAMESIZE - \  //32-3+1 = 30
-			   sizeof(RTE_RING_MZ_PREFIX) + 1)
+#define RTE_RING_NAMESIZE (RTE_MEMZONE_NAMESIZE - sizeof(RTE_RING_MZ_PREFIX) + 1)
 
 /** prod/cons sync types */ //生产者&消费者同步模式
 enum rte_ring_sync_type {

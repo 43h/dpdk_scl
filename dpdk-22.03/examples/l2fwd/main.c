@@ -663,11 +663,11 @@ main(int argc, char **argv)
 	ret = rte_eal_init(argc, argv);
 	if (ret < 0)
 		rte_exit(EXIT_FAILURE, "Invalid EAL arguments\n");
-	argc -= ret;
+	argc -= ret; //自定义的参数跟在dpdk参数后面
 	argv += ret;
 
 	force_quit = false;
-	signal(SIGINT, signal_handler);
+	signal(SIGINT, signal_handler); //信号初始化
 	signal(SIGTERM, signal_handler);
 
 	/* parse application arguments (after the EAL ones) */
@@ -681,7 +681,7 @@ main(int argc, char **argv)
 	/* convert to number of cycles */
 	timer_period *= rte_get_timer_hz();
 
-	nb_ports = rte_eth_dev_count_avail();
+	nb_ports = rte_eth_dev_count_avail(); //获取可用网口数
 	if (nb_ports == 0)
 		rte_exit(EXIT_FAILURE, "No Ethernet ports - bye\n");
 
@@ -767,7 +767,7 @@ main(int argc, char **argv)
 	nb_mbufs = RTE_MAX(nb_ports * (nb_rxd + nb_txd + MAX_PKT_BURST +
 		nb_lcores * MEMPOOL_CACHE_SIZE), 8192U);
 
-	/* Create the mbuf pool. 8< */
+	/* Create the mbuf pool. 创建mbuf内存池8< */
 	l2fwd_pktmbuf_pool = rte_pktmbuf_pool_create("mbuf_pool", nb_mbufs,
 		MEMPOOL_CACHE_SIZE, 0, RTE_MBUF_DEFAULT_BUF_SIZE,
 		rte_socket_id());
@@ -775,7 +775,7 @@ main(int argc, char **argv)
 		rte_exit(EXIT_FAILURE, "Cannot init mbuf pool\n");
 	/* >8 End of create the mbuf pool. */
 
-	/* Initialise each port */
+	/* Initialise each port 网口初始化*/
 	RTE_ETH_FOREACH_DEV(portid) {
 		struct rte_eth_rxconf rxq_conf;
 		struct rte_eth_txconf txq_conf;

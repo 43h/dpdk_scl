@@ -11,12 +11,12 @@
  * RTE Ethernet Device API
  *
  * The Ethernet Device API is composed of two parts:
- *
+ *   提供应用使用的接口
  * - The application-oriented Ethernet API that includes functions to setup
  *   an Ethernet device (configure it, setup its Rx and Tx queues and start it),
  *   to get its MAC address, the speed and the status of its physical link,
  *   to receive and to transmit packets, and so on.
- *
+ *   提供驱动使用的接口
  * - The driver-oriented Ethernet API that exports functions allowing
  *   an Ethernet Poll Mode Driver (PMD) to allocate an Ethernet device instance,
  *   create memzone for HW rings and process registered callbacks, and so on.
@@ -56,7 +56,7 @@
  * *rte_eth_dev* structure is effectively registered.
  * Otherwise, both the *rte_eth_dev* structure and the port identifier are
  * freed.
- *
+ * 初始化函数调用流程
  * The functions exported by the application Ethernet API to setup a device
  * designated by its port identifier must be invoked in the following order:
  *     - rte_eth_dev_configure()
@@ -68,7 +68,7 @@
  * exported by the Ethernet API to get the MAC address of a given device, to
  * get the speed and the status of a device physical link, to receive/transmit
  * [burst of] packets, and so on.
- *
+ * //更新网口配置前需要先停止设备，更新完后再启动
  * If the application wants to change the configuration (i.e. call
  * rte_eth_dev_configure(), rte_eth_tx_queue_setup(), or
  * rte_eth_rx_queue_setup()), it must call rte_eth_dev_stop() first to stop the

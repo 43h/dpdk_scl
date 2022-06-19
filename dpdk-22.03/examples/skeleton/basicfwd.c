@@ -37,7 +37,7 @@ port_init(uint16_t port, struct rte_mempool *mbuf_pool)
 	struct rte_eth_dev_info dev_info;
 	struct rte_eth_txconf txconf;
 
-	if (!rte_eth_dev_is_valid_port(port))
+	if (!rte_eth_dev_is_valid_port(port)) //检查网口是否可用
 		return -1;
 
 	memset(&port_conf, 0, sizeof(struct rte_eth_conf));
@@ -81,14 +81,14 @@ port_init(uint16_t port, struct rte_mempool *mbuf_pool)
 	}
 
 	/* Starting Ethernet port. 8< */
-	retval = rte_eth_dev_start(port);
+	retval = rte_eth_dev_start(port); //启动网口
 	/* >8 End of starting of ethernet port. */
 	if (retval < 0)
 		return retval;
 
 	/* Display the port MAC address. */
 	struct rte_ether_addr addr;
-	retval = rte_eth_macaddr_get(port, &addr);
+	retval = rte_eth_macaddr_get(port, &addr); //获取网口mac地址
 	if (retval != 0)
 		return retval;
 
@@ -97,7 +97,7 @@ port_init(uint16_t port, struct rte_mempool *mbuf_pool)
 			port, RTE_ETHER_ADDR_BYTES(&addr));
 
 	/* Enable RX in promiscuous mode for the Ethernet device. */
-	retval = rte_eth_promiscuous_enable(port);
+	retval = rte_eth_promiscuous_enable(port); //开启混杂模式
 	/* End of setting RX port in promiscuous mode. */
 	if (retval != 0)
 		return retval;
@@ -145,7 +145,7 @@ lcore_main(void)
 			const uint16_t nb_rx = rte_eth_rx_burst(port, 0,
 					bufs, BURST_SIZE);
 
-			if (unlikely(nb_rx == 0))
+			if (unlikely(nb_rx == 0)) //收包个数为0，继续
 				continue;
 
 			/* Send burst of TX packets, to second port of pair. */
@@ -186,7 +186,7 @@ main(int argc, char *argv[])
 
 	/* Check that there is an even number of ports to send/receive on. */
 	nb_ports = rte_eth_dev_count_avail();
-	if (nb_ports < 2 || (nb_ports & 1))
+	if (nb_ports < 2 || (nb_ports & 1)) //偶数个并且大于等于2
 		rte_exit(EXIT_FAILURE, "Error: number of ports must be even\n");
 
 	/* Creates a new mempool in memory to hold the mbufs. */

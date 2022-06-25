@@ -1,0 +1,1 @@
+sudo ./test -l 1 -n 4 --no-huge --vdev 'net_pcap0,iface=eth0,phy_mac=1'

@@ -8,7 +8,7 @@
 /**
  * @file
  *
- * Ethernet Helpers in RTE
+ * Ethernet Helpers in RTE, 二层头相关文件
  */
 
 #ifdef __cplusplus
@@ -25,9 +25,7 @@ extern "C" {
 #define RTE_ETHER_ADDR_LEN  6 /**< Length of Ethernet address. */
 #define RTE_ETHER_TYPE_LEN  2 /**< Length of Ethernet type field. */
 #define RTE_ETHER_CRC_LEN   4 /**< Length of Ethernet CRC. */
-#define RTE_ETHER_HDR_LEN   \
-	(RTE_ETHER_ADDR_LEN * 2 + \
-		RTE_ETHER_TYPE_LEN) /**< Length of Ethernet header. */
+#define RTE_ETHER_HDR_LEN   (RTE_ETHER_ADDR_LEN * 2 + RTE_ETHER_TYPE_LEN) /**< Length of Ethernet header. */
 #define RTE_ETHER_MIN_LEN   64    /**< Minimum frame len, including CRC. */
 #define RTE_ETHER_MAX_LEN   1518  /**< Maximum frame len, including CRC. */
 #define RTE_ETHER_MTU       \

@@ -56,3 +56,4 @@ dkms.conf
 
 usr/*
 dpdk-22.03/buildtools/__pycache__/coff.cpython-310.pyc
+test/test

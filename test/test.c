@@ -25,6 +25,7 @@
 #define NUM_MBUFS 8191
 #define MBUF_CACHE_SIZE 250
 #define BURST_SIZE 32
+
 /**
  * @berif dump dev info
  *
@@ -177,7 +178,6 @@ port_init(uint16_t port, struct rte_mempool *mbuf_pool)
 static __rte_noreturn void
 lcore_rcv(void)
 {
-
 	unsigned lcore_id;
 	lcore_id = rte_lcore_id();
 	printf("hello from core %u\n", lcore_id);
@@ -212,22 +212,22 @@ lcore_rcv(void)
 
 			/* Get burst of RX packets, from first port of pair. */
 			struct rte_mbuf *bufs[BURST_SIZE];
-			const uint16_t nb_rx = rte_eth_rx_burst(port, 0,
-													bufs, BURST_SIZE);
+			const uint16_t nb_rx = rte_eth_rx_burst(port, 0, bufs, BURST_SIZE);
 
 			if (unlikely(nb_rx == 0)) //收包个数为0，继续
 				continue;
-
-			/* Send burst of TX packets, to second port of pair. */
-			const uint16_t nb_tx = rte_eth_tx_burst(port ^ 1, 0,
-													bufs, nb_rx);
-
+			else
+			{
+				printf("rcv pkg num:%hu\n", nb_rx);
+			}
+			//const uint16_t nb_tx = rte_eth_tx_burst(port ^ 1, 0,bufs, nb_rx);
+			uint16_t nb_tx = 0;
 			/* Free any unsent packets. */
 			if (unlikely(nb_tx < nb_rx))
 			{
-				uint16_t buf;
-				for (buf = nb_tx; buf < nb_rx; buf++)
-					rte_pktmbuf_free(bufs[buf]);
+			    uint16_t buf;
+		    	for (buf = nb_tx; buf < nb_rx; buf++)
+				rte_pktmbuf_free(bufs[buf]);
 			}
 		}
 	}
@@ -284,9 +284,9 @@ int main(int argc, char **argv)
 	//		rte_eal_remote_launch(lcore_snd, NULL, lcore_id); //每个从核上启动任务
 	//	}
 
-	//	lcore_rcv(); //主核也启动任务
+	lcore_rcv(); //主核也启动任务
 
-	// rte_eal_mp_wait_lcore(); //主核任务结束后，等待从核任务结束，类似于父进程等待子进程的wait
+	// rte_eal_mp_wait_lcore(); //主核任务结束后，等待从核任务结束，类似于父进程等待子进程
 
 	rte_eal_cleanup(); //清理eal
 

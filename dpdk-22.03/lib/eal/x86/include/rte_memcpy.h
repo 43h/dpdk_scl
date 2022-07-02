@@ -7,7 +7,7 @@
 
 /**
  * @file
- *
+ * 使用intel特定指令集,实现一次拷贝多个字节
  * Functions for SSE/AVX/AVX2/AVX512 implementation of memcpy().
  */
 
@@ -21,7 +21,10 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
+/**
+ * @brief 使用GCC诊断块，禁用"-Wstringop-overflow"编译告警
+ * 
+ */
 #if defined(RTE_TOOLCHAIN_GCC) && (GCC_VERSION >= 100000)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wstringop-overflow"
@@ -54,7 +57,7 @@ rte_memcpy(void *dst, const void *src, size_t n);
  */
 
 /**
- * Copy 16 bytes from one location to another,
+ * Copy 16 bytes from one location to another, 一次性拷贝16字节，16(byte)*8(bit/byte)=128bit
  * locations should not overlap.
  */
 static __rte_always_inline void
@@ -67,7 +70,7 @@ rte_mov16(uint8_t *dst, const uint8_t *src)
 }
 
 /**
- * Copy 32 bytes from one location to another,
+ * Copy 32 bytes from one location to another, 一次拷贝32byte
  * locations should not overlap.
  */
 static __rte_always_inline void
@@ -80,7 +83,7 @@ rte_mov32(uint8_t *dst, const uint8_t *src)
 }
 
 /**
- * Copy 64 bytes from one location to another,
+ * Copy 64 bytes from one location to another, 一次拷贝64字节
  * locations should not overlap.
  */
 static __rte_always_inline void
@@ -93,7 +96,7 @@ rte_mov64(uint8_t *dst, const uint8_t *src)
 }
 
 /**
- * Copy 128 bytes from one location to another,
+ * Copy 128 bytes from one location to another, 一次拷贝128字节
  * locations should not overlap.
  */
 static __rte_always_inline void
@@ -117,7 +120,7 @@ rte_mov256(uint8_t *dst, const uint8_t *src)
 }
 
 /**
- * Copy 128-byte blocks from one location to another,
+ * Copy 128-byte blocks from one location to another, 每块按128字节拷贝
  * locations should not overlap.
  */
 static __rte_always_inline void
@@ -180,23 +183,23 @@ rte_memcpy_generic(void *dst, const void *src, size_t n)
 	/**
 	 * Copy less than 16 bytes
 	 */
-	if (n < 16) {
-		if (n & 0x01) {
+	if (n < 16) {  //当n小于16，每次复制2^n n(0-3)个字节
+		if (n & 0x01) { //复制1个字节
 			*(uint8_t *)dstu = *(const uint8_t *)srcu;
 			srcu = (uintptr_t)((const uint8_t *)srcu + 1);
 			dstu = (uintptr_t)((uint8_t *)dstu + 1);
 		}
-		if (n & 0x02) {
+		if (n & 0x02) { //复制2个字节
 			*(uint16_t *)dstu = *(const uint16_t *)srcu;
 			srcu = (uintptr_t)((const uint16_t *)srcu + 1);
 			dstu = (uintptr_t)((uint16_t *)dstu + 1);
 		}
-		if (n & 0x04) {
+		if (n & 0x04) { //复制4个字节
 			*(uint32_t *)dstu = *(const uint32_t *)srcu;
 			srcu = (uintptr_t)((const uint32_t *)srcu + 1);
 			dstu = (uintptr_t)((uint32_t *)dstu + 1);
 		}
-		if (n & 0x08)
+		if (n & 0x08) //复制8个字节
 			*(uint64_t *)dstu = *(const uint64_t *)srcu;
 		return ret;
 	}
@@ -204,9 +207,9 @@ rte_memcpy_generic(void *dst, const void *src, size_t n)
 	/**
 	 * Fast way when copy size doesn't exceed 512 bytes
 	 */
-	if (n <= 32) {
-		rte_mov16((uint8_t *)dst, (const uint8_t *)src);
-		rte_mov16((uint8_t *)dst - 16 + n,
+	if (n <= 32) {                                          //当小于等于32字节时，
+		rte_mov16((uint8_t *)dst, (const uint8_t *)src);    //先从开始处拷贝16字节
+		rte_mov16((uint8_t *)dst - 16 + n,                  //再从末尾处往前倒数16字节拷贝
 				  (const uint8_t *)src - 16 + n);
 		return ret;
 	}
@@ -242,19 +245,19 @@ COPY_BLOCK_128_BACK63:
 		return ret;
 	}
 
-	/**
+	/** //如果总长度大于64字节
 	 * Make store aligned when copy size exceeds 512 bytes
 	 */
-	dstofss = ((uintptr_t)dst & 0x3F);
-	if (dstofss > 0) {
-		dstofss = 64 - dstofss;
-		n -= dstofss;
-		rte_mov64((uint8_t *)dst, (const uint8_t *)src);
-		src = (const uint8_t *)src + dstofss;
+	dstofss = ((uintptr_t)dst & 0x3F); //目的地址是不是64字节整数倍
+	if (dstofss > 0) {                 //如果不是，
+		dstofss = 64 - dstofss;        //地址以64对齐需要后移的长度
+		n -= dstofss;                   //地址以64字节对齐后需要拷贝的长度
+		rte_mov64((uint8_t *)dst, (const uint8_t *)src); //先拷贝一次
+		src = (const uint8_t *)src + dstofss;            //更新源、目的地址，以64字节对齐
 		dst = (uint8_t *)dst + dstofss;
 	}
 
-	/**
+	/** //按64字节复制数据
 	 * Copy 512-byte blocks.
 	 * Use copy block function for better instruction order control,
 	 * which is important when load is unaligned.
@@ -266,7 +269,7 @@ COPY_BLOCK_128_BACK63:
 	src = (const uint8_t *)src + bits;
 	dst = (uint8_t *)dst + bits;
 
-	/**
+	/** //剩余长度大于128，按128复制
 	 * Copy 128-byte blocks.
 	 * Use copy block function for better instruction order control,
 	 * which is important when load is unaligned.
@@ -281,7 +284,7 @@ COPY_BLOCK_128_BACK63:
 	}
 
 	/**
-	 * Copy whatever left
+	 * Copy whatever left //跳转到不足128赋值的位置
 	 */
 	goto COPY_BLOCK_128_BACK63;
 }

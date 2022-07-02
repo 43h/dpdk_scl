@@ -2,7 +2,7 @@
  * Copyright(c) 2015 Neil Horman <nhorman@tuxdriver.com>.
  * All rights reserved.
  */
-
+//实验性API
 #ifndef _RTE_COMPAT_H_
 #define _RTE_COMPAT_H_
 

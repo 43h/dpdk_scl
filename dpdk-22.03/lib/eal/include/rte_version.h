@@ -4,7 +4,7 @@
 
 /**
  * @file
- * Definitions of DPDK version numbers
+ * Definitions of DPDK version numbers DPDK版本
  */
 
 #ifndef _RTE_VERSION_H_

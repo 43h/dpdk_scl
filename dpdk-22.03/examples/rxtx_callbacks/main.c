@@ -61,7 +61,7 @@ add_timestamps(uint16_t port __rte_unused, uint16_t qidx __rte_unused,
 	uint64_t now = rte_rdtsc();
 
 	for (i = 0; i < nb_pkts; i++)
-		*tsc_field(pkts[i]) = now;
+		*tsc_field(pkts[i]) = now; //mbuf私有数据段添加时间戳
 	return nb_pkts;
 }
 /* >8 End of callback addition and application. */
@@ -229,7 +229,7 @@ port_init(uint16_t port, struct rte_mempool *mbuf_pool)
 	if (retval != 0)
 		return retval;
 
-	/* RX and TX callbacks are added to the ports. 8< */
+	/* RX and TX callbacks are added to the ports. 8< */ //注册收发回调函数
 	rte_eth_add_rx_callback(port, 0, add_timestamps, NULL);
 	rte_eth_add_tx_callback(port, 0, calc_latency, NULL);
 	/* >8 End of RX and TX callbacks. */

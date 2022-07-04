@@ -8,7 +8,7 @@
 
 /**
  * @file
- * This file contains definition of RTE mbuf structure itself,
+ * This file contains definition of RTE mbuf structure itself, //mbuf结构体定义
  * packet offload flags and some related macros.
  * For majority of DPDK entities, it is not recommended to include
  * this file directly, use include <rte_mbuf.h> instead.
@@ -599,20 +599,20 @@ struct rte_mbuf {
 	 * rte_mbuf_refcnt_set(). The functionality of these functions (atomic,
 	 * or non-atomic) is controlled by the RTE_MBUF_REFCNT_ATOMIC flag.
 	 */
-	uint16_t refcnt;
+	uint16_t refcnt; //引用计数
 
 	/**
 	 * Number of segments. Only valid for the first segment of an mbuf
 	 * chain.
 	 */
-	uint16_t nb_segs;
+	uint16_t nb_segs; //分段报文个数
 
 	/** Input port (16 bits to support more than 256 virtual ports).
 	 * The event eth Tx adapter uses this field to specify the output port.
 	 */
-	uint16_t port;
+	uint16_t port; //收报的网口ID
 
-	uint64_t ol_flags;        /**< Offload features. */
+	uint64_t ol_flags;        /**< Offload features. */ //网卡卸载特性
 
 	/* remaining bytes are set on RX when pulling packet from descriptor */
 	RTE_MARKER rx_descriptor_fields1;
@@ -652,8 +652,8 @@ struct rte_mbuf {
 		};
 	};
 
-	uint32_t pkt_len;         /**< Total pkt len: sum of all segments. */
-	uint16_t data_len;        /**< Amount of data in segment buffer. */
+	uint32_t pkt_len;         /**< Total pkt len: sum of all segments. */ //报文总长度
+	uint16_t data_len;        /**< Amount of data in segment buffer. */ //报文段内有效数据长度。实际存储报文长度
 	/** VLAN TCI (CPU order), valid if RTE_MBUF_F_RX_VLAN is set. */
 	uint16_t vlan_tci;
 
@@ -705,7 +705,7 @@ struct rte_mbuf {
 	 * Next segment of scattered packet. Must be NULL in the last segment or
 	 * in case of non-segmented packet.
 	 */
-	struct rte_mbuf *next;
+	struct rte_mbuf *next; //指向下一个报文段
 
 	/* fields to support TX offloads */
 	RTE_STD_C11
@@ -756,7 +756,7 @@ struct rte_mbuf {
 	uint16_t priv_size;
 
 	/** Timesync flags for use with IEEE1588. */
-	uint16_t timesync;
+	uint16_t timesync; //时间同步标志
 
 	uint32_t dynfield1[9]; /**< Reserved for dynamic fields. */
 } __rte_cache_aligned;

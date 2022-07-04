@@ -8,7 +8,7 @@
 
 /**
  * @file
- * RTE Mbuf Packet Types
+ * RTE Mbuf Packet Types mbuf包含的协议类型组合，即二三四层头
  *
  * This file contains declarations for features related to mbuf packet
  * types. The packet type gives information about the data carried by the
@@ -19,7 +19,7 @@
  * - Bit 3:0 is for L2 types.
  * - Bit 7:4 is for L3 or outer L3 (for tunneling case) types.
  * - Bit 11:8 is for L4 or outer L4 (for tunneling case) types.
- * - Bit 15:12 is for tunnel types.
+ * - Bit 15:12 is for tunnel types.                    //隧道
  * - Bit 19:16 is for inner L2 types.
  * - Bit 23:20 is for inner L3 types.
  * - Bit 27:24 is for inner L4 types.

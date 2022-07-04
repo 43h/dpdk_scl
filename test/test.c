@@ -10,6 +10,7 @@
 #include <sys/queue.h>
 
 #include <rte_memory.h>
+#include <rte_memzone.h>
 #include <rte_launch.h>
 #include <rte_eal.h>
 #include <rte_per_lcore.h>
@@ -30,7 +31,7 @@
  * @berif dump dev info
  *
  */
-void dump_eth_dev_info(uint16_t port, struct rte_eth_dev_info *dev_info)
+void dump_ethdev(uint16_t port, struct rte_eth_dev_info *dev_info)
 {
 	printf("-------------dump port:%hu-----------------\n", port);
 	// struct rte_device *device; /**< Generic device information */
@@ -92,6 +93,21 @@ void dump_eth_dev_info(uint16_t port, struct rte_eth_dev_info *dev_info)
 	printf("------------------------------------\n");
 }
 
+void dump_mem(void)
+{
+	rte_dump_physmem_layout(stdout);
+	rte_memzone_dump(stdout);
+	//rte_dump_tailq(stdout);
+	//rte_malloc_dump_stats(stdout, NULL);
+	//rte_malloc_dump_heaps(stdout);
+	//rte_malloc_dump_stats_no_numa(stdout, "socket_mem"); 
+}
+
+void dump_mbuf(struct rte_mbuf* mbuf)
+{
+	rte_pktmbuf_dump(stdout, mbuf, mbuf->pkt_len);
+}
+
 static inline int
 port_init(uint16_t port, struct rte_mempool *mbuf_pool)
 {
@@ -112,7 +128,7 @@ port_init(uint16_t port, struct rte_mempool *mbuf_pool)
 	}
 	else
 	{
-		dump_eth_dev_info(port, &dev_info);
+		dump_ethdev(port, &dev_info);
 	}
 
 	struct rte_eth_conf port_conf;
@@ -219,6 +235,7 @@ lcore_rcv(void)
 			else
 			{
 				printf("rcv pkg num:%hu\n", nb_rx);
+				dump_mbuf(bufs[0]);
 			}
 			//const uint16_t nb_tx = rte_eth_tx_burst(port ^ 1, 0,bufs, nb_rx);
 			uint16_t nb_tx = 0;
@@ -272,6 +289,7 @@ int main(int argc, char **argv)
 	else
 		printf("create mempool\n");
 
+	//dump_mem();
 	// init port
 	uint16_t portid;
 	RTE_ETH_FOREACH_DEV(portid)

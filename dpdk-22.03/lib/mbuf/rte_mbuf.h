@@ -1365,7 +1365,7 @@ rte_pktmbuf_free_seg(struct rte_mbuf *m)
 }
 
 /**
- * Free a packet mbuf back into its original mempool.
+ * Free a packet mbuf back into its original mempool. 将mbuf释放回原始内存池
  *
  * Free an mbuf, and all its segments in case of chained buffers. Each
  * segment is added back into its original mempool.

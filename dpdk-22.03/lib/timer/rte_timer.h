@@ -8,7 +8,7 @@
 /**
  * @file
  RTE Timer
- *
+ *  定时器
  * This library provides a timer service to RTE Data Plane execution
  * units that allows the execution of callback functions asynchronously.
  *
@@ -56,8 +56,8 @@ extern "C" {
  * Timer type: Periodic or single (one-shot).
  */
 enum rte_timer_type {
-	SINGLE,
-	PERIODICAL
+	SINGLE,    //一次性
+	PERIODICAL //周期性
 };
 
 /**

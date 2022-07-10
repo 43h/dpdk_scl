@@ -96,7 +96,7 @@ main(int argc, char **argv)
 		rte_panic("Cannot init EAL\n");
 
 	/* init RTE timer library */
-	rte_timer_subsystem_init();
+	rte_timer_subsystem_init();  //初始化定时器子系统
 	/* >8 End of init EAL. */
 
 	/* Init timer structures. 8< */

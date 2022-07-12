@@ -28,8 +28,8 @@ hwts_field(struct rte_mbuf *mbuf)
 			hwts_dynfield_offset, rte_mbuf_timestamp_t *);
 }
 
-typedef uint64_t tsc_t;
-static int tsc_dynfield_offset = -1;
+typedef uint64_t tsc_t; //定义时间搓类型
+static int tsc_dynfield_offset = -1; //mbuf里时间搓偏移
 
 static inline tsc_t *
 tsc_field(struct rte_mbuf *mbuf)
@@ -323,9 +323,9 @@ main(int argc, char *argv[])
 		RTE_MBUF_DEFAULT_BUF_SIZE, rte_socket_id());
 	if (mbuf_pool == NULL)
 		rte_exit(EXIT_FAILURE, "Cannot create mbuf pool\n");
-
+	//注册动态字段，返回偏移值
 	tsc_dynfield_offset =
-		rte_mbuf_dynfield_register(&tsc_dynfield_desc);
+		rte_mbuf_dynfield_register(&tsc_dynfield_desc);//？global?local?
 	if (tsc_dynfield_offset < 0)
 		rte_exit(EXIT_FAILURE, "Cannot register mbuf field\n");
 

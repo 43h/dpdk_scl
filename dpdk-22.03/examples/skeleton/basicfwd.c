@@ -14,7 +14,7 @@
 #define TX_RING_SIZE 1024
 
 #define NUM_MBUFS 8191
-#define MBUF_CACHE_SIZE 250
+#define MBUF_CACHE_SIZE 250 //为啥是250？
 #define BURST_SIZE 32
 
 /* basicfwd.c: Basic DPDK skeleton forwarding example. */
@@ -30,7 +30,7 @@ port_init(uint16_t port, struct rte_mempool *mbuf_pool)
 {
 
 	const uint16_t rx_rings = 1, tx_rings = 1;
-	uint16_t nb_rxd = RX_RING_SIZE;
+	uint16_t nb_rxd = RX_RING_SIZE; //收发描述符个数
 	uint16_t nb_txd = TX_RING_SIZE;
 	int retval;
 	uint16_t q;
@@ -147,7 +147,7 @@ lcore_main(void)
 		 * Receive packets on a port and forward them on the paired
 		 * port. The mapping is 0 -> 1, 1 -> 0, 2 -> 3, 3 -> 2, etc.
 		 */
-		RTE_ETH_FOREACH_DEV(port)
+		RTE_ETH_FOREACH_DEV(port) //依次接受每个网口上的报文
 		{
 
 			/* Get burst of RX packets, from first port of pair. */ //接收报文
